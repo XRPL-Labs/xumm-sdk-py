@@ -1,10 +1,9 @@
 import os
-from protocols.xumm import client
-from protocols.xumm.resource import XummResource
-from protocols.xumm.util import (
+from xumm import client
+from xumm.resource import XummResource
+from xumm.util import (
     cached_property,
 )
-from basedir import basedir
 import json
 import time
 

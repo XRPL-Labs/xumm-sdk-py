@@ -3,8 +3,7 @@ from __future__ import unicode_literals
 import requests
 import textwrap
 
-from protocols.xumm import api_version, api_base, error
-from basedir import basedir
+from xumm import api_version, api_base, error
 
 
 def build_url(endpoint=None):
@@ -17,12 +16,12 @@ def build_url(endpoint=None):
 
 
 def get_env():
-    from protocols.xumm import env
+    from xumm import env
     return env
 
 
 def get_headers():
-    from protocols.xumm import api_key, api_secret
+    from xumm import api_key, api_secret
 
     if api_key is None:
         raise error.AuthenticationError(

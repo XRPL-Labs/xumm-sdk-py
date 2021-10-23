@@ -22,11 +22,8 @@ class BaseTestConfig(TestCase):
         self.xumm_auth()
 
     def xumm_auth(self):
-        self.client = xumm.Account()
+        self.client = xumm.Payload
         self.assertNotEqual(self.client, None)
-        self.assertEqual(self.client.scope, 'read:calendar write:calendar')
-        self.assertEqual(self.client.expires_in, 86400)
-        self.assertEqual(self.client.token_type, 'Bearer')
 
     def tearDown(self):
         print('Tear Down')

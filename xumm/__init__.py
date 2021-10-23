@@ -4,6 +4,6 @@ api_secret = None
 api_version = 'v1'
 env = 'Prod'
 
-from protocols.xumm.resource.base import (  # noqa
+from xumm.resource.base import (  # noqa
     Payload,
 )

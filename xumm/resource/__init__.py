@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from protocols.xumm import client
+from xumm import client
 
 
 class PrintableResource(object):
