@@ -1,0 +1,5 @@
+.eggs
+guesty.egg-info
+*.pyc
+venv
+.cache
