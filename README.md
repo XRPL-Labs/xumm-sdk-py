@@ -32,10 +32,30 @@ xumm.api_key = 'xxx'
 xumm.api_secret = 'xxx'
 xumm.api_version = 'v1'
 
-payload_data = xumm.Payload.get(payload)
+payload_id = 'xxxx-xxxx-xxxx-xxxx'
+payload_data = xumm.Payload.get(payload_id)
 
 custom_meta = payload_data.custom_meta
 print(custom_meta)
+```
+
+### Submitting a payload
+
+```python
+payload = {
+  'txjson': {
+    'TransactionType': 'Signin'
+  },
+  'options': {
+    'expire': 240,
+    'submit': False,
+    'return_url': {
+      'web': 'https://example.com/signin'
+    },
+  }
+}
+response = xumm.Payload.post(payload)
+print(response.payload_id)
 ```
 
 ## Development
