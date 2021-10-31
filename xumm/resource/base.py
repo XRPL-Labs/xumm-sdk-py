@@ -21,7 +21,6 @@ class Payload(XummResource):
         return res
 
     def refresh_from(cls, **kwargs):
-        # print('XUMM ACCOUNT: {}'.format(json.dumps(kwargs, indent=4, sort_keys=True)))
         cls.application = kwargs['application']
         cls.custom_meta = kwargs['custom_meta']
         cls.meta = kwargs['meta']
@@ -36,7 +35,6 @@ class Payload(XummResource):
             'payload': cls.payload,
             'response': cls.response,
         }
-
 
     def __unicode__(cls):
         return '<{} {}>'.format(cls.__class__.__name__, cls.id)

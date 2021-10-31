@@ -46,10 +46,7 @@ def get_headers():
 
 def get(url):
     try:
-        print('GET')
-        print('URL: {}'.format(url))
         res = requests.get(url, headers=get_headers())
-        # print(res.text)
     except Exception as e:
         handle_request_error(e)
     return handle_response(res)
@@ -57,17 +54,7 @@ def get(url):
 
 def post(url, data):
     try:
-        print('Post Url: {}'.format(url))
-        print('Post Data: {}'.format(data))
         res = requests.post(url, headers=get_headers(), json=data)
-    except Exception as e:
-        handle_request_error(e)
-    return handle_response(res)
-
-
-def delete(url):
-    try:
-        res = requests.delete(url, headers=get_headers())
     except Exception as e:
         handle_request_error(e)
     return handle_response(res)
