@@ -9,3 +9,6 @@ venv
 ######################
 .pytest_cache
 .github
+
+# Lint Logs #
+/logs
