@@ -1,29 +1,25 @@
 from unittest import TestCase
+from tests.fixtures import xumm_api
+
+from xumm.util import read_json
 
 import xumm
 
 
 class BaseTestConfig(TestCase):
 
-    client_id = ''
-    client_secret = ''
-    version = 'v2'
-    client = None
+    sdk = None
+    json_fixtures = {}
 
-    def __main__(self):
-        self.setUp()
+    def __main__(cls):
+        cls.setUp()
 
-    def setUp(self):
-        print('Set Up Testing Auth')
-        xumm.env = 'production'
-        xumm.api_client_id = self.client_id
-        xumm.api_client_secret = self.client_secret
-        xumm.api_version = self.version
-        self.xumm_auth()
+    def setUp(cls):
+        print('Set Up Testing')
+        cls.json_fixtures = read_json('./tests/fixtures/xumm_api.json')
+        xumm.api_key = cls.json_fixtures['api']['key']
+        xumm.api_secret = cls.json_fixtures['api']['secret']
+        cls.sdk = xumm.XummSdk()
 
-    def xumm_auth(self):
-        self.client = xumm.Payload
-        self.assertNotEqual(self.client, None)
-
-    def tearDown(self):
-        print('Tear Down')
+    def tearDown(cls):
+        print('Tear Down Testing')

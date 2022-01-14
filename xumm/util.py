@@ -1,5 +1,5 @@
 import os
-import re
+from typing import Dict  # noqa: F401
 
 class CachedProperty(object):
     """
@@ -27,31 +27,10 @@ cached_property = CachedProperty
 
 import json
 
-def read_json(path):
+def read_json(path: str) -> Dict[str, object]:
     with open(path) as json_file:
         return json.load(json_file)
 
-def write_json(data, path):
+def write_json(data: Dict[str, object], path: str):
     with open(path, 'w') as json_file:
         json.dump(data, json_file)
-
-def read_csv(csv_path):
-    df = pd.read_csv(csv_path)
-    df = df.applymap(str)
-    df = df.replace({'nan': None})
-    df = df.apply(lambda x: x.str.strip() if x.dtype == "object" else x)
-    return df
-
-def write_csv(path, data):
-    with open(path, 'w') as json_file:
-        return json.dump(data, json_file, indent=4, sort_keys=True)
-
-def read_csv_data(csv_path=None):
-    csv_path = os.path.join(csv_path)
-    data = pd.read_csv(csv_path)
-    return data
-
-def write_csv_data(df=None, csv_path=None):
-    csv_path = os.path.join(csv_path)
-    df.to_csv(csv_path)
-    return df

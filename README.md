@@ -60,9 +60,19 @@ print(response.payload_id)
 
 ## Development
 
-We use virtualenv. Install with `[sudo] pip install virtualenv`, initialize with `virtualenv venv`, and activate with `source venv/bin/activate`.
 
-Install the development requirements with `pip install -r requirements/dev.txt`
+### Install Virtual ENV - (Skip)
+
+We use virtualenv. Install with `[sudo] pip3 install virtualenv`, initialize with `virtualenv venv`, and activate with `source venv/bin/activate`.
+
+### Create VirtualEnv and Install requirements
+
+Already have Virtualenv installed:
+
+```bash
+mkvirtualenv xumm-py \
+&& pip3 install -r requirements.txt
+```
 
 ### Testing
 
@@ -71,3 +81,14 @@ To run the test suite, run `py.test` from the project root.
 ### Linting
 
 We enforce linting on the code with flake8. Run with `flake8 xumm` from the project root.
+
+```bash
+flake8 xumm --output-file logs/linter.txt
+```
+
+
+### TODO
+
+scripts/
+
+for bumping major/minor/patch
