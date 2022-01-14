@@ -50,16 +50,30 @@ class TestXummSDKPayloadCancel(BaseTestConfig):
             cls.assertEqual(e.error['code'], cls.json_fixtures['payload']['notfound']['error']['code'])
             # cls.assertEqual(response.error['message'], cls.json_fixtures['payload']['notfound']['error']['message'])
 
-
-    def test_payload_create_cancel(cls):
+    @patch('xumm.client.requests.delete')
+    @patch('xumm.client.requests.post')
+    def test_payload_create_cancel(cls, mock_post, mock_delete):
         print('should cancel a payload by Created Payload')
-        created_payload = cls.sdk.payload_create(test_fixtures.valid_payload())
-        result = cls.sdk.payload_cancel(created_payload.uuid)
-        cls.assertEqual(result.to_dict(), cls.json_fixtures['payload']['cancelled'])
 
-    # def _test_payload_get_cancel(cls):
-    #     print('should cancel a payload by Fetched Payload')
-    #     payloadId = '00000000-0000-4839-af2f-f794874a80b0'
-    #     get_payload = PayloadApi(cls.sdk).payload_get(payloadId)
-    #     result = PayloadApi(cls.sdk).payload_delete(get_payload.uuid)
-    #     cls.assertEqual(result.to_dict(), cls.json_fixtures['payload']['cancelled'])
+        mock_post.return_value = Mock(status_code=200)
+        mock_post.return_value.json.return_value = cls.json_fixtures['payload']['created']
+
+        created_payload = cls.sdk.payload_create(test_fixtures.valid_payload())
+        if created_payload:
+            mock_delete.return_value = Mock(status_code=200)
+            mock_delete.return_value.json.return_value = cls.json_fixtures['payload']['cancelled']
+            cls.assertEqual(cls.sdk.payload_cancel(created_payload.uuid).to_dict(), cls.json_fixtures['payload']['cancelled'])
+
+    @patch('xumm.client.requests.delete')
+    @patch('xumm.client.requests.get')
+    def test_payload_get_cancel(cls, mock_get, mock_delete):
+        print('should cancel a payload by Fetched Payload')
+        payloadId = '00000000-0000-4839-af2f-f794874a80b0'
+        mock_get.return_value = Mock(status_code=200)
+        mock_get.return_value.json.return_value = cls.json_fixtures['payload']['get']
+
+        get_payload = cls.sdk.payload_get(payloadId)
+        if get_payload:
+            mock_delete.return_value = Mock(status_code=200)
+            mock_delete.return_value.json.return_value = cls.json_fixtures['payload']['cancelled']
+            cls.assertEqual(cls.sdk.payload_cancel(get_payload.meta.uuid).to_dict(), cls.json_fixtures['payload']['cancelled'])

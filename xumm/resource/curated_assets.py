@@ -12,7 +12,7 @@ from typing import List, Dict  # noqa: F401
 
 class Currency(XummResource):
 
-    swagger_types = {
+    model_types = {
         'id': 'int',
         'issuer_id': 'int',
         'issuer': 'str',
@@ -42,7 +42,7 @@ class Currency(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             if isinstance(value, list):
                 result[attr] = list(map(
@@ -63,20 +63,20 @@ class Currency(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
+        return {k: v for k, v in result.items() if v is not None}
 
     @property
-    def id(self) -> int:
+    def id(cls) -> int:
         """Gets the id of this Currency.
 
 
         :return: The id of this Currency.
         :rtype: int
         """
-        return self._id
+        return cls._id
 
     @id.setter
-    def id(self, id: int):
+    def id(cls, id: int):
         """Sets the id of this Currency.
 
 
@@ -86,20 +86,20 @@ class Currency(XummResource):
         if id is None:
             raise ValueError("Invalid value for `id`, must not be `None`")  # noqa: E501
 
-        self._id = id
+        cls._id = id
 
     @property
-    def issuer_id(self) -> int:
+    def issuer_id(cls) -> int:
         """Gets the issuer_id of this Currency.
 
 
         :return: The issuer_id of this Currency.
         :rtype: int
         """
-        return self._issuer_id
+        return cls._issuer_id
 
     @issuer_id.setter
-    def issuer_id(self, issuer_id: int):
+    def issuer_id(cls, issuer_id: int):
         """Sets the issuer_id of this Currency.
 
 
@@ -109,20 +109,20 @@ class Currency(XummResource):
         if issuer_id is None:
             raise ValueError("Invalid value for `issuer_id`, must not be `None`")  # noqa: E501
 
-        self._issuer_id = issuer_id
+        cls._issuer_id = issuer_id
 
     @property
-    def issuer(self) -> str:
+    def issuer(cls) -> str:
         """Gets the issuer of this Currency.
 
 
         :return: The issuer of this Currency.
         :rtype: str
         """
-        return self._issuer
+        return cls._issuer
 
     @issuer.setter
-    def issuer(self, issuer: str):
+    def issuer(cls, issuer: str):
         """Sets the issuer of this Currency.
 
 
@@ -132,20 +132,20 @@ class Currency(XummResource):
         if issuer is None:
             raise ValueError("Invalid value for `issuer`, must not be `None`")  # noqa: E501
 
-        self._issuer = issuer
+        cls._issuer = issuer
 
     @property
-    def currency(self) -> str:
+    def currency(cls) -> str:
         """Gets the currency of this Currency.
 
 
         :return: The currency of this Currency.
         :rtype: str
         """
-        return self._currency
+        return cls._currency
 
     @currency.setter
-    def currency(self, currency: str):
+    def currency(cls, currency: str):
         """Sets the currency of this Currency.
 
 
@@ -155,20 +155,20 @@ class Currency(XummResource):
         if currency is None:
             raise ValueError("Invalid value for `currency`, must not be `None`")  # noqa: E501
 
-        self._currency = currency
+        cls._currency = currency
 
     @property
-    def name(self) -> str:
+    def name(cls) -> str:
         """Gets the name of this Currency.
 
 
         :return: The name of this Currency.
         :rtype: str
         """
-        return self._name
+        return cls._name
 
     @name.setter
-    def name(self, name: str):
+    def name(cls, name: str):
         """Sets the name of this Currency.
 
 
@@ -178,20 +178,20 @@ class Currency(XummResource):
         if name is None:
             raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
-        self._name = name
+        cls._name = name
 
     @property
-    def avatar(self) -> str:
+    def avatar(cls) -> str:
         """Gets the avatar of this Currency.
 
 
         :return: The avatar of this Currency.
         :rtype: str
         """
-        return self._avatar
+        return cls._avatar
 
     @avatar.setter
-    def avatar(self, avatar: str):
+    def avatar(cls, avatar: str):
         """Sets the avatar of this Currency.
 
 
@@ -199,20 +199,20 @@ class Currency(XummResource):
         :type avatar: str
         """
 
-        self._avatar = avatar
+        cls._avatar = avatar
 
     @property
-    def shortlist(self) -> int:
+    def shortlist(cls) -> int:
         """Gets the shortlist of this Currency.
 
 
         :return: The shortlist of this Currency.
         :rtype: int
         """
-        return self._shortlist
+        return cls._shortlist
 
     @shortlist.setter
-    def shortlist(self, shortlist: int):
+    def shortlist(cls, shortlist: int):
         """Sets the shortlist of this Currency.
 
 
@@ -220,12 +220,12 @@ class Currency(XummResource):
         :type shortlist: int
         """
 
-        self._shortlist = shortlist
+        cls._shortlist = shortlist
 
 
 class Asset(XummResource):
 
-    swagger_types = {
+    model_types = {
         'id': 'int',
         'name': 'str',
         'domain': 'str',
@@ -253,7 +253,7 @@ class Asset(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             if isinstance(value, list):
                 result[attr] = list(map(
@@ -274,20 +274,20 @@ class Asset(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
+        return {k: v for k, v in result.items() if v is not None}
 
     @property
-    def id(self) -> int:
+    def id(cls) -> int:
         """Gets the id of this Asset.
 
 
         :return: The id of this Asset.
         :rtype: int
         """
-        return self._id
+        return cls._id
 
     @id.setter
-    def id(self, id: int):
+    def id(cls, id: int):
         """Sets the id of this Asset.
 
 
@@ -297,20 +297,20 @@ class Asset(XummResource):
         if id is None:
             raise ValueError("Invalid value for `id`, must not be `None`")  # noqa: E501
 
-        self._id = id
+        cls._id = id
 
     @property
-    def name(self) -> str:
+    def name(cls) -> str:
         """Gets the name of this Asset.
 
 
         :return: The name of this Asset.
         :rtype: str
         """
-        return self._name
+        return cls._name
 
     @name.setter
-    def name(self, name: str):
+    def name(cls, name: str):
         """Sets the name of this Asset.
 
 
@@ -320,20 +320,20 @@ class Asset(XummResource):
         if name is None:
             raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
-        self._name = name
+        cls._name = name
 
     @property
-    def domain(self) -> str:
+    def domain(cls) -> str:
         """Gets the domain of this Asset.
 
 
         :return: The domain of this Asset.
         :rtype: str
         """
-        return self._domain
+        return cls._domain
 
     @domain.setter
-    def domain(self, domain: str):
+    def domain(cls, domain: str):
         """Sets the domain of this Asset.
 
 
@@ -343,20 +343,20 @@ class Asset(XummResource):
         if domain is None:
             raise ValueError("Invalid value for `domain`, must not be `None`")  # noqa: E501
 
-        self._domain = domain
+        cls._domain = domain
 
     @property
-    def avatar(self) -> str:
+    def avatar(cls) -> str:
         """Gets the avatar of this Asset.
 
 
         :return: The avatar of this Asset.
         :rtype: str
         """
-        return self._avatar
+        return cls._avatar
 
     @avatar.setter
-    def avatar(self, avatar: str):
+    def avatar(cls, avatar: str):
         """Sets the avatar of this Asset.
 
 
@@ -366,20 +366,20 @@ class Asset(XummResource):
         if avatar is None:
             raise ValueError("Invalid value for `avatar`, must not be `None`")  # noqa: E501
 
-        self._avatar = avatar
+        cls._avatar = avatar
 
     @property
-    def shortlist(self) -> int:
+    def shortlist(cls) -> int:
         """Gets the shortlist of this Asset.
 
 
         :return: The shortlist of this Asset.
         :rtype: int
         """
-        return self._shortlist
+        return cls._shortlist
 
     @shortlist.setter
-    def shortlist(self, shortlist: int):
+    def shortlist(cls, shortlist: int):
         """Sets the shortlist of this Asset.
 
 
@@ -389,20 +389,20 @@ class Asset(XummResource):
         if shortlist is None:
             raise ValueError("Invalid value for `shortlist`, must not be `None`")  # noqa: E501
 
-        self._shortlist = shortlist
+        cls._shortlist = shortlist
 
     @property
-    def currencies(self) -> Dict[str, Currency]:
+    def currencies(cls) -> Dict[str, Currency]:
         """Gets the currencies of this Asset.
 
 
         :return: The currencies of this Asset.
         :rtype: Dict[str, Currency]
         """
-        return self._currencies
+        return cls._currencies
 
     @currencies.setter
-    def currencies(self, currencies: Dict[str, Currency]):
+    def currencies(cls, currencies: Dict[str, Currency]):
         """Sets the currencies of this Asset.
 
 
@@ -412,12 +412,12 @@ class Asset(XummResource):
         if currencies is None:
             raise ValueError("Invalid value for `currencies`, must not be `None`")  # noqa: E501
 
-        self._currencies = currencies
+        cls._currencies = currencies
 
 
 class CuratedAssetsResponse(XummResource):
 
-    swagger_types = {
+    model_types = {
         'issuers': 'list[str]',
         'currencies': 'list[str]',
         'details': 'dict(str, Asset)'
@@ -446,7 +446,7 @@ class CuratedAssetsResponse(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             if isinstance(value, list):
                 result[attr] = list(map(
@@ -467,20 +467,20 @@ class CuratedAssetsResponse(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
+        return {k: v for k, v in result.items() if v is not None}
 
     @property
-    def issuers(self) -> List[str]:
+    def issuers(cls) -> List[str]:
         """Gets the issuers of this CuratedAssetsResponse.
 
 
         :return: The issuers of this CuratedAssetsResponse.
         :rtype: List[str]
         """
-        return self._issuers
+        return cls._issuers
 
     @issuers.setter
-    def issuers(self, issuers: List[str]):
+    def issuers(cls, issuers: List[str]):
         """Sets the issuers of this CuratedAssetsResponse.
 
 
@@ -490,20 +490,20 @@ class CuratedAssetsResponse(XummResource):
         if issuers is None:
             raise ValueError("Invalid value for `issuers`, must not be `None`")  # noqa: E501
 
-        self._issuers = issuers
+        cls._issuers = issuers
 
     @property
-    def currencies(self) -> List[str]:
+    def currencies(cls) -> List[str]:
         """Gets the currencies of this CuratedAssetsResponse.
 
 
         :return: The currencies of this CuratedAssetsResponse.
         :rtype: List[str]
         """
-        return self._currencies
+        return cls._currencies
 
     @currencies.setter
-    def currencies(self, currencies: List[str]):
+    def currencies(cls, currencies: List[str]):
         """Sets the currencies of this CuratedAssetsResponse.
 
 
@@ -513,20 +513,20 @@ class CuratedAssetsResponse(XummResource):
         if currencies is None:
             raise ValueError("Invalid value for `currencies`, must not be `None`")  # noqa: E501
 
-        self._currencies = currencies
+        cls._currencies = currencies
 
     @property
-    def details(self) -> Dict[str, Asset]:
+    def details(cls) -> Dict[str, Asset]:
         """Gets the details of this CuratedAssetsResponse.
 
 
         :return: The details of this CuratedAssetsResponse.
         :rtype: Dict[str, Asset]
         """
-        return self._details
+        return cls._details
 
     @details.setter
-    def details(self, details: Dict[str, Asset]):
+    def details(cls, details: Dict[str, Asset]):
         """Sets the details of this CuratedAssetsResponse.
 
 
@@ -536,4 +536,4 @@ class CuratedAssetsResponse(XummResource):
         if details is None:
             raise ValueError("Invalid value for `details`, must not be `None`")  # noqa: E501
 
-        self._details = details
+        cls._details = details

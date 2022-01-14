@@ -1,12 +1,18 @@
 import os
 from xumm.resource import XummResource
 import six
+import json
 
 class KYCStatusResponse(XummResource):
 
-    swagger_types = {
+    model_types = {
         'account': 'str',
         'kyc_approved': 'bool'
+    }
+
+    attribute_map = {
+        'account': 'account',
+        'kyc_approved': 'kycApproved'
     }
 
     @classmethod
@@ -23,7 +29,7 @@ class KYCStatusResponse(XummResource):
         :return: The KYCStatusResponse of this KYCStatusResponse.  # noqa: E501
         :rtype: KYCStatusResponse
         """
-        # print(json.dumps(kwargs, indent=4, sort_keys=True))
+        print(json.dumps(kwargs, indent=4, sort_keys=True))
         cls._account = kwargs['account']
         cls._kyc_approved = kwargs['kycApproved']
 
@@ -31,41 +37,42 @@ class KYCStatusResponse(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
+            attr = cls.attribute_map[attr]
             if isinstance(value, list):
-                result[to_camel_case(attr)] = list(map(
+                result[attr] = list(map(
                     lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
                     value
                 ))
             elif hasattr(value, "to_dict"):
-                result[to_camel_case(attr)] = value.to_dict()
+                result[attr] = value.to_dict()
             elif isinstance(value, dict):
-                result[to_camel_case(attr)] = dict(map(
+                result[attr] = dict(map(
                     lambda item: (item[0], item[1].to_dict())
                     if hasattr(item[1], "to_dict") else item,
                     value.items()
                 ))
             else:
-                result[to_camel_case(attr)] = value
+                result[attr] = value
         if issubclass(KYCStatusResponse, dict):
             for key, value in cls.items():
-                result[to_camel_case(key)] = value
+                result[key] = value
 
-        return result
+        return {k: v for k, v in result.items() if v is not None}
 
     @property
-    def account(self) -> str:
+    def account(cls) -> str:
         """Gets the account of this KYCStatusResponse.
 
 
         :return: The account of this KYCStatusResponse.
         :rtype: str
         """
-        return self._account
+        return cls._account
 
     @account.setter
-    def account(self, account: str):
+    def account(cls, account: str):
         """Sets the account of this KYCStatusResponse.
 
 
@@ -75,20 +82,20 @@ class KYCStatusResponse(XummResource):
         if account is None:
             raise ValueError("Invalid value for `account`, must not be `None`")  # noqa: E501
 
-        self._account = account
+        cls._account = account
 
     @property
-    def kyc_approved(self) -> bool:
+    def kyc_approved(cls) -> bool:
         """Gets the kyc_approved of this KYCStatusResponse.
 
 
         :return: The kyc_approved of this KYCStatusResponse.
         :rtype: bool
         """
-        return self._kyc_approved
+        return cls._kyc_approved
 
     @kyc_approved.setter
-    def kyc_approved(self, kyc_approved: bool):
+    def kyc_approved(cls, kyc_approved: bool):
         """Sets the kyc_approved of this KYCStatusResponse.
 
 
@@ -98,4 +105,4 @@ class KYCStatusResponse(XummResource):
         if kyc_approved is None:
             raise ValueError("Invalid value for `kyc_approved`, must not be `None`")  # noqa: E501
 
-        self._kyc_approved = kyc_approved
+        cls._kyc_approved = kyc_approved

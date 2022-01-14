@@ -6,8 +6,6 @@ from unittest.mock import Mock, patch
 
 import xumm
 
-import pytest
-@pytest.mark.skip(reason="Using Prod Cert")
 class TestXummSDKPayloadCreate(BaseTestConfig):
 
     @patch('xumm.client.requests.post')

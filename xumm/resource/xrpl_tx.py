@@ -7,7 +7,7 @@ from typing import List, Dict  # noqa: F401
 
 class TxMeta(XummResource):
 
-    swagger_types = {
+    model_types = {
         'transaction_index': 'int',
         'transaction_result': 'str',
         'delivered_amount': 'str'
@@ -35,7 +35,7 @@ class TxMeta(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -57,20 +57,20 @@ class TxMeta(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
+        return {k: v for k, v in result.items() if v is not None}
 
     @property
-    def transaction_index(self) -> int:
+    def transaction_index(cls) -> int:
         """Gets the transaction_index of this TxMeta.
 
 
         :return: The transaction_index of this TxMeta.
         :rtype: int
         """
-        return self._transaction_index
+        return cls._transaction_index
 
     @transaction_index.setter
-    def transaction_index(self, transaction_index: int):
+    def transaction_index(cls, transaction_index: int):
         """Sets the transaction_index of this TxMeta.
 
 
@@ -80,20 +80,20 @@ class TxMeta(XummResource):
         if transaction_index is None:
             raise ValueError("Invalid value for `transaction_index`, must not be `None`")  # noqa: E501
 
-        self._transaction_index = transaction_index
+        cls._transaction_index = transaction_index
 
     @property
-    def transaction_result(self) -> str:
+    def transaction_result(cls) -> str:
         """Gets the transaction_result of this TxMeta.
 
 
         :return: The transaction_result of this TxMeta.
         :rtype: str
         """
-        return self._transaction_result
+        return cls._transaction_result
 
     @transaction_result.setter
-    def transaction_result(self, transaction_result: str):
+    def transaction_result(cls, transaction_result: str):
         """Sets the transaction_result of this TxMeta.
 
 
@@ -103,20 +103,20 @@ class TxMeta(XummResource):
         if transaction_result is None:
             raise ValueError("Invalid value for `transaction_result`, must not be `None`")  # noqa: E501
 
-        self._transaction_result = transaction_result
+        cls._transaction_result = transaction_result
 
     @property
-    def delivered_amount(self) -> str:
+    def delivered_amount(cls) -> str:
         """Gets the delivered_amount of this TxMeta.
 
 
         :return: The delivered_amount of this TxMeta.
         :rtype: str
         """
-        return self._delivered_amount
+        return cls._delivered_amount
 
     @delivered_amount.setter
-    def delivered_amount(self, delivered_amount: str):
+    def delivered_amount(cls, delivered_amount: str):
         """Sets the delivered_amount of this TxMeta.
 
 
@@ -126,11 +126,11 @@ class TxMeta(XummResource):
         if delivered_amount is None:
             raise ValueError("Invalid value for `delivered_amount`, must not be `None`")  # noqa: E501
 
-        self._delivered_amount = delivered_amount
+        cls._delivered_amount = delivered_amount
 
 class Transaction(XummResource):
 
-    swagger_types = {
+    model_types = {
         'account': 'str',
         'amount': 'str',
         'destination': 'str',
@@ -179,7 +179,7 @@ class Transaction(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -201,20 +201,20 @@ class Transaction(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
+        return {k: v for k, v in result.items() if v is not None}
 
     @property
-    def account(self) -> str:
+    def account(cls) -> str:
         """Gets the account of this Transaction.
 
 
         :return: The account of this Transaction.
         :rtype: str
         """
-        return self._account
+        return cls._account
 
     @account.setter
-    def account(self, account: str):
+    def account(cls, account: str):
         """Sets the account of this Transaction.
 
 
@@ -224,20 +224,20 @@ class Transaction(XummResource):
         if account is None:
             raise ValueError("Invalid value for `account`, must not be `None`")  # noqa: E501
 
-        self._account = account
+        cls._account = account
 
     @property
-    def amount(self) -> str:
+    def amount(cls) -> str:
         """Gets the amount of this Transaction.
 
 
         :return: The amount of this Transaction.
         :rtype: str
         """
-        return self._amount
+        return cls._amount
 
     @amount.setter
-    def amount(self, amount: str):
+    def amount(cls, amount: str):
         """Sets the amount of this Transaction.
 
 
@@ -247,20 +247,20 @@ class Transaction(XummResource):
         if amount is None:
             raise ValueError("Invalid value for `amount`, must not be `None`")  # noqa: E501
 
-        self._amount = amount
+        cls._amount = amount
 
     @property
-    def destination(self) -> str:
+    def destination(cls) -> str:
         """Gets the destination of this Transaction.
 
 
         :return: The destination of this Transaction.
         :rtype: str
         """
-        return self._destination
+        return cls._destination
 
     @destination.setter
-    def destination(self, destination: str):
+    def destination(cls, destination: str):
         """Sets the destination of this Transaction.
 
 
@@ -270,20 +270,20 @@ class Transaction(XummResource):
         if destination is None:
             raise ValueError("Invalid value for `destination`, must not be `None`")  # noqa: E501
 
-        self._destination = destination
+        cls._destination = destination
 
     @property
-    def fee(self) -> str:
+    def fee(cls) -> str:
         """Gets the fee of this Transaction.
 
 
         :return: The fee of this Transaction.
         :rtype: str
         """
-        return self._fee
+        return cls._fee
 
     @fee.setter
-    def fee(self, fee: str):
+    def fee(cls, fee: str):
         """Sets the fee of this Transaction.
 
 
@@ -293,20 +293,20 @@ class Transaction(XummResource):
         if fee is None:
             raise ValueError("Invalid value for `fee`, must not be `None`")  # noqa: E501
 
-        self._fee = fee
+        cls._fee = fee
 
     @property
-    def flags(self) -> int:
+    def flags(cls) -> int:
         """Gets the flags of this Transaction.
 
 
         :return: The flags of this Transaction.
         :rtype: int
         """
-        return self._flags
+        return cls._flags
 
     @flags.setter
-    def flags(self, flags: int):
+    def flags(cls, flags: int):
         """Sets the flags of this Transaction.
 
 
@@ -316,20 +316,20 @@ class Transaction(XummResource):
         if flags is None:
             raise ValueError("Invalid value for `flags`, must not be `None`")  # noqa: E501
 
-        self._flags = flags
+        cls._flags = flags
 
     @property
-    def sequence(self) -> int:
+    def sequence(cls) -> int:
         """Gets the sequence of this Transaction.
 
 
         :return: The sequence of this Transaction.
         :rtype: int
         """
-        return self._sequence
+        return cls._sequence
 
     @sequence.setter
-    def sequence(self, sequence: int):
+    def sequence(cls, sequence: int):
         """Sets the sequence of this Transaction.
 
 
@@ -339,20 +339,20 @@ class Transaction(XummResource):
         if sequence is None:
             raise ValueError("Invalid value for `sequence`, must not be `None`")  # noqa: E501
 
-        self._sequence = sequence
+        cls._sequence = sequence
 
     @property
-    def signing_pub_key(self) -> str:
+    def signing_pub_key(cls) -> str:
         """Gets the signing_pub_key of this Transaction.
 
 
         :return: The signing_pub_key of this Transaction.
         :rtype: str
         """
-        return self._signing_pub_key
+        return cls._signing_pub_key
 
     @signing_pub_key.setter
-    def signing_pub_key(self, signing_pub_key: str):
+    def signing_pub_key(cls, signing_pub_key: str):
         """Sets the signing_pub_key of this Transaction.
 
 
@@ -362,20 +362,20 @@ class Transaction(XummResource):
         if signing_pub_key is None:
             raise ValueError("Invalid value for `signing_pub_key`, must not be `None`")  # noqa: E501
 
-        self._signing_pub_key = signing_pub_key
+        cls._signing_pub_key = signing_pub_key
 
     @property
-    def transaction_type(self) -> str:
+    def transaction_type(cls) -> str:
         """Gets the transaction_type of this Transaction.
 
 
         :return: The transaction_type of this Transaction.
         :rtype: str
         """
-        return self._transaction_type
+        return cls._transaction_type
 
     @transaction_type.setter
-    def transaction_type(self, transaction_type: str):
+    def transaction_type(cls, transaction_type: str):
         """Sets the transaction_type of this Transaction.
 
 
@@ -385,20 +385,20 @@ class Transaction(XummResource):
         if transaction_type is None:
             raise ValueError("Invalid value for `transaction_type`, must not be `None`")  # noqa: E501
 
-        self._transaction_type = transaction_type
+        cls._transaction_type = transaction_type
 
     @property
-    def meta(self) -> TxMeta:
+    def meta(cls) -> TxMeta:
         """Gets the meta of this Transaction.
 
 
         :return: The meta of this Transaction.
         :rtype: TxMeta
         """
-        return self._meta
+        return cls._meta
 
     @meta.setter
-    def meta(self, meta: TxMeta):
+    def meta(cls, meta: TxMeta):
         """Sets the meta of this Transaction.
 
 
@@ -408,20 +408,20 @@ class Transaction(XummResource):
         if meta is None:
             raise ValueError("Invalid value for `meta`, must not be `None`")  # noqa: E501
 
-        self._meta = meta
+        cls._meta = meta
 
     @property
-    def validated(self) -> bool:
+    def validated(cls) -> bool:
         """Gets the validated of this Transaction.
 
 
         :return: The validated of this Transaction.
         :rtype: bool
         """
-        return self._validated
+        return cls._validated
 
     @validated.setter
-    def validated(self, validated: bool):
+    def validated(cls, validated: bool):
         """Sets the validated of this Transaction.
 
 
@@ -431,12 +431,12 @@ class Transaction(XummResource):
         if validated is None:
             raise ValueError("Invalid value for `validated`, must not be `None`")  # noqa: E501
 
-        self._validated = validated
+        cls._validated = validated
 
 
 class BalanceChange(XummResource):
 
-    swagger_types = {
+    model_types = {
         'counterparty': 'str',
         'currency': 'str',
         'value': 'str'
@@ -464,7 +464,7 @@ class BalanceChange(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -487,20 +487,20 @@ class BalanceChange(XummResource):
                 key = cls.attribute_map[key]
                 result[key] = value
 
-        return result
+        return {k: v for k, v in result.items() if v is not None}
 
     @property
-    def counterparty(self) -> str:
+    def counterparty(cls) -> str:
         """Gets the counterparty of this BalanceChange.
 
 
         :return: The counterparty of this BalanceChange.
         :rtype: str
         """
-        return self._counterparty
+        return cls._counterparty
 
     @counterparty.setter
-    def counterparty(self, counterparty: str):
+    def counterparty(cls, counterparty: str):
         """Sets the counterparty of this BalanceChange.
 
 
@@ -508,20 +508,20 @@ class BalanceChange(XummResource):
         :type counterparty: str
         """
 
-        self._counterparty = counterparty
+        cls._counterparty = counterparty
 
     @property
-    def currency(self) -> str:
+    def currency(cls) -> str:
         """Gets the currency of this BalanceChange.
 
 
         :return: The currency of this BalanceChange.
         :rtype: str
         """
-        return self._currency
+        return cls._currency
 
     @currency.setter
-    def currency(self, currency: str):
+    def currency(cls, currency: str):
         """Sets the currency of this BalanceChange.
 
 
@@ -529,20 +529,20 @@ class BalanceChange(XummResource):
         :type currency: str
         """
 
-        self._currency = currency
+        cls._currency = currency
 
     @property
-    def value(self) -> str:
+    def value(cls) -> str:
         """Gets the value of this BalanceChange.
 
 
         :return: The value of this BalanceChange.
         :rtype: str
         """
-        return self._value
+        return cls._value
 
     @value.setter
-    def value(self, value: str):
+    def value(cls, value: str):
         """Sets the value of this BalanceChange.
 
 
@@ -550,11 +550,11 @@ class BalanceChange(XummResource):
         :type value: str
         """
 
-        self._value = value
+        cls._value = value
 
 class XRPLTxResponse(XummResource):
 
-    swagger_types = {
+    model_types = {
         'txid': 'str',
         'balance_changes': 'dict(str, BalanceChange)',
         'node': 'str',
@@ -592,7 +592,7 @@ class XRPLTxResponse(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -614,20 +614,20 @@ class XRPLTxResponse(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
+        return {k: v for k, v in result.items() if v is not None}
 
     @property
-    def txid(self) -> str:
+    def txid(cls) -> str:
         """Gets the txid of this XRPLTxResponse.
 
 
         :return: The txid of this XRPLTxResponse.
         :rtype: str
         """
-        return self._txid
+        return cls._txid
 
     @txid.setter
-    def txid(self, txid: str):
+    def txid(cls, txid: str):
         """Sets the txid of this XRPLTxResponse.
 
 
@@ -637,20 +637,20 @@ class XRPLTxResponse(XummResource):
         if txid is None:
             raise ValueError("Invalid value for `txid`, must not be `None`")  # noqa: E501
 
-        self._txid = txid
+        cls._txid = txid
 
     @property
-    def balance_changes(self) -> Dict[str, BalanceChange]:
+    def balance_changes(cls) -> Dict[str, BalanceChange]:
         """Gets the balance_changes of this XRPLTxResponse.
 
 
         :return: The balance_changes of this XRPLTxResponse.
         :rtype: Dict[str, BalanceChange]
         """
-        return self._balance_changes
+        return cls._balance_changes
 
     @balance_changes.setter
-    def balance_changes(self, balance_changes: Dict[str, BalanceChange]):
+    def balance_changes(cls, balance_changes: Dict[str, BalanceChange]):
         """Sets the balance_changes of this XRPLTxResponse.
 
 
@@ -660,20 +660,20 @@ class XRPLTxResponse(XummResource):
         if balance_changes is None:
             raise ValueError("Invalid value for `balance_changes`, must not be `None`")  # noqa: E501
 
-        self._balance_changes = balance_changes
+        cls._balance_changes = balance_changes
 
     @property
-    def node(self) -> str:
+    def node(cls) -> str:
         """Gets the node of this XRPLTxResponse.
 
 
         :return: The node of this XRPLTxResponse.
         :rtype: str
         """
-        return self._node
+        return cls._node
 
     @node.setter
-    def node(self, node: str):
+    def node(cls, node: str):
         """Sets the node of this XRPLTxResponse.
 
 
@@ -683,20 +683,20 @@ class XRPLTxResponse(XummResource):
         if node is None:
             raise ValueError("Invalid value for `node`, must not be `None`")  # noqa: E501
 
-        self._node = node
+        cls._node = node
 
     @property
-    def transaction(self) -> Transaction:
+    def transaction(cls) -> Transaction:
         """Gets the transaction of this XRPLTxResponse.
 
 
         :return: The transaction of this XRPLTxResponse.
         :rtype: Transaction
         """
-        return self._transaction
+        return cls._transaction
 
     @transaction.setter
-    def transaction(self, transaction: Transaction):
+    def transaction(cls, transaction: Transaction):
         """Sets the transaction of this XRPLTxResponse.
 
 
@@ -706,4 +706,4 @@ class XRPLTxResponse(XummResource):
         if transaction is None:
             raise ValueError("Invalid value for `transaction`, must not be `None`")  # noqa: E501
 
-        self._transaction = transaction
+        cls._transaction = transaction

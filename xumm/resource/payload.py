@@ -8,13 +8,13 @@ from typing import List, Dict  # noqa: F401
 class Refs(XummResource):
     """
     Attributes:
-      swagger_types (dict): The key is attribute name
+      model_types (dict): The key is attribute name
                             and the value is attribute type.
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
 
-    swagger_types = {
+    model_types = {
         'qr_png': 'str',
         'qr_matrix': 'str',
         'qr_uri_quality_opts': 'str',
@@ -45,7 +45,7 @@ class Refs(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -67,7 +67,7 @@ class Refs(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
+        return {k: v for k, v in result.items() if v is not None}
     
     @property
     def qr_png(cls) -> str:
@@ -165,13 +165,13 @@ class Refs(XummResource):
 class Next(XummResource):
     """
     Attributes:
-      swagger_types (dict): The key is attribute name
+      model_types (dict): The key is attribute name
                             and the value is attribute type.
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
 
-    swagger_types = {
+    model_types = {
         'always': 'str'
     }
 
@@ -193,7 +193,7 @@ class Next(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -215,7 +215,7 @@ class Next(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
+        return {k: v for k, v in result.items() if v is not None}
 
     @property
     def always(cls) -> str:
@@ -244,12 +244,12 @@ class Next(XummResource):
 class PostPayloadResponse(XummResource):
     """
     Attributes:
-      swagger_types (dict): The key is attribute name
+      model_types (dict): The key is attribute name
                             and the value is attribute type.
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {
+    model_types = {
         'uuid': 'str',
         'next': 'Next',
         'refs': 'Refs',
@@ -287,7 +287,7 @@ class PostPayloadResponse(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -309,7 +309,7 @@ class PostPayloadResponse(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
+        return {k: v for k, v in result.items() if v is not None}
 
     @property
     def uuid(cls) -> str:
@@ -407,12 +407,12 @@ class PostPayloadResponse(XummResource):
 class CustomMeta(XummResource):
     """
     Attributes:
-      swagger_types (dict): The key is attribute name
+      model_types (dict): The key is attribute name
                             and the value is attribute type.
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {
+    model_types = {
         'identifier': 'str',
         'blob': 'dict(str, object)',
         'instruction': 'str'
@@ -442,7 +442,7 @@ class CustomMeta(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -465,19 +465,20 @@ class CustomMeta(XummResource):
                 result[key] = value
 
         return result
+        # return {k: v for k, v in result.items() if v is not None}
 
     @property
-    def identifier(self) -> str:
+    def identifier(cls) -> str:
         """Gets the identifier of this CustomMeta.
 
 
         :return: The identifier of this CustomMeta.
         :rtype: str
         """
-        return self._identifier
+        return cls._identifier
 
     @identifier.setter
-    def identifier(self, identifier: str):
+    def identifier(cls, identifier: str):
         """Sets the identifier of this CustomMeta.
 
 
@@ -485,20 +486,20 @@ class CustomMeta(XummResource):
         :type identifier: str
         """
 
-        self._identifier = identifier
+        cls._identifier = identifier
 
     @property
-    def blob(self) -> Dict[str, object]:
+    def blob(cls) -> Dict[str, object]:
         """Gets the blob of this CustomMeta.
 
 
         :return: The blob of this CustomMeta.
         :rtype: Dict[str, object]
         """
-        return self._blob
+        return cls._blob
 
     @blob.setter
-    def blob(self, blob: Dict[str, object]):
+    def blob(cls, blob: Dict[str, object]):
         """Sets the blob of this CustomMeta.
 
 
@@ -508,20 +509,20 @@ class CustomMeta(XummResource):
         if blob is None:
             raise ValueError("Invalid value for `blob`, must not be `None`")  # noqa: E501
 
-        self._blob = blob
+        cls._blob = blob
 
     @property
-    def instruction(self) -> str:
+    def instruction(cls) -> str:
         """Gets the instruction of this CustomMeta.
 
 
         :return: The instruction of this CustomMeta.
         :rtype: str
         """
-        return self._instruction
+        return cls._instruction
 
     @instruction.setter
-    def instruction(self, instruction: str):
+    def instruction(cls, instruction: str):
         """Sets the instruction of this CustomMeta.
 
 
@@ -529,17 +530,17 @@ class CustomMeta(XummResource):
         :type instruction: str
         """
 
-        self._instruction = instruction
+        cls._instruction = instruction
 
 class Meta(XummResource):
     """
     Attributes:
-      swagger_types (dict): The key is attribute name
+      model_types (dict): The key is attribute name
                             and the value is attribute type.
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {
+    model_types = {
         'exists': 'bool',
         'uuid': 'str',
         'multisign': 'bool',
@@ -585,28 +586,44 @@ class Meta(XummResource):
         :return: The Meta of this Meta.  # noqa: E501
         :rtype: Meta
         """
-        cls.exists = kwargs['exists']
-        cls.uuid = kwargs['uuid']
-        cls.multisign = kwargs['multisign']
-        cls.submit = kwargs['submit']
-        cls.destination = kwargs['destination']
-        cls.resolved_destination = kwargs['resolved_destination']
-        cls.resolved = kwargs['resolved']
-        cls.signed = kwargs['signed']
-        cls.cancelled = kwargs['cancelled']
-        cls.expired = kwargs['expired']
-        cls.pushed = kwargs['pushed']
-        cls.app_opened = kwargs['app_opened']
-        cls.opened_by_deeplink = kwargs['opened_by_deeplink']
-        cls.return_url_app = kwargs['return_url_app']
-        cls.return_url_web = kwargs['return_url_web']
-        cls.is_xapp = kwargs['is_xapp']
+        cls._exists = None
+        cls._uuid = None
+        cls._multisign = None
+        cls._submit = None
+        cls._destination = None
+        cls._resolved_destination = None
+        cls._resolved = None
+        cls._signed = None
+        cls._cancelled = None
+        cls._expired = None
+        cls._pushed = None
+        cls._app_opened = None
+        cls._opened_by_deeplink = None
+        cls._return_url_app = None
+        cls._return_url_web = None
+        cls._is_xapp = None
+        cls._exists = kwargs['exists']
+        cls._uuid = kwargs['uuid']
+        cls._multisign = kwargs['multisign']
+        cls._submit = kwargs['submit']
+        cls._destination = kwargs['destination']
+        cls._resolved_destination = kwargs['resolved_destination']
+        cls._resolved = kwargs['resolved']
+        cls._signed = kwargs['signed']
+        cls._cancelled = kwargs['cancelled']
+        cls._expired = kwargs['expired']
+        cls._pushed = kwargs['pushed']
+        cls._app_opened = kwargs['app_opened']
+        cls._opened_by_deeplink = kwargs['opened_by_deeplink']
+        cls._return_url_app = kwargs['return_url_app']
+        cls._return_url_web = kwargs['return_url_web']
+        cls._is_xapp = kwargs['is_xapp']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -628,7 +645,7 @@ class Meta(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
+        return {k: v for k, v in result.items() if v is not None}
 
     @property
     def exists(cls) -> bool:
@@ -1001,12 +1018,12 @@ class Meta(XummResource):
 class Result(XummResource):
     """
     Attributes:
-      swagger_types (dict): The key is attribute name
+      model_types (dict): The key is attribute name
                             and the value is attribute type.
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {
+    model_types = {
         'cancelled': 'bool',
         'reason': 'str'
     }
@@ -1031,7 +1048,7 @@ class Result(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -1053,7 +1070,7 @@ class Result(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
+        return {k: v for k, v in result.items() if v is not None}
 
     @property
     def cancelled(cls) -> bool:
@@ -1104,12 +1121,12 @@ class Result(XummResource):
 class DeletePayloadResponse(XummResource):
     """
     Attributes:
-      swagger_types (dict): The key is attribute name
+      model_types (dict): The key is attribute name
                             and the value is attribute type.
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {
+    model_types = {
         'result': 'Result',
         'meta': 'Meta',
         'custom_meta': 'CustomMeta'
@@ -1135,7 +1152,7 @@ class DeletePayloadResponse(XummResource):
         :return: The DeletePayloadResponse of this DeletePayloadResponse.  # noqa: E501
         :rtype: DeletePayloadResponse
         """
-        print(json.dumps(kwargs, indent=4, sort_keys=True))
+        # print(json.dumps(kwargs, indent=4, sort_keys=True))
         cls._result = Result(**kwargs['result'])
         cls._meta = Meta(**kwargs['meta'])
         cls._custom_meta = CustomMeta(**kwargs['custom_meta'])
@@ -1144,7 +1161,7 @@ class DeletePayloadResponse(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -1166,7 +1183,7 @@ class DeletePayloadResponse(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
+        return {k: v for k, v in result.items() if v is not None}
 
     @property
     def result(cls) -> Result:
@@ -1230,6 +1247,1072 @@ class DeletePayloadResponse(XummResource):
 
 
         :param custom_meta: The custom_meta of this PayloadDeleteResponse.
+        :type custom_meta: CustomMeta
+        """
+        if custom_meta is None:
+            raise ValueError("Invalid value for `custom_meta`, must not be `None`")  # noqa: E501
+
+        cls._custom_meta = custom_meta
+
+
+class Response(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
+    model_types = {
+        'hex': 'str',
+        'txid': 'str',
+        'resolved_at': 'str',
+        'dispatched_to': 'str',
+        'dispatched_result': 'str',
+        'dispatched_nodetype': 'str',
+        'multisign_account': 'str',
+        'account': 'str'
+    }
+
+    attribute_map = {
+        'hex': 'hex',
+        'txid': 'txid',
+        'resolved_at': 'resolved_at',
+        'dispatched_to': 'dispatched_to',
+        'dispatched_result': 'dispatched_result',
+        'dispatched_nodetype': 'dispatched_nodetype',
+        'multisign_account': 'multisign_account',
+        'account': 'account'
+    }
+
+    def refresh_from(cls, **kwargs):
+        """Returns the dict as a model
+
+        :param kwargs: A dict.
+        :type: dict
+        :return: The Response of this Response.  # noqa: E501
+        :rtype: Response
+        """
+        cls._hex = None
+        cls._txid = None
+        cls._resolved_at = None
+        cls._dispatched_to = None
+        cls._dispatched_result = None
+        cls._dispatched_nodetype = None
+        cls._multisign_account = None
+        cls._account = None
+        cls.hex = kwargs['hex']
+        cls.txid = kwargs['txid']
+        cls.resolved_at = kwargs['resolved_at']
+        cls.dispatched_to = kwargs['dispatched_to']
+        cls.dispatched_result = kwargs['dispatched_result']
+        cls.dispatched_nodetype = kwargs['dispatched_nodetype']
+        cls.multisign_account = kwargs['multisign_account']
+        cls.account = kwargs['account']
+
+    def to_dict(cls):
+        """Returns the model properties as a dict"""
+        result = {}
+
+        for attr, _ in six.iteritems(cls.model_types):
+            value = getattr(cls, attr)
+            attr = cls.attribute_map[attr]
+            if isinstance(value, list):
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
+            elif hasattr(value, "to_dict"):
+                result[attr] = value.to_dict()
+            elif isinstance(value, dict):
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
+            else:
+                result[attr] = value
+        if issubclass(Response, dict):
+            for key, value in cls.items():
+                result[key] = value
+
+        return {k: v for k, v in result.items() if v is not None}
+
+    @property
+    def hex(cls) -> str:
+        """Gets the hex of this Response.
+
+
+        :return: The hex of this Response.
+        :rtype: str
+        """
+        return cls._hex
+
+    @hex.setter
+    def hex(cls, hex: str):
+        """Sets the hex of this Response.
+
+
+        :param hex: The hex of this Response.
+        :type hex: str
+        """
+        if hex is None:
+            raise ValueError("Invalid value for `hex`, must not be `None`")  # noqa: E501
+
+        cls._hex = hex
+
+    @property
+    def txid(cls) -> str:
+        """Gets the txid of this Response.
+
+
+        :return: The txid of this Response.
+        :rtype: str
+        """
+        return cls._txid
+
+    @txid.setter
+    def txid(cls, txid: str):
+        """Sets the txid of this Response.
+
+
+        :param txid: The txid of this Response.
+        :type txid: str
+        """
+        if txid is None:
+            raise ValueError("Invalid value for `txid`, must not be `None`")  # noqa: E501
+
+        cls._txid = txid
+
+    @property
+    def resolved_at(cls) -> str:
+        """Gets the resolved_at of this Response.
+
+
+        :return: The resolved_at of this Response.
+        :rtype: str
+        """
+        return cls._resolved_at
+
+    @resolved_at.setter
+    def resolved_at(cls, resolved_at: str):
+        """Sets the resolved_at of this Response.
+
+
+        :param resolved_at: The resolved_at of this Response.
+        :type resolved_at: str
+        """
+        if resolved_at is None:
+            raise ValueError("Invalid value for `resolved_at`, must not be `None`")  # noqa: E501
+
+        cls._resolved_at = resolved_at
+
+    @property
+    def dispatched_to(cls) -> str:
+        """Gets the dispatched_to of this Response.
+
+
+        :return: The dispatched_to of this Response.
+        :rtype: str
+        """
+        return cls._dispatched_to
+
+    @dispatched_to.setter
+    def dispatched_to(cls, dispatched_to: str):
+        """Sets the dispatched_to of this Response.
+
+
+        :param dispatched_to: The dispatched_to of this Response.
+        :type dispatched_to: str
+        """
+        if dispatched_to is None:
+            raise ValueError("Invalid value for `dispatched_to`, must not be `None`")  # noqa: E501
+
+        cls._dispatched_to = dispatched_to
+
+    @property
+    def dispatched_result(cls) -> str:
+        """Gets the dispatched_result of this Response.
+
+
+        :return: The dispatched_result of this Response.
+        :rtype: str
+        """
+        return cls._dispatched_result
+
+    @dispatched_result.setter
+    def dispatched_result(cls, dispatched_result: str):
+        """Sets the dispatched_result of this Response.
+
+
+        :param dispatched_result: The dispatched_result of this Response.
+        :type dispatched_result: str
+        """
+        if dispatched_result is None:
+            raise ValueError("Invalid value for `dispatched_result`, must not be `None`")  # noqa: E501
+
+        cls._dispatched_result = dispatched_result
+
+    @property
+    def dispatched_nodetype(cls) -> str:
+        """Gets the dispatched_nodetype of this Response.
+
+
+        :return: The dispatched_nodetype of this Response.
+        :rtype: str
+        """
+        return cls._dispatched_nodetype
+
+    @dispatched_nodetype.setter
+    def dispatched_nodetype(cls, dispatched_nodetype: str):
+        """Sets the dispatched_nodetype of this Response.
+
+
+        :param dispatched_nodetype: The dispatched_nodetype of this Response.
+        :type dispatched_nodetype: str
+        """
+        if dispatched_nodetype is None:
+            raise ValueError("Invalid value for `dispatched_nodetype`, must not be `None`")  # noqa: E501
+
+        cls._dispatched_nodetype = dispatched_nodetype
+
+    @property
+    def multisign_account(cls) -> str:
+        """Gets the multisign_account of this Response.
+
+
+        :return: The multisign_account of this Response.
+        :rtype: str
+        """
+        return cls._multisign_account
+
+    @multisign_account.setter
+    def multisign_account(cls, multisign_account: str):
+        """Sets the multisign_account of this Response.
+
+
+        :param multisign_account: The multisign_account of this Response.
+        :type multisign_account: str
+        """
+        if multisign_account is None:
+            raise ValueError("Invalid value for `multisign_account`, must not be `None`")  # noqa: E501
+
+        cls._multisign_account = multisign_account
+
+    @property
+    def account(cls) -> str:
+        """Gets the account of this Response.
+
+
+        :return: The account of this Response.
+        :rtype: str
+        """
+        return cls._account
+
+    @account.setter
+    def account(cls, account: str):
+        """Sets the account of this Response.
+
+
+        :param account: The account of this Response.
+        :type account: str
+        """
+        if account is None:
+            raise ValueError("Invalid value for `account`, must not be `None`")  # noqa: E501
+
+        cls._account = account
+
+class RequestJson(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
+    model_types = {
+        'transaction_type': 'str',
+        'sign_in': 'bool'
+    }
+
+    attribute_map = {
+        'transaction_type': 'TransactionType',
+        'sign_in': 'SignIn'
+    }
+
+    def refresh_from(cls, **kwargs):
+        """Returns the dict as a model
+
+        :param kwargs: A dict.
+        :type: dict
+        :return: The RequestJson of this RequestJson.  # noqa: E501
+        :rtype: RequestJson
+        """
+        cls._transaction_type = None
+        cls._sign_in = None
+        cls.transaction_type = kwargs['transaction_type']
+        cls.sign_in = kwargs['sign_in']
+
+    def to_dict(cls):
+        """Returns the model properties as a dict"""
+        result = {}
+
+        for attr, _ in six.iteritems(cls.model_types):
+            value = getattr(cls, attr)
+            attr = cls.attribute_map[attr]
+            if isinstance(value, list):
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
+            elif hasattr(value, "to_dict"):
+                result[attr] = value.to_dict()
+            elif isinstance(value, dict):
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
+            else:
+                result[attr] = value
+        if issubclass(RequestJson, dict):
+            for key, value in cls.items():
+                result[key] = value
+
+        return {k: v for k, v in result.items() if v is not None}
+
+    @property
+    def transaction_type(cls) -> str:
+        """Gets the transaction_type of this RequestJson.
+
+
+        :return: The transaction_type of this RequestJson.
+        :rtype: str
+        """
+        return cls._transaction_type
+
+    @transaction_type.setter
+    def transaction_type(cls, transaction_type: str):
+        """Sets the transaction_type of this RequestJson.
+
+
+        :param transaction_type: The transaction_type of this RequestJson.
+        :type transaction_type: str
+        """
+        if transaction_type is None:
+            raise ValueError("Invalid value for `transaction_type`, must not be `None`")  # noqa: E501
+
+        cls._transaction_type = transaction_type
+
+    @property
+    def sign_in(cls) -> bool:
+        """Gets the sign_in of this RequestJson.
+
+
+        :return: The sign_in of this RequestJson.
+        :rtype: bool
+        """
+        return cls._sign_in
+
+    @sign_in.setter
+    def sign_in(cls, sign_in: bool):
+        """Sets the sign_in of this RequestJson.
+
+
+        :param sign_in: The sign_in of this RequestJson.
+        :type sign_in: bool
+        """
+        if sign_in is None:
+            raise ValueError("Invalid value for `sign_in`, must not be `None`")  # noqa: E501
+
+        cls._sign_in = sign_in
+
+class Payload(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
+    model_types = {
+        'tx_type': 'str',
+        'tx_destination': 'str',
+        'tx_destination_tag': 'str',
+        'request_json': 'RequestJson',
+        'origintype': 'str',
+        'signmethod': 'str',
+        'created_at': 'str',
+        'expires_at': 'str',
+        'expires_in_seconds': 'int'
+    }
+
+    attribute_map = {
+        'tx_type': 'tx_type',
+        'tx_destination': 'tx_destination',
+        'tx_destination_tag': 'tx_destination_tag',
+        'request_json': 'request_json',
+        'origintype': 'origintype',
+        'signmethod': 'signmethod',
+        'created_at': 'created_at',
+        'expires_at': 'expires_at',
+        'expires_in_seconds': 'expires_in_seconds'
+    }
+
+    def refresh_from(cls, **kwargs):
+        """Returns the dict as a model
+
+        :param kwargs: A dict.
+        :type: dict
+        :return: The Payload of this Payload.  # noqa: E501
+        :rtype: Payload
+        """
+        cls._tx_type = None
+        cls._tx_destination = None
+        cls._tx_destination_tag = None
+        cls._request_json = None
+        cls._origintype = None
+        cls._signmethod = None
+        cls._created_at = None
+        cls._expires_at = None
+        cls._expires_in_seconds = None
+        cls.tx_type = kwargs['tx_type']
+        cls.tx_destination = kwargs['tx_destination']
+        cls.tx_destination_tag = kwargs['tx_destination_tag']
+        cls.request_json = kwargs['request_json']
+        cls.origintype = kwargs['origintype']
+        cls.signmethod = kwargs['signmethod']
+        cls.created_at = kwargs['created_at']
+        cls.expires_at = kwargs['expires_at']
+        cls.expires_in_seconds = kwargs['expires_in_seconds']
+
+    def to_dict(cls):
+        """Returns the model properties as a dict"""
+        result = {}
+
+        for attr, _ in six.iteritems(cls.model_types):
+            value = getattr(cls, attr)
+            attr = cls.attribute_map[attr]
+            if isinstance(value, list):
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
+            elif hasattr(value, "to_dict"):
+                result[attr] = value.to_dict()
+            elif isinstance(value, dict):
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
+            else:
+                result[attr] = value
+        if issubclass(Payload, dict):
+            for key, value in cls.items():
+                result[key] = value
+
+        return result
+        # return {k: v for k, v in result.items() if v is not None}
+
+    @property
+    def tx_type(cls) -> str:
+        """Gets the tx_type of this Payload.
+
+
+        :return: The tx_type of this Payload.
+        :rtype: str
+        """
+        return cls._tx_type
+
+    @tx_type.setter
+    def tx_type(cls, tx_type: str):
+        """Sets the tx_type of this Payload.
+
+
+        :param tx_type: The tx_type of this Payload.
+        :type tx_type: str
+        """
+        if tx_type is None:
+            raise ValueError("Invalid value for `tx_type`, must not be `None`")  # noqa: E501
+
+        cls._tx_type = tx_type
+
+    @property
+    def tx_destination(cls) -> str:
+        """Gets the tx_destination of this Payload.
+
+
+        :return: The tx_destination of this Payload.
+        :rtype: str
+        """
+        return cls._tx_destination
+
+    @tx_destination.setter
+    def tx_destination(cls, tx_destination: str):
+        """Sets the tx_destination of this Payload.
+
+
+        :param tx_destination: The tx_destination of this Payload.
+        :type tx_destination: str
+        """
+        if tx_destination is None:
+            raise ValueError("Invalid value for `tx_destination`, must not be `None`")  # noqa: E501
+
+        cls._tx_destination = tx_destination
+
+    @property
+    def tx_destination_tag(cls) -> str:
+        """Gets the tx_destination_tag of this Payload.
+
+
+        :return: The tx_destination_tag of this Payload.
+        :rtype: str
+        """
+        return cls._tx_destination_tag
+
+    @tx_destination_tag.setter
+    def tx_destination_tag(cls, tx_destination_tag: str):
+        """Sets the tx_destination_tag of this Payload.
+
+
+        :param tx_destination_tag: The tx_destination_tag of this Payload.
+        :type tx_destination_tag: str
+        """
+
+        cls._tx_destination_tag = tx_destination_tag
+
+    @property
+    def request_json(cls) -> RequestJson:
+        """Gets the request_json of this Payload.
+
+
+        :return: The request_json of this Payload.
+        :rtype: RequestJson
+        """
+        return cls._request_json
+
+    @request_json.setter
+    def request_json(cls, request_json: RequestJson):
+        """Sets the request_json of this Payload.
+
+
+        :param request_json: The request_json of this Payload.
+        :type request_json: RequestJson
+        """
+        if request_json is None:
+            raise ValueError("Invalid value for `request_json`, must not be `None`")  # noqa: E501
+
+        cls._request_json = request_json
+
+    @property
+    def origintype(cls) -> str:
+        """Gets the origintype of this Payload.
+
+
+        :return: The origintype of this Payload.
+        :rtype: str
+        """
+        return cls._origintype
+
+    @origintype.setter
+    def origintype(cls, origintype: str):
+        """Sets the origintype of this Payload.
+
+
+        :param origintype: The origintype of this Payload.
+        :type origintype: str
+        """
+        if origintype is None:
+            raise ValueError("Invalid value for `origintype`, must not be `None`")  # noqa: E501
+
+        cls._origintype = origintype
+
+    @property
+    def signmethod(cls) -> str:
+        """Gets the signmethod of this Payload.
+
+
+        :return: The signmethod of this Payload.
+        :rtype: str
+        """
+        return cls._signmethod
+
+    @signmethod.setter
+    def signmethod(cls, signmethod: str):
+        """Sets the signmethod of this Payload.
+
+
+        :param signmethod: The signmethod of this Payload.
+        :type signmethod: str
+        """
+        if signmethod is None:
+            raise ValueError("Invalid value for `signmethod`, must not be `None`")  # noqa: E501
+
+        cls._signmethod = signmethod
+
+    @property
+    def created_at(cls) -> str:
+        """Gets the created_at of this Payload.
+
+
+        :return: The created_at of this Payload.
+        :rtype: str
+        """
+        return cls._created_at
+
+    @created_at.setter
+    def created_at(cls, created_at: str):
+        """Sets the created_at of this Payload.
+
+
+        :param created_at: The created_at of this Payload.
+        :type created_at: str
+        """
+        if created_at is None:
+            raise ValueError("Invalid value for `created_at`, must not be `None`")  # noqa: E501
+
+        cls._created_at = created_at
+
+    @property
+    def expires_at(cls) -> str:
+        """Gets the expires_at of this Payload.
+
+
+        :return: The expires_at of this Payload.
+        :rtype: str
+        """
+        return cls._expires_at
+
+    @expires_at.setter
+    def expires_at(cls, expires_at: str):
+        """Sets the expires_at of this Payload.
+
+
+        :param expires_at: The expires_at of this Payload.
+        :type expires_at: str
+        """
+        if expires_at is None:
+            raise ValueError("Invalid value for `expires_at`, must not be `None`")  # noqa: E501
+
+        cls._expires_at = expires_at
+
+    @property
+    def expires_in_seconds(cls) -> int:
+        """Gets the expires_in_seconds of this Payload.
+
+
+        :return: The expires_in_seconds of this Payload.
+        :rtype: int
+        """
+        return cls._expires_in_seconds
+
+    @expires_in_seconds.setter
+    def expires_in_seconds(cls, expires_in_seconds: int):
+        """Sets the expires_in_seconds of this Payload.
+
+
+        :param expires_in_seconds: The expires_in_seconds of this Payload.
+        :type expires_in_seconds: int
+        """
+        if expires_in_seconds is None:
+            raise ValueError("Invalid value for `expires_in_seconds`, must not be `None`")  # noqa: E501
+
+        cls._expires_in_seconds = expires_in_seconds
+
+
+class Application(XummResource):
+
+    model_types = {
+        'name': 'str',
+        'description': 'str',
+        'uuidv4': 'str',
+        'disabled': 'int',
+        'icon_url': 'str',
+        'issued_user_token': 'str'
+    }
+
+    attribute_map = {
+        'name': 'name',
+        'description': 'description',
+        'uuidv4': 'uuidv4',
+        'disabled': 'disabled',
+        'icon_url': 'icon_url',
+        'issued_user_token': 'issued_user_token'
+    }
+
+    def refresh_from(cls, **kwargs):
+        """Returns the dict as a model
+
+        :param kwargs: A dict.
+        :type: dict
+        :return: The Application of this Application.  # noqa: E501
+        :rtype: Application
+        """
+        cls._name = None
+        cls._description = None
+        cls._uuidv4 = None
+        cls._disabled = None
+        cls._icon_url = None
+        cls._issued_user_token = None
+
+        cls._name = kwargs['name']
+        if 'description' in kwargs:
+            cls._description = kwargs['description']
+        cls._uuidv4 = kwargs['uuidv4']
+        if 'disabled' in kwargs:
+            cls._disabled = kwargs['disabled']
+        if 'icon_url' in kwargs:
+            cls._icon_url = kwargs['icon_url']
+        if 'issued_user_token' in kwargs:
+            cls._issued_user_token = kwargs['issued_user_token']
+    
+    def to_dict(cls):
+        """Returns the model properties as a dict"""
+        result = {}
+
+        for attr, _ in six.iteritems(cls.model_types):
+            value = getattr(cls, attr)
+            attr = cls.attribute_map[attr]
+            if isinstance(value, list):
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
+            elif hasattr(value, "to_dict"):
+                result[attr] = value.to_dict()
+            elif isinstance(value, dict):
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
+            else:
+                result[attr] = value
+        if issubclass(Application, dict):
+            for key, value in cls.items():
+                result[key] = value
+
+        return result
+        # return {k: v for k, v in result.items() if v is not None}
+
+    @property
+    def name(cls) -> str:
+        """Gets the name of this Application.
+
+
+        :return: The name of this Application.
+        :rtype: str
+        """
+        return cls._name
+
+    @name.setter
+    def name(cls, name: str):
+        """Sets the name of this Application.
+
+
+        :param name: The name of this Application.
+        :type name: str
+        """
+        if name is None:
+            raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
+
+        cls._name = name
+
+    @property
+    def description(cls) -> str:
+        """Gets the description of this Application.
+
+
+        :return: The description of this Application.
+        :rtype: str
+        """
+        return cls._description
+
+    @description.setter
+    def description(cls, description: str):
+        """Sets the description of this Application.
+
+
+        :param description: The description of this Application.
+        :type description: str
+        """
+
+        cls._description = description
+
+    @property
+    def uuidv4(cls) -> str:
+        """Gets the uuidv4 of this Application.
+
+
+        :return: The uuidv4 of this Application.
+        :rtype: str
+        """
+        return cls._uuidv4
+
+    @uuidv4.setter
+    def uuidv4(cls, uuidv4: str):
+        """Sets the uuidv4 of this Application.
+
+
+        :param uuidv4: The uuidv4 of this Application.
+        :type uuidv4: str
+        """
+        if uuidv4 is None:
+            raise ValueError("Invalid value for `uuidv4`, must not be `None`")  # noqa: E501
+
+        cls._uuidv4 = uuidv4
+
+    @property
+    def disabled(cls) -> int:
+        """Gets the disabled of this Application.
+
+
+        :return: The disabled of this Application.
+        :rtype: int
+        """
+        return cls._disabled
+
+    @disabled.setter
+    def disabled(cls, disabled: int):
+        """Sets the disabled of this Application.
+
+
+        :param disabled: The disabled of this Application.
+        :type disabled: int
+        """
+
+        cls._disabled = disabled
+
+    @property
+    def icon_url(cls) -> str:
+        """Gets the icon_url of this Application.
+
+
+        :return: The icon_url of this Application.
+        :rtype: str
+        """
+        return cls._icon_url
+
+    @icon_url.setter
+    def icon_url(cls, icon_url: str):
+        """Sets the icon_url of this Application.
+
+
+        :param icon_url: The icon_url of this Application.
+        :type icon_url: str
+        """
+
+        cls._icon_url = icon_url
+
+    @property
+    def issued_user_token(cls) -> str:
+        """Gets the issued_user_token of this Application.
+
+
+        :return: The issued_user_token of this Application.
+        :rtype: str
+        """
+        return cls._issued_user_token
+
+    @issued_user_token.setter
+    def issued_user_token(cls, issued_user_token: str):
+        """Sets the issued_user_token of this Application.
+
+
+        :param issued_user_token: The issued_user_token of this Application.
+        :type issued_user_token: str
+        """
+
+        cls._issued_user_token = issued_user_token
+
+
+class GetPayloadResponse(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
+    model_types = {
+        'meta': 'Meta',
+        'application': 'Application',
+        'payload': 'Payload',
+        'response': 'Response',
+        'custom_meta': 'CustomMeta'
+    }
+
+    attribute_map = {
+        'meta': 'meta',
+        'application': 'application',
+        'payload': 'payload',
+        'response': 'response',
+        'custom_meta': 'custom_meta'
+    }
+
+    @classmethod
+    def get_url(cls, id):
+        """get_url."""
+        return super(GetPayloadResponse, cls).platform_url() + 'payload' + '/' + id
+        
+
+    def refresh_from(cls, **kwargs):
+        """Returns the dict as a model
+
+        :param kwargs: A dict.
+        :type: dict
+        :return: The GetPayloadResponse of this GetPayloadResponse.  # noqa: E501
+        :rtype: GetPayloadResponse
+        """
+        # print(json.dumps(kwargs, indent=4, sort_keys=True))
+        cls._meta = None
+        cls._application = None
+        cls._payload = None
+        cls._response = None
+        cls._custom_meta = None
+        cls._meta = Meta(**kwargs['meta'])
+        cls._application = Application(**kwargs['application'])
+        cls._payload = Payload(**kwargs['payload'])
+        cls._response = Response(**kwargs['response'])
+        cls._custom_meta = CustomMeta(**kwargs['custom_meta'])
+
+    def to_dict(cls):
+        """Returns the model properties as a dict"""
+        result = {}
+
+        for attr, _ in six.iteritems(cls.model_types):
+            value = getattr(cls, attr)
+            attr = cls.attribute_map[attr]
+            if isinstance(value, list):
+                result[attr] = list(map(
+                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+                    value
+                ))
+            elif hasattr(value, "to_dict"):
+                result[attr] = value.to_dict()
+            elif isinstance(value, dict):
+                result[attr] = dict(map(
+                    lambda item: (item[0], item[1].to_dict())
+                    if hasattr(item[1], "to_dict") else item,
+                    value.items()
+                ))
+            else:
+                result[attr] = value
+        if issubclass(GetPayloadResponse, dict):
+            for key, value in cls.items():
+                result[key] = value
+
+        return {k: v for k, v in result.items() if v is not None}
+
+    @property
+    def meta(cls) -> Meta:
+        """Gets the meta of this GetPayloadResponse.
+
+
+        :return: The meta of this GetPayloadResponse.
+        :rtype: Meta
+        """
+        return cls._meta
+
+    @meta.setter
+    def meta(cls, meta: Meta):
+        """Sets the meta of this GetPayloadResponse.
+
+
+        :param meta: The meta of this GetPayloadResponse.
+        :type meta: Meta
+        """
+        if meta is None:
+            raise ValueError("Invalid value for `meta`, must not be `None`")  # noqa: E501
+
+        cls._meta = meta
+
+    @property
+    def application(cls) -> Application:
+        """Gets the application of this GetPayloadResponse.
+
+
+        :return: The application of this GetPayloadResponse.
+        :rtype: Application
+        """
+        return cls._application
+
+    @application.setter
+    def application(cls, application: Application):
+        """Sets the application of this GetPayloadResponse.
+
+
+        :param application: The application of this GetPayloadResponse.
+        :type application: Application
+        """
+        if application is None:
+            raise ValueError("Invalid value for `application`, must not be `None`")  # noqa: E501
+
+        cls._application = application
+
+    @property
+    def payload(cls) -> Payload:
+        """Gets the payload of this GetPayloadResponse.
+
+
+        :return: The payload of this GetPayloadResponse.
+        :rtype: Payload
+        """
+        return cls._payload
+
+    @payload.setter
+    def payload(cls, payload: Payload):
+        """Sets the payload of this GetPayloadResponse.
+
+
+        :param payload: The payload of this GetPayloadResponse.
+        :type payload: Payload
+        """
+        if payload is None:
+            raise ValueError("Invalid value for `payload`, must not be `None`")  # noqa: E501
+
+        cls._payload = payload
+
+    @property
+    def response(cls) -> Response:
+        """Gets the response of this GetPayloadResponse.
+
+
+        :return: The response of this GetPayloadResponse.
+        :rtype: Response
+        """
+        return cls._response
+
+    @response.setter
+    def response(cls, response: Response):
+        """Sets the response of this GetPayloadResponse.
+
+
+        :param response: The response of this GetPayloadResponse.
+        :type response: Response
+        """
+        if response is None:
+            raise ValueError("Invalid value for `response`, must not be `None`")  # noqa: E501
+
+        cls._response = response
+
+    @property
+    def custom_meta(cls) -> CustomMeta:
+        """Gets the custom_meta of this GetPayloadResponse.
+
+
+        :return: The custom_meta of this GetPayloadResponse.
+        :rtype: CustomMeta
+        """
+        return cls._custom_meta
+
+    @custom_meta.setter
+    def custom_meta(cls, custom_meta: CustomMeta):
+        """Sets the custom_meta of this GetPayloadResponse.
+
+
+        :param custom_meta: The custom_meta of this GetPayloadResponse.
         :type custom_meta: CustomMeta
         """
         if custom_meta is None:

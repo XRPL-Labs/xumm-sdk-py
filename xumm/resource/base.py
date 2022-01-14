@@ -20,6 +20,12 @@ from xumm.resource.xrpl_tx import XRPLTxResponse  # noqa - avoid circular import
 from xumm.resource.payload import (
     PostPayloadResponse,  # noqa - avoid circular import
     DeletePayloadResponse,  # noqa - avoid circular import
+    GetPayloadResponse,  # noqa - avoid circular import
+)
+from xumm.resource.storage import (
+    SetStorageResponse,  # noqa - avoid circular import
+    GetStorageResponse,  # noqa - avoid circular import
+    DeleteStorageResponse,  # noqa - avoid circular import
 )
 
 
@@ -85,7 +91,7 @@ class XummSdk(XummResource):
         return KYCStatusResponse(**res)
 
     # @cached_property
-    def xrpl_tx(cls, id):
+    def xrpl_tx(cls, id: str=None):
         """Returns the dict as a model
 
         :return: The XRPLTxResponse of this XRPLTxResponse.  # noqa: E501
@@ -107,7 +113,7 @@ class XummSdk(XummResource):
         return PostPayloadResponse(**res)
 
     # @cached_property
-    def payload_cancel(cls, id):
+    def payload_cancel(cls, id: str=None):
         """Returns the dict as a model
 
         :return: The DeletePayloadResponse of this DeletePayloadResponse.  # noqa: E501
@@ -116,6 +122,50 @@ class XummSdk(XummResource):
         
         res = client.delete(DeletePayloadResponse.delete_url(id))
         return DeletePayloadResponse(**res)
+        
+    # @cached_property
+    def payload_get(cls, id: str=None):
+        """Returns the dict as a model
+
+        :return: The GetPayloadResponse of this GetPayloadResponse.  # noqa: E501
+        :rtype: GetPayloadResponse
+        """
+        
+        res = client.get(GetPayloadResponse.get_url(id))
+        return GetPayloadResponse(**res)
+
+    # @cached_property
+    def storage_set(cls, data):
+        """Returns the dict as a model
+
+        :return: The SetStorageResponse of this SetStorageResponse.  # noqa: E501
+        :rtype: SetStorageResponse
+        """
+        
+        res = client.post(SetStorageResponse.post_url(), data)
+        return SetStorageResponse(**res)
+
+    # @cached_property
+    def storage_get(cls):
+        """Returns the dict as a model
+
+        :return: The GetStorageResponse of this GetStorageResponse.  # noqa: E501
+        :rtype: GetStorageResponse
+        """
+        
+        res = client.get(GetStorageResponse.get_url())
+        return GetStorageResponse(**res)
+
+    # @cached_property
+    def storage_delete(cls):
+        """Returns the dict as a model
+
+        :return: The DeleteStorageResponse of this DeleteStorageResponse.  # noqa: E501
+        :rtype: DeleteStorageResponse
+        """
+        
+        res = client.delete(DeleteStorageResponse.delete_url())
+        return DeleteStorageResponse(**res)
 
     def __unicode__(cls):
         return '<{} {}>'.format(cls.__class__.__name__, cls.id)

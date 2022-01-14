@@ -11,7 +11,7 @@ import six
 
 class Call(XummResource):
 
-    swagger_types = {
+    model_types = {
         'uuidv4': 'str'
     }
 
@@ -29,7 +29,7 @@ class Call(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             if isinstance(value, list):
                 result[attr] = list(map(
@@ -50,20 +50,20 @@ class Call(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
+        return {k: v for k, v in result.items() if v is not None}
 
     @property
-    def uuidv4(self) -> str:
+    def uuidv4(cls) -> str:
         """Gets the uuidv4 of this Call.
 
 
         :return: The uuidv4 of this Call.
         :rtype: str
         """
-        return self._uuidv4
+        return cls._uuidv4
 
     @uuidv4.setter
-    def uuidv4(self, uuidv4: str):
+    def uuidv4(cls, uuidv4: str):
         """Sets the uuidv4 of this Call.
 
 
@@ -73,18 +73,22 @@ class Call(XummResource):
         if uuidv4 is None:
             raise ValueError("Invalid value for `uuidv4`, must not be `None`")  # noqa: E501
 
-        self._uuidv4 = uuidv4
+        cls._uuidv4 = uuidv4
 
 class Application(XummResource):
 
-    swagger_types = {
+    model_types = {
         'name': 'str',
-        'description': 'str',
         'uuidv4': 'str',
         'webhookurl': 'str',
-        'disabled': 'int',
-        'icon_url': 'str',
-        'issued_user_token': 'str'
+        'disabled': 'int'
+    }
+
+    attribute_map = {
+        'name': 'name',
+        'uuidv4': 'uuidv4',
+        'webhookurl': 'webhookurl',
+        'disabled': 'disabled'
     }
 
     def refresh_from(cls, **kwargs):
@@ -95,31 +99,23 @@ class Application(XummResource):
         :return: The Application of this Application.  # noqa: E501
         :rtype: Application
         """
+        cls._name = None
+        cls._uuidv4 = None
+        cls._webhookurl = None
+        cls._disabled = None
+
         cls._name = kwargs['name']
         cls._uuidv4 = kwargs['uuidv4']
-        
-        cls._description = None
-        if 'description' in kwargs:
-            cls._description = kwargs['description']
-        cls._webhookurl = None
-        if 'webhookurl' in kwargs:
-            cls._webhookurl = kwargs['webhookurl']
-        cls._disabled = None
-        if 'disabled' in kwargs:
-            cls._disabled = kwargs['disabled']
-        cls._icon_url = None
-        if 'icon_url' in kwargs:
-            cls._icon_url = kwargs['icon_url']
-        cls._issued_user_token = None
-        if 'issued_user_token' in kwargs:
-            cls._issued_user_token = kwargs['issued_user_token']
+        cls._webhookurl = kwargs['webhookurl']
+        cls._disabled = kwargs['disabled']
     
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
+            attr = cls.attribute_map[attr]
             if isinstance(value, list):
                 result[attr] = list(map(
                     lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
@@ -142,17 +138,17 @@ class Application(XummResource):
         return {k: v for k, v in result.items() if v is not None}
 
     @property
-    def name(self) -> str:
+    def name(cls) -> str:
         """Gets the name of this Application.
 
 
         :return: The name of this Application.
         :rtype: str
         """
-        return self._name
+        return cls._name
 
     @name.setter
-    def name(self, name: str):
+    def name(cls, name: str):
         """Sets the name of this Application.
 
 
@@ -162,20 +158,20 @@ class Application(XummResource):
         if name is None:
             raise ValueError("Invalid value for `name`, must not be `None`")  # noqa: E501
 
-        self._name = name
+        cls._name = name
 
     @property
-    def description(self) -> str:
+    def description(cls) -> str:
         """Gets the description of this Application.
 
 
         :return: The description of this Application.
         :rtype: str
         """
-        return self._description
+        return cls._description
 
     @description.setter
-    def description(self, description: str):
+    def description(cls, description: str):
         """Sets the description of this Application.
 
 
@@ -183,20 +179,20 @@ class Application(XummResource):
         :type description: str
         """
 
-        self._description = description
+        cls._description = description
 
     @property
-    def uuidv4(self) -> str:
+    def uuidv4(cls) -> str:
         """Gets the uuidv4 of this Application.
 
 
         :return: The uuidv4 of this Application.
         :rtype: str
         """
-        return self._uuidv4
+        return cls._uuidv4
 
     @uuidv4.setter
-    def uuidv4(self, uuidv4: str):
+    def uuidv4(cls, uuidv4: str):
         """Sets the uuidv4 of this Application.
 
 
@@ -206,20 +202,20 @@ class Application(XummResource):
         if uuidv4 is None:
             raise ValueError("Invalid value for `uuidv4`, must not be `None`")  # noqa: E501
 
-        self._uuidv4 = uuidv4
+        cls._uuidv4 = uuidv4
 
     @property
-    def webhookurl(self) -> str:
+    def webhookurl(cls) -> str:
         """Gets the webhookurl of this Application.
 
 
         :return: The webhookurl of this Application.
         :rtype: str
         """
-        return self._webhookurl
+        return cls._webhookurl
 
     @webhookurl.setter
-    def webhookurl(self, webhookurl: str):
+    def webhookurl(cls, webhookurl: str):
         """Sets the webhookurl of this Application.
 
 
@@ -227,20 +223,20 @@ class Application(XummResource):
         :type webhookurl: str
         """
 
-        self._webhookurl = webhookurl
+        cls._webhookurl = webhookurl
 
     @property
-    def disabled(self) -> int:
+    def disabled(cls) -> int:
         """Gets the disabled of this Application.
 
 
         :return: The disabled of this Application.
         :rtype: int
         """
-        return self._disabled
+        return cls._disabled
 
     @disabled.setter
-    def disabled(self, disabled: int):
+    def disabled(cls, disabled: int):
         """Sets the disabled of this Application.
 
 
@@ -248,20 +244,20 @@ class Application(XummResource):
         :type disabled: int
         """
 
-        self._disabled = disabled
+        cls._disabled = disabled
 
     @property
-    def icon_url(self) -> str:
+    def icon_url(cls) -> str:
         """Gets the icon_url of this Application.
 
 
         :return: The icon_url of this Application.
         :rtype: str
         """
-        return self._icon_url
+        return cls._icon_url
 
     @icon_url.setter
-    def icon_url(self, icon_url: str):
+    def icon_url(cls, icon_url: str):
         """Sets the icon_url of this Application.
 
 
@@ -269,32 +265,11 @@ class Application(XummResource):
         :type icon_url: str
         """
 
-        self._icon_url = icon_url
-
-    @property
-    def issued_user_token(self) -> str:
-        """Gets the issued_user_token of this Application.
-
-
-        :return: The issued_user_token of this Application.
-        :rtype: str
-        """
-        return self._issued_user_token
-
-    @issued_user_token.setter
-    def issued_user_token(self, issued_user_token: str):
-        """Sets the issued_user_token of this Application.
-
-
-        :param issued_user_token: The issued_user_token of this Application.
-        :type issued_user_token: str
-        """
-
-        self._issued_user_token = issued_user_token
+        cls._icon_url = icon_url
 
 class Quota(XummResource):
 
-    swagger_types = {
+    model_types = {
         'ratelimit': 'str'
     }
 
@@ -306,7 +281,7 @@ class Quota(XummResource):
         :return: The Quota of this Quota.  # noqa: E501
         :rtype: Quota
         """
-        # cls._ratelimit = None
+        cls._ratelimit = None
         if 'ratelimit' in kwargs:
             cls._ratelimit = kwargs['ratelimit']
     
@@ -314,7 +289,7 @@ class Quota(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             if isinstance(value, list):
                 result[attr] = list(map(
@@ -336,19 +311,20 @@ class Quota(XummResource):
                 result[key] = value
 
         return result
+        # return {k: v for k, v in result.items() if v is not None}
 
     @property
-    def ratelimit(self) -> str:
+    def ratelimit(cls) -> str:
         """Gets the ratelimit of this Quota.
 
 
         :return: The ratelimit of this Quota.
         :rtype: str
         """
-        return self._ratelimit
+        return cls._ratelimit
 
     @ratelimit.setter
-    def ratelimit(self, ratelimit: str):
+    def ratelimit(cls, ratelimit: str):
         """Sets the ratelimit of this Quota.
 
 
@@ -358,12 +334,12 @@ class Quota(XummResource):
         if ratelimit is None:
             raise ValueError("Invalid value for `ratelimit`, must not be `None`")  # noqa: E501
 
-        self._ratelimit = ratelimit
+        cls._ratelimit = ratelimit
 
 
 class Auth(XummResource):
 
-    swagger_types = {
+    model_types = {
         'quota': 'Quota',
         'application': 'Application',
         'call': 'Call'
@@ -387,7 +363,7 @@ class Auth(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             if isinstance(value, list):
                 result[attr] = list(map(
@@ -408,20 +384,20 @@ class Auth(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
+        return {k: v for k, v in result.items() if v is not None}
 
     @property
-    def quota(self) -> Quota:
+    def quota(cls) -> Quota:
         """Gets the quota of this Auth.
 
 
         :return: The quota of this Auth.
         :rtype: Quota
         """
-        return self._quota
+        return cls._quota
 
     @quota.setter
-    def quota(self, quota: Quota):
+    def quota(cls, quota: Quota):
         """Sets the quota of this Auth.
 
 
@@ -431,20 +407,20 @@ class Auth(XummResource):
         if quota is None:
             raise ValueError("Invalid value for `quota`, must not be `None`")  # noqa: E501
 
-        self._quota = quota
+        cls._quota = quota
 
     @property
-    def application(self) -> Application:
+    def application(cls) -> Application:
         """Gets the application of this Auth.
 
 
         :return: The application of this Auth.
         :rtype: Application
         """
-        return self._application
+        return cls._application
 
     @application.setter
-    def application(self, application: Application):
+    def application(cls, application: Application):
         """Sets the application of this Auth.
 
 
@@ -454,20 +430,20 @@ class Auth(XummResource):
         if application is None:
             raise ValueError("Invalid value for `application`, must not be `None`")  # noqa: E501
 
-        self._application = application
+        cls._application = application
 
     @property
-    def call(self) -> Call:
+    def call(cls) -> Call:
         """Gets the call of this Auth.
 
 
         :return: The call of this Auth.
         :rtype: Call
         """
-        return self._call
+        return cls._call
 
     @call.setter
-    def call(self, call: Call):
+    def call(cls, call: Call):
         """Sets the call of this Auth.
 
 
@@ -477,12 +453,12 @@ class Auth(XummResource):
         if call is None:
             raise ValueError("Invalid value for `call`, must not be `None`")  # noqa: E501
 
-        self._call = call
+        cls._call = call
 
 
 class PongResponse(XummResource):
 
-    swagger_types = {
+    model_types = {
         'pong': 'bool',
         'auth': 'Auth'
     }
@@ -509,7 +485,7 @@ class PongResponse(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.swagger_types):
+        for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             if isinstance(value, list):
                 result[attr] = list(map(
@@ -530,20 +506,20 @@ class PongResponse(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
+        return {k: v for k, v in result.items() if v is not None}
 
     @property
-    def pong(self) -> bool:
+    def pong(cls) -> bool:
         """Gets the pong of this PongResponse.
 
 
         :return: The pong of this PongResponse.
         :rtype: bool
         """
-        return self._pong
+        return cls._pong
 
     @pong.setter
-    def pong(self, pong: bool):
+    def pong(cls, pong: bool):
         """Sets the pong of this PongResponse.
 
 
@@ -553,20 +529,20 @@ class PongResponse(XummResource):
         if pong is None:
             raise ValueError("Invalid value for `pong`, must not be `None`")  # noqa: E501
 
-        self._pong = pong
+        cls._pong = pong
     
     @property
-    def auth(self) -> Auth:
+    def auth(cls) -> Auth:
         """Gets the auth of this PongResponse.
 
 
         :return: The auth of this PongResponse.
         :rtype: Auth
         """
-        return self._auth
+        return cls._auth
 
     @auth.setter
-    def auth(self, auth: Auth):
+    def auth(cls, auth: Auth):
         """Sets the auth of this PongResponse.
 
 
@@ -576,4 +552,4 @@ class PongResponse(XummResource):
         if auth is None:
             raise ValueError("Invalid value for `auth`, must not be `None`")  # noqa: E501
 
-        self._auth = auth
+        cls._auth = auth
