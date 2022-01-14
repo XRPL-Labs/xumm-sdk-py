@@ -4,6 +4,9 @@ from xumm import client
 
 class PrintableResource(object):
 
+    def to_dict(cls):
+        return cls.to_dict()
+
     def __unicode__(cls):
         return '<xumm::{} {}>'.format(cls.__class__.__name__, cls.id)
 
@@ -16,30 +19,17 @@ class PrintableResource(object):
             for key
             in cls.__dict__
         ]
-
         return '\n{{\n\t{}\n}}'.format('\n\t'.join(attrs))
 
 
 class XummResource(PrintableResource):
 
     @classmethod
-    def list_url(cls):
-        return client.build_url() + 'payload' + '/'
-
-    @classmethod
-    def get_url(cls, id):
-        return client.build_url() + 'payload' + '/' + id + '/'
-
-    @classmethod
-    def retrieve_url(cls, instance_id):
-        return cls.list_url() + instance_id + '/'
+    def platform_url(cls):
+        return client.build_url() + 'platform' + '/'
 
     def __init__(cls, **kwargs):
         cls.refresh_from(**kwargs)
 
     def refresh_from(cls, **kwargs):
         raise NotImplementedError
-
-    @property
-    def instance_url(cls):
-        return cls.__class__.retrieve_url(cls.id)

@@ -2,11 +2,15 @@ from __future__ import unicode_literals
 
 import requests
 import textwrap
+from typing import List, Dict  # noqa: F401
 
-from xumm import api_version, api_base, error
+from xumm import (
+    api_version, 
+    api_base, 
+    error,
+)
 
-
-def build_url(endpoint=None):
+def build_url(endpoint: str=None) -> str:
     url = api_base
 
     if endpoint:
@@ -15,7 +19,7 @@ def build_url(endpoint=None):
     return url
 
 
-def get_env():
+def get_env() -> str:
     from xumm import env
     return env
 
@@ -44,8 +48,9 @@ def get_headers():
     }
 
 
-def get(url):
+def get(url: str=None):
     try:
+        print(url)
         res = requests.get(url, headers=get_headers())
     except Exception as e:
         handle_request_error(e)
@@ -55,6 +60,14 @@ def get(url):
 def post(url, data):
     try:
         res = requests.post(url, headers=get_headers(), json=data)
+    except Exception as e:
+        handle_request_error(e)
+    return handle_response(res)
+
+def delete(url):
+    try:
+        print(url)
+        res = requests.delete(url, headers=get_headers())
     except Exception as e:
         handle_request_error(e)
     return handle_response(res)
