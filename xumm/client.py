@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import requests
 import textwrap
 from typing import List, Dict  # noqa: F401
+from requests.exceptions import ConnectionError
 
 from xumm import (
     api_version, 
@@ -48,23 +49,22 @@ def get_headers():
     }
 
 
-def get(url: str=None):
+def get(url: str):
     try:
-        print(url)
         res = requests.get(url, headers=get_headers())
     except Exception as e:
         handle_request_error(e)
     return handle_response(res)
 
 
-def post(url, data):
+def post(url: str, data: Dict[str, object]):
     try:
         res = requests.post(url, headers=get_headers(), json=data)
     except Exception as e:
         handle_request_error(e)
     return handle_response(res)
 
-def delete(url):
+def delete(url: str):
     try:
         print(url)
         res = requests.delete(url, headers=get_headers())
@@ -85,7 +85,7 @@ def handle_response(res):
     return json
 
 
-def handle_request_error(e):
+def handle_request_error(e: ConnectionError):
     if isinstance(e, requests.exceptions.RequestException):
         msg = 'Unexpected error communicating with Xumm.'
         err = '{}: {}'.format(type(e).__name__, str(e))
@@ -103,7 +103,7 @@ def handle_request_error(e):
     raise error.APIConnectionError(msg)
 
 
-def handle_error_code(json, status_code, headers):
+def handle_error_code(json: Dict[str, object], status_code: int, headers: Dict[str, object]):
     if status_code == 400:
         err = json.get('error', 'Bad request')
         raise error.InvalidRequestError(err, status_code, headers)
@@ -121,7 +121,7 @@ def handle_error_code(json, status_code, headers):
         raise error.APIError(err, status_code, headers)
 
 
-def handle_parse_error(e, status_code=None, headers=None):
+def handle_parse_error(e: ValueError, status_code: int, headers: Dict[str, object]):
     err = '{}: {}'.format(type(e).__name__, e)
     msg = 'Error parsing Xumm JSON response. \n\n{}'.format(err)
     raise error.APIError(msg, status_code, headers)

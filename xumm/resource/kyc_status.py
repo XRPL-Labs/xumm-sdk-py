@@ -29,7 +29,9 @@ class KYCStatusResponse(XummResource):
         :return: The KYCStatusResponse of this KYCStatusResponse.  # noqa: E501
         :rtype: KYCStatusResponse
         """
-        print(json.dumps(kwargs, indent=4, sort_keys=True))
+        # print(json.dumps(kwargs, indent=4, sort_keys=True))
+        cls._account = None
+        cls._kyc_approved = None
         cls._account = kwargs['account']
         cls._kyc_approved = kwargs['kycApproved']
 

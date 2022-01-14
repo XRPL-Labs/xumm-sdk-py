@@ -15,6 +15,10 @@ class Call(XummResource):
         'uuidv4': 'str'
     }
 
+    attribute_map = {
+        'uuidv4': 'uuidv4',
+    }
+
     def refresh_from(cls, **kwargs):
         """Returns the dict as a model
 
@@ -23,7 +27,8 @@ class Call(XummResource):
         :return: The Call of this Call.  # noqa: E501
         :rtype: Call
         """
-        cls.uuidv4 = kwargs['uuidv4']
+        cls._uuidv4 = None
+        cls._uuidv4 = kwargs['uuidv4']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
@@ -31,6 +36,7 @@ class Call(XummResource):
 
         for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
+            attr = cls.attribute_map[attr]
             if isinstance(value, list):
                 result[attr] = list(map(
                     lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
@@ -103,7 +109,6 @@ class Application(XummResource):
         cls._uuidv4 = None
         cls._webhookurl = None
         cls._disabled = None
-
         cls._name = kwargs['name']
         cls._uuidv4 = kwargs['uuidv4']
         cls._webhookurl = kwargs['webhookurl']
@@ -273,6 +278,10 @@ class Quota(XummResource):
         'ratelimit': 'str'
     }
 
+    attribute_map = {
+        'ratelimit': 'ratelimit',
+    }
+
     def refresh_from(cls, **kwargs):
         """Returns the dict as a model
 
@@ -291,6 +300,7 @@ class Quota(XummResource):
 
         for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
+            attr = cls.attribute_map[attr]
             if isinstance(value, list):
                 result[attr] = list(map(
                     lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
@@ -310,8 +320,7 @@ class Quota(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
-        # return {k: v for k, v in result.items() if v is not None}
+        return {k: v for k, v in result.items() if v is not None}
 
     @property
     def ratelimit(cls) -> str:
@@ -345,6 +354,12 @@ class Auth(XummResource):
         'call': 'Call'
     }
 
+    attribute_map = {
+        'quota': 'quota',
+        'application': 'application',
+        'call': 'call',
+    }
+
     def refresh_from(cls, **kwargs):
         """Returns the dict as a model
 
@@ -353,9 +368,11 @@ class Auth(XummResource):
         :return: The PongResponse of this PongResponse.  # noqa: E501
         :rtype: PongResponse
         """
-        cls._quota = {}
-        if kwargs['quota'] != {}:
-            cls._quota = Quota(**kwargs['quota'])
+        cls._quota = None
+        cls._application = None
+        cls._call = None
+        cls._quota = Quota(**kwargs['quota'])
+        print(cls._quota.to_dict())
         cls._application = Application(**kwargs['application'])
         cls._call = Call(**kwargs['call'])
 
@@ -365,6 +382,7 @@ class Auth(XummResource):
 
         for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
+            attr = cls.attribute_map[attr]
             if isinstance(value, list):
                 result[attr] = list(map(
                     lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
@@ -463,6 +481,11 @@ class PongResponse(XummResource):
         'auth': 'Auth'
     }
 
+    attribute_map = {
+        'pong': 'pong',
+        'auth': 'auth',
+    }
+
     @classmethod
     def get_url(cls):
         """get_url."""
@@ -478,6 +501,8 @@ class PongResponse(XummResource):
         :rtype: PongResponse
         """
         # print(json.dumps(kwargs, indent=4, sort_keys=True))
+        cls._pong = None
+        cls._auth = None
         cls._pong = kwargs['pong']
         cls._auth = Auth(**kwargs['auth'])
 
@@ -487,6 +512,7 @@ class PongResponse(XummResource):
 
         for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
+            attr = cls.attribute_map[attr]
             if isinstance(value, list):
                 result[attr] = list(map(
                     lambda x: x.to_dict() if hasattr(x, "to_dict") else x,

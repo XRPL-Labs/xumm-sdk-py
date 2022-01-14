@@ -1,5 +1,5 @@
 import os
-import re
+from typing import Dict  # noqa: F401
 
 class CachedProperty(object):
     """
@@ -27,10 +27,10 @@ cached_property = CachedProperty
 
 import json
 
-def read_json(path):
+def read_json(path: str) -> Dict[str, object]:
     with open(path) as json_file:
         return json.load(json_file)
 
-def write_json(data, path):
+def write_json(data: Dict[str, object], path: str):
     with open(path, 'w') as json_file:
         json.dump(data, json_file)

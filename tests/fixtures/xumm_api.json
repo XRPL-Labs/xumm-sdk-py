@@ -13,9 +13,7 @@
     "pong": {
       "pong": true,
       "auth": {
-        "quota": {
-          "ratelimit": null
-        },
+        "quota": {},
         "application": {
           "uuidv4": "00000000-0000-4839-af2f-f794874a80b0",
           "name": "SomeApplication",

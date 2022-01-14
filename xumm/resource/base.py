@@ -33,29 +33,6 @@ class XummSdk(XummResource):
 
     def refresh_from(cls, **kwargs):
         print('BASE KWARGS: {}'.format(kwargs))
-        # p = re.compile('^[a-f0-9]{8}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{12}$')
-        # cls.application = kwargs['application']
-        # cls.custom_meta = kwargs['custom_meta']
-        # cls.meta = kwargs['meta']
-        # cls.payload = kwargs['payload']
-        # cls.response = kwargs['response']
-        # print(p.match(api_key))
-        # print(p.match(api_secret))
-        # if not p.match(api_key) or  not p.match(api_secret):
-        #     raise error.AuthenticationError(
-        #         'Invalid API key provided. (HINT: set your API key using '
-        #         '"xumm.api_key = <API-KEY>"). You can generate API keys '
-        #         'from the Xumm web interface.'
-        #     )
-
-    # def to_any_object(cls):
-    #     return {
-    #         'application': cls.application,
-    #         'custom_meta': cls.custom_meta,
-    #         'meta': cls.meta,
-    #         'payload': cls.payload,
-    #         'response': cls.response,
-    #     }
 
     # @cached_property
     def ping(cls):

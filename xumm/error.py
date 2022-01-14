@@ -1,13 +1,20 @@
+from typing import Dict  # noqa: F401
+
 class XummError(Exception):
-    def __init__(self, error, status_code=None, headers=None):
-        super(XummError, self).__init__(error)
+    def __init__(
+        cls, 
+        error: str, 
+        status_code: int=None, 
+        headers: Dict[str, object]=None
+    ):
+        super(XummError, cls).__init__(error)
 
-        self.error = error
-        self.status_code = status_code
-        self.headers = headers
+        cls.error = error
+        cls.status_code = status_code
+        cls.headers = headers
 
-    def __unicode__(self):
-        return self.error
+    def __unicode__(cls):
+        return cls.error
 
 
 class APIError(XummError):

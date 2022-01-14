@@ -1,8 +1,19 @@
+# coding: utf-8
+
 import os
 import sys
 
 from setuptools import setup
 from codecs import open
+
+NAME = "xumm-sdk-python"
+VERSION = "1.0.0"
+# To install the library, run the following
+#
+# python setup.py install
+#
+# prerequisite: setuptools
+# http://pypi.python.org/pypi/setuptools
 
 # Get the long description from the README.md file
 here = os.path.abspath(os.path.dirname(__file__))
@@ -11,23 +22,22 @@ with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
 
 # Don't import xumm module here, since deps may not be installed
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'xumm'))
-from version import VERSION
 
 setup(
-    name='xumm-py',
+    name=NAME,
     version=VERSION,
-    description='xumm python library',
+    description='Xumm SDK for Python',
     long_description=long_description,
     license='MIT',
-    author='Denis Angell',
-    author_email='denis@harpangell.com',
-    url='https://bitbucket.org/angellenterprises/xumm-py',
+    author='xrpl-labs',
+    author_email='support@xrpl-labs.com',
+    url='https://github.com/CASL-AE/xumm-sdk-py',
     packages=['xumm', 'xumm.resource'],
     install_requires=['requests >= 2.8.1'],
-    test_suite='pytest',  # 'xumm.test.all?'
-    tests_require=['pytest'],  # TODO: stripe uses unittest2 and mock?
+    test_suite='pytest',
+    tests_require=['pytest'],
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 01 - Alpha',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'License :: OSI Approved :: MIT License',
