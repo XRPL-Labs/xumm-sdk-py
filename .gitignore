@@ -8,7 +8,7 @@ venv
 # PyTest #
 ######################
 .pytest_cache
-.github
+# .github
 
 # Lint Logs #
 /logs
