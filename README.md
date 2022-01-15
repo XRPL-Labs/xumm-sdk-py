@@ -422,3 +422,6 @@ Lint the code using `npm run lint`, run tests (jest) using `npm run test`
 Build, run, show debug output & watch `dist/samples/dev.js`, compiled from `samples/dev.ts` using `npm run dev`. The `samples/dev.ts` file is **not included by default**.
 
 [Here's a sample `samples/dev.ts` file](https://gist.github.com/WietseWind/e2e9729619872cb736fe29b486e9c623).
+
+
+python3 -m flake8 --output-file=./logs/linter.txt
