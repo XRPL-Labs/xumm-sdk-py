@@ -8,7 +8,6 @@ import xumm
 class BaseTestConfig(TestCase):
 
     sdk = None
-    ws_client = None
     ws_sdk = None
     json_fixtures = {}
 
@@ -18,7 +17,6 @@ class BaseTestConfig(TestCase):
         xumm.api_key = cls.json_fixtures['api']['key']
         xumm.api_secret = cls.json_fixtures['api']['secret']
         cls.sdk = xumm.XummSdk()
-        cls.ws_client = xumm.XummWsClient()
         cls.ws_sdk = xumm.XummWs()
 
     def tearDown(cls):

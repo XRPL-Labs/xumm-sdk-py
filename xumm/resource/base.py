@@ -30,11 +30,6 @@ from xumm.resource.storage import (
     DeleteStorageResponse  # noqa - avoid circular import
 )
 
-from xumm.websocket import (
-    ConnectWebsocket,
-    WebsocketConnect,
-)
-import asyncio
 import websocket
 
 
@@ -156,87 +151,6 @@ class XummSdk(XummResource):
 
     def __unicode__(cls):
         return '<{} {}>'.format(cls.__class__.__name__, cls.id)
-
-
-class XummWsClient(XummResource):
-    """
-    https://docs.xumm.app/#websocket-feed
-    """
-
-    def refresh_from(cls, **kwargs):
-        cls._callback = None
-        cls._conn = None
-        cls._client = None
-
-    @classmethod
-    async def _recv(cls, msg):
-        print(msg)
-        if 'data' not in msg:
-            return None
-        json: dict(str, object)
-        try:
-          json = json.loads(msg)
-        except Exception as e:
-          print('Payload {}: Received message, unable to parse as JSON: {}'.format('payload_details.meta.uuid'), e)
-        if json and cls._callback and json['devapp_fetched'] is None:
-          try:
-            callback_result = await cls._callback({
-              'uuid': 'payload_details.meta.uuid',
-              'data': json,
-            #   async resolve (resolveData?: unknown) {
-            #     await callbackPromise.resolve(resolveData || undefined)
-            #   },
-              'payload': 'payload_details'
-            })
-
-            if callback_result:
-              await cls._callback(msg)
-          
-          except Exception as e:
-            print('Payload {}: Callback exception: {}'.format('payload_details.meta.uuid', e))
-
-    @classmethod
-    async def subscribe(cls, client, payload, callback):
-        """Subscribe to a channel
-        :param payload: required
-        :type payload: str
-        :returns: None
-        """
-
-        cls._callback = callback
-        # TODO: add this to payload functions
-        def resolve_payload(payload):
-            if isinstance(payload, str):
-                return client.payload_get(payload)
-            if isinstance(payload, Payload):
-                return payload
-        
-        payload_details = resolve_payload(payload)
-
-        if payload_details is not None:
-            # print(cls._recv)
-            cls._conn = ConnectWebsocket(
-                asyncio.get_running_loop(), 
-                payload_details.meta.uuid, 
-                cls._recv
-            )
-            # cls._recv({
-            #     'payload': payload_details,
-            #     # resolve (resolveData?: unknown) {
-            #     # callbackPromise.resolve(resolveData || undefined)
-            #     # },
-            #     # 'resolved': callbackPromise.promise,
-            #     # 'websocket': socket
-            # })
-
-    @classmethod
-    async def unsubscribe(cls):
-        """Subscribe to a channel
-        :param payload: required
-        :type payload: str
-        :returns: None
-        """
-        # cls._conn.close()
 
 class CallbackPromise:
 
