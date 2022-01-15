@@ -6,7 +6,7 @@ from unittest.mock import Mock, patch
 
 import xumm
 
-class TestXummSDKPayloadCancel(BaseTestConfig):
+class TestPayloadCancel(BaseTestConfig):
 
     @patch('xumm.client.requests.delete')
     def test_payload_cancel(cls, mock_delete):

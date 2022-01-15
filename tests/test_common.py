@@ -6,7 +6,7 @@ from unittest.mock import Mock, patch
 import xumm
 import json
 
-class TestXummSDK(BaseTestConfig):
+class TestCommon(BaseTestConfig):
 
     def test_xumm_dotenv(cls):
         print('should construct based on dotenv')

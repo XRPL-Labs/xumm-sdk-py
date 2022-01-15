@@ -6,7 +6,7 @@ from unittest.mock import Mock, patch
 
 import xumm
 
-class TestXummSDKPayloadCreate(BaseTestConfig):
+class TestPayloadCreate(BaseTestConfig):
 
     @patch('xumm.client.requests.post')
     def test_payload_create(cls, mock_post):
