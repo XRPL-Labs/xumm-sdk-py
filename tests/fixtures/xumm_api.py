@@ -1,5 +1,5 @@
 
-
+from typing import List, Dict  # noqa: F401
 # def pong_object():
 #     return {
 #         'disabled': expect.any(Number),
@@ -18,19 +18,59 @@
 #   }
 # }
 
-# export const subscriptionUpdates = {
-#   welcome: {message: 'Welcome aaaaaaaa-dddd-ffff-cccc-8207bd724e45'},
-#   expire: {expires_in_seconds: 30000},
-#   opened: {opened: true},
-#   rejected: {
-#     payload_uuidv4: 'aaaaaaaa-dddd-ffff-cccc-8207bd724e45',
-#     reference_call_uuidv4: 'bbbbbbbb-eeee-aaaa-1111-8d192bd91f07',
-#     signed: false,
-#     user_token: true,
-#     return_url: {app: null, web: null},
-#     custom_meta: {}
-#   }
-# }
+# IDK if I need this. msg.data is confusing
+def msg_data_wrapper(data: Dict[str, object]):
+    return {
+        'data': data
+    }
+
+def wrapped_subscription_updates():
+    return {
+        'welcome': msg_data_wrapper({
+            'message': 'Welcome aaaaaaaa-dddd-ffff-cccc-8207bd724e45'
+        }),
+        'expire': msg_data_wrapper({
+            'expires_in_seconds': 30000
+        }),
+        'opened': msg_data_wrapper({
+            'opened': True
+        }),
+        'rejected': msg_data_wrapper({
+            'payload_uuidv4': 'aaaaaaaa-dddd-ffff-cccc-8207bd724e45',
+            'reference_call_uuidv4': 'bbbbbbbb-eeee-aaaa-1111-8d192bd91f07',
+            'signed': False,
+            'user_token': True,
+            'return_url': {
+                'app': None, 
+                'web': None
+            },
+            'custom_meta': {}
+        })
+    }
+
+def subscription_updates():
+    return {
+        'welcome': {
+            'message': 'Welcome aaaaaaaa-dddd-ffff-cccc-8207bd724e45'
+        },
+        'expire': {
+            'expires_in_seconds': 30000
+        },
+        'opened': {
+            'opened': True
+        },
+        'rejected': {
+            'payload_uuidv4': 'aaaaaaaa-dddd-ffff-cccc-8207bd724e45',
+            'reference_call_uuidv4': 'bbbbbbbb-eeee-aaaa-1111-8d192bd91f07',
+            'signed': False,
+            'user_token': True,
+            'return_url': {
+                'app': None, 
+                'web': None
+            },
+            'custom_meta': {}
+        }
+    }
 
 # export const createPayloadResponseObject = {
 #   uuid: expect.any(String),

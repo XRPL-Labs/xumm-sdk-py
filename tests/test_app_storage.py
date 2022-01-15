@@ -6,7 +6,7 @@ from unittest.mock import Mock, patch
 
 import xumm
 
-class TestXummSDKAppStorage(BaseTestConfig):
+class TestAppStorage(BaseTestConfig):
 
     @patch('xumm.client.requests.post')
     def test_storage_set(cls, mock_post):
