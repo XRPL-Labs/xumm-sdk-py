@@ -10,5 +10,9 @@ venv
 .pytest_cache
 # .github
 
-# Lint Logs #
+# Lint #
 /logs
+
+# Production #
+/build
+/xumm_sdk_python.egg-info
