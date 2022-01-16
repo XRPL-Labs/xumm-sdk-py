@@ -8,6 +8,13 @@ import xumm
 
 class TestPayloadCancel(BaseTestConfig):
 
+    @classmethod
+    def setUp(cls):
+        xumm.api_key = cls.json_fixtures['api']['key']
+        xumm.api_secret = cls.json_fixtures['api']['secret']
+        cls.sdk = xumm.XummSdk()
+        cls.ws_sdk = xumm.XummWs()
+
     @patch('xumm.client.requests.delete')
     def test_payload_cancel(cls, mock_delete):
         print('should cancel a payload by UUID')

@@ -14,10 +14,6 @@ class BaseTestConfig(TestCase):
     @classmethod
     def setUpClass(cls):
         cls.json_fixtures = read_json('./tests/fixtures/xumm_api.json')
-        xumm.api_key = cls.json_fixtures['api']['key']
-        xumm.api_secret = cls.json_fixtures['api']['secret']
-        cls.sdk = xumm.XummSdk()
-        cls.ws_sdk = xumm.XummWs()
 
     def tearDown(cls):
         print('Tear Down Testing')
