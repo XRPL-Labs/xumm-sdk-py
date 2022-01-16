@@ -1,8 +1,7 @@
+from cmath import e
 import os
 from xumm import (
-    client, 
-    api_key, 
-    api_secret,
+    client,
     error
 )
 from xumm.resource import XummResource
@@ -15,7 +14,10 @@ import re
 
 from xumm.resource.ping import PongResponse  # noqa - avoid circular import
 from xumm.resource.curated_assets import CuratedAssetsResponse  # noqa - avoid circular import
-from xumm.resource.kyc_status import KYCStatusResponse  # noqa - avoid circular import
+from xumm.resource.kyc_status import (
+    GetKycResponse,  # noqa - avoid circular import
+    PostKycResponse,  # noqa - avoid circular import
+)
 from xumm.resource.xrpl_tx import XRPLTxResponse  # noqa - avoid circular import
 from xumm.resource.payload import (
     PayloadSubscription,
@@ -32,12 +34,27 @@ from xumm.resource.storage import (
 
 import websocket
 
-
-
 class XummSdk(XummResource):
 
     def refresh_from(cls, **kwargs):
-        print('BASE KWARGS: {}'.format(kwargs))
+        from xumm import api_key, api_secret
+
+        # print(api_key)
+        # print(api_secret)
+
+        if api_key is None:
+            raise error.AuthenticationError(
+                'No API key provided. (HINT: set your API key using '
+                '"xumm.api_key = <API-KEY>"). You can generate API keys '
+                'from the Xumm web interface.'
+            )
+        if api_secret is None:
+            raise error.AuthenticationError(
+                'No API secret provided. (HINT: set your API key using '
+                '"xumm.api_secret = <API-SECRET>"). You can generate API keys '
+                'from the Xumm web interface.'
+            )
+        # print('BASE KWARGS: {}'.format(kwargs))
 
     # @cached_property
     def ping(cls) -> PongResponse:
@@ -62,15 +79,22 @@ class XummSdk(XummResource):
         return CuratedAssetsResponse(**res)
 
     # @cached_property
-    def kyc_status(cls) -> KYCStatusResponse:
+    def kyc_status(cls, id) -> GetKycResponse:
         """Returns the dict as a model
 
-        :return: The KYCStatusResponse of this KYCStatusResponse.  # noqa: E501
-        :rtype: KYCStatusResponse
+        :return: The GetKycResponse of this GetKycResponse.  # noqa: E501
+        :rtype: GetKycResponse
         """
-        
-        res = client.get(KYCStatusResponse.get_url())
-        return KYCStatusResponse(**res)
+        if re.match('^r', id.strip()):
+            res = client.get(GetKycResponse.get_url(id))
+            return GetKycResponse(**res)
+            # return call?.kycApproved ? 'SUCCESSFUL' : 'NONE'
+        else:
+            res = client.post(PostKycResponse.post_url(), {
+                'user_token': id
+            })
+            return PostKycResponse(**res)
+            # return call?.kycStatus || 'NONE'
 
     # @cached_property
     def xrpl_tx(cls, id: str=None):

@@ -604,7 +604,7 @@ class XRPLTxResponse(XummResource):
         cls._node = None
         cls._transaction = None
         cls._txid = kwargs['txid']
-        cls._balance_changes = {k: [BalanceChange(**b) for b in v] for k, v in kwargs['balanceChanges'].items()}
+        cls._balance_changes = {k: [BalanceChange(**b).to_dict() for b in v] for k, v in kwargs['balanceChanges'].items()}
         cls._node = kwargs['node']
         cls._transaction = Transaction(**kwargs['transaction'])
 
@@ -615,6 +615,8 @@ class XRPLTxResponse(XummResource):
         for attr, _ in six.iteritems(cls.model_types):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
+            # if attr == 'balanceChanges':
+                # result[attr] = {k: [b.to_dict() for b in v] for k, v in value.items()}
             if isinstance(value, list):
                 result[attr] = list(map(
                     lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
