@@ -8,6 +8,13 @@ import xumm
 
 class TestAppStorage(BaseTestConfig):
 
+    @classmethod
+    def setUp(cls):
+        xumm.api_key = cls.json_fixtures['api']['key']
+        xumm.api_secret = cls.json_fixtures['api']['secret']
+        cls.sdk = xumm.XummSdk()
+        cls.ws_sdk = xumm.XummWs()
+
     @patch('xumm.client.requests.post')
     def test_storage_set(cls, mock_post):
         print('should set app storage')

@@ -8,11 +8,19 @@ from tests.fixtures import (
 )
 from unittest.mock import Mock, patch
 
+import xumm
 import asyncio
 
 import pytest
 @pytest.mark.skip(reason="Using Prod Cert")
 class TestPayloadSubscribe(BaseTestConfig):
+
+    @classmethod
+    def setUp(cls):
+        xumm.api_key = cls.json_fixtures['api']['key']
+        xumm.api_secret = cls.json_fixtures['api']['secret']
+        cls.sdk = xumm.XummSdk()
+        cls.ws_sdk = xumm.XummWs()
 
     # def setUp(cls):
     #     print('SET UP TEST')

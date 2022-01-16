@@ -2,6 +2,7 @@ from cmath import e
 from testing_config import BaseTestConfig
 import os
 from unittest.mock import Mock, patch
+from dotenv import dotenv_values
 
 import xumm
 import json
@@ -10,11 +11,12 @@ class TestCommon(BaseTestConfig):
 
     def test_xumm_dotenv(cls):
         print('should construct based on dotenv')
-        os.environ['XUMM_APIKEY'] = cls.json_fixtures['api']['key']
-        os.environ['XUMM_APISECRET'] = cls.json_fixtures['api']['secret']
+        configs = { **dotenv_values(".env.sample") }
+        cls.assertEqual(configs['XUMM_APIKEY'], 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX')
+        cls.assertEqual(configs['XUMM_APISECRET'], 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX')
         try:
-            xumm.api_key = os.environ.get('XUMM_APIKEY')
-            xumm.api_secret = os.environ.get('XUMM_APISECRET')
+            xumm.api_key = configs['XUMM_APIKEY']
+            xumm.api_secret = configs['XUMM_APISECRET']
             sdk = xumm.XummSdk()
         except Exception:
             cls.fail("XummSdk() raised Exception unexpectedly!")

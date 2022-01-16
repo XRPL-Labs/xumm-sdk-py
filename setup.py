@@ -23,6 +23,9 @@ with open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
 # Don't import xumm module here, since deps may not be installed
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'xumm'))
 
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
+
 setup(
     name=NAME,
     version=VERSION,
@@ -33,7 +36,8 @@ setup(
     author_email='support@xrpl-labs.com',
     url='https://github.com/CASL-AE/xumm-sdk-py',
     packages=['xumm', 'xumm.resource'],
-    install_requires=['requests >= 2.8.1'],
+    # install_requires=['requests >= 2.27.1', 'websocket-client >= 1.2.3'],
+    install_requires=required,
     test_suite='pytest',
     tests_require=['pytest'],
     classifiers=[
@@ -42,6 +46,6 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.9',
     ],
 )

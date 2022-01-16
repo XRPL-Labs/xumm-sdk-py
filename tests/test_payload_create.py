@@ -8,6 +8,13 @@ import xumm
 
 class TestPayloadCreate(BaseTestConfig):
 
+    @classmethod
+    def setUp(cls):
+        xumm.api_key = cls.json_fixtures['api']['key']
+        xumm.api_secret = cls.json_fixtures['api']['secret']
+        cls.sdk = xumm.XummSdk()
+        cls.ws_sdk = xumm.XummWs()
+
     @patch('xumm.client.requests.post')
     def test_payload_create(cls, mock_post):
         print('should create a simple payment')
