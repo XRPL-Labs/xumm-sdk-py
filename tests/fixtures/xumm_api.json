@@ -232,12 +232,18 @@
     }
   },
   "kycStatus": {
-    "kycStatus": "IN_PROGRESS",
-    "possibleStatuses": {
-      "NONE": "No KYC attempt has been made",
-      "IN_PROGRESS": "KYC flow has been started, but did not finish (yet)",
-      "REJECTED": "KYC flow has been started and rejected (NO SUCCESSFUL KYC)",
-      "SUCCESSFUL": "KYC flow has been started and was SUCCESSFUL :)"
+    "get": {
+        "account": "rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY",
+        "kycApproved": false
+    },
+    "post": {
+      "kycStatus": "IN_PROGRESS",
+      "possibleStatuses": {
+        "NONE": "No KYC attempt has been made",
+        "IN_PROGRESS": "KYC flow has been started, but did not finish (yet)",
+        "REJECTED": "KYC flow has been started and rejected (NO SUCCESSFUL KYC)",
+        "SUCCESSFUL": "KYC flow has been started and was SUCCESSFUL :)"
+      }
     }
   },
   "xrplTx": {

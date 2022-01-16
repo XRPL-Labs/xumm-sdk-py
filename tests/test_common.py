@@ -13,6 +13,8 @@ class TestCommon(BaseTestConfig):
         os.environ['XUMM_APIKEY'] = cls.json_fixtures['api']['key']
         os.environ['XUMM_APISECRET'] = cls.json_fixtures['api']['secret']
         try:
+            xumm.api_key = os.environ.get('XUMM_APIKEY')
+            xumm.api_secret = os.environ.get('XUMM_APISECRET')
             sdk = xumm.XummSdk()
         except Exception:
             cls.fail("XummSdk() raised Exception unexpectedly!")
@@ -80,14 +82,26 @@ class TestCommon(BaseTestConfig):
         xumm.api_key = cls.json_fixtures['api']['key']
         xumm.api_secret = cls.json_fixtures['api']['secret']
         sdk = xumm.XummSdk()
-
+        
+        user_token = 'rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY'
         mock_get.return_value = Mock(status_code=200)
-        mock_get.return_value.json.return_value = {}
-        # mock_get.return_value.json.return_value = cls.json_fixtures['kycResult']
-        # cls.assertEqual(sdk.kyc_status().to_dict(), cls.json_fixtures['kycResult'])
-        # print(ee)
+        mock_get.return_value.json.return_value = cls.json_fixtures['kycStatus']['get']
+        cls.assertEqual(xumm.XummSdk().kyc_status(user_token).to_dict(), cls.json_fixtures['kycStatus']['get'])
 
-    # TODO: FIX ASSERT
+    @patch('xumm.client.requests.post')
+    def test_create_kyc_status(cls, mock_post):
+        print('should create user KYC status')
+        xumm.api_key = cls.json_fixtures['api']['key']
+        xumm.api_secret = cls.json_fixtures['api']['secret']
+        sdk = xumm.XummSdk()
+
+        user_token = '2557f69c-6617-40dc-9d1e-a34487cb3f90'
+
+        mock_post.return_value = Mock(status_code=200)
+        mock_post.return_value.json.return_value = cls.json_fixtures['kycStatus']['post']
+
+        cls.assertEqual(xumm.XummSdk().kyc_status(user_token).kyc_status, 'IN_PROGRESS')
+
     @patch('xumm.client.requests.get')
     def test_fetch_tx(cls, mock_get):
         print('should fetch an XRPL tx')
@@ -98,10 +112,5 @@ class TestCommon(BaseTestConfig):
         mock_get.return_value = Mock(status_code=200)
         mock_get.return_value.json.return_value = cls.json_fixtures['xrplTx']
 
-        print(sdk.xrpl_tx(cls.json_fixtures['xrplTx']['txid']).to_dict()['balanceChanges'])
-        print(cls.json_fixtures['xrplTx']['balanceChanges'])
-        print(sdk.xrpl_tx(cls.json_fixtures['xrplTx']['txid']).to_dict()['transaction'])
-        print(cls.json_fixtures['xrplTx']['transaction'])
-
-        # cls.assertEqual(sdk.xrpl_tx(cls.json_fixtures['xrplTx']['txid']).to_dict(), cls.json_fixtures['xrplTx'])
-        # print(ee)
+        # TODO: FIXUP BALANCE CHANGES MODEL
+        cls.assertEqual(sdk.xrpl_tx(cls.json_fixtures['xrplTx']['txid']).to_dict(), cls.json_fixtures['xrplTx'])

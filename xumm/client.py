@@ -28,6 +28,9 @@ def get_env() -> str:
 def get_headers():
     from xumm import api_key, api_secret
 
+    print(api_key)
+    print(api_secret)
+
     if api_key is None:
         raise error.AuthenticationError(
             'No API key provided. (HINT: set your API key using '
@@ -51,6 +54,7 @@ def get_headers():
 
 def get(url: str):
     try:
+        print(url)
         res = requests.get(url, headers=get_headers())
     except Exception as e:
         handle_request_error(e)
