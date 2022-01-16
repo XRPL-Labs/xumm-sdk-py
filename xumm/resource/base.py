@@ -11,6 +11,7 @@ from xumm.util import (
 import json
 import time
 import re
+import websocket
 
 from xumm.resource.ping import PongResponse  # noqa - avoid circular import
 from xumm.resource.curated_assets import CuratedAssetsResponse  # noqa - avoid circular import
@@ -31,8 +32,6 @@ from xumm.resource.storage import (
     GetStorageResponse,  # noqa - avoid circular import
     DeleteStorageResponse  # noqa - avoid circular import
 )
-
-import websocket
 
 class XummSdk(XummResource):
 
