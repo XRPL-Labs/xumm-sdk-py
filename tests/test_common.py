@@ -12,6 +12,8 @@ class TestCommon(BaseTestConfig):
     def test_xumm_dotenv(cls):
         print('should construct based on dotenv')
         configs = { **dotenv_values(".env.sample") }
+        cls.assertEqual(configs['XUMM_APIKEY'], 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX')
+        cls.assertEqual(configs['XUMM_APISECRET'], 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX')
         try:
             xumm.api_key = configs['XUMM_APIKEY']
             xumm.api_secret = configs['XUMM_APISECRET']
