@@ -75,15 +75,15 @@ More information about the XUMM API, payloads, the API workflow, sending Push no
 
 After constructing the SDK, you can call the methods:
 
-- `Sdk.*` for the helper methods (see below)
-- `Sdk.payload.*` to get/update/create payloads for users to sign
-- `Sdk.storage.*` for your XUMM app storage (to store meta info for headless applications)
+- `sdk.*` for the helper methods (see below)
+- `sdk.payload.*` to get/update/create payloads for users to sign
+- `sdk.storage.*` for your XUMM app storage (to store meta info for headless applications)
 
 Please note all snippets below assume you constructed the XUMM SDK into the `Sdk` constant, as the [How to use the XUMM SDK](#how-to-use-the-xumm-sdk) section outlines.
 
 #### Helper methods
 
-##### Sdk.ping()
+##### sdk.ping()
 
 The `ping` method allows you to verify API access (valid credentials) and returns some info on your XUMM APP:
 
@@ -105,13 +105,13 @@ Returns [`<ApplicationDetails>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/mast
 }
 ```
 
-##### Sdk.getCuratedAssets()
+##### sdk.get_curated_assets()
 
 The `curated_assets` method allows you to get the list of trusted issuers and IOU's. This is the same list used to
 populate the "Add Asset" button at the XUMM home screan.
 
 ```python
-curated_assets = sdk.curated_assets()
+curated_assets = sdk.get_curated_assets()
 ```
 
 Returns [`<CuratedAssetsResponse>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/src/types/Meta/CuratedAssetsResponse.ts):
@@ -129,7 +129,7 @@ Returns [`<CuratedAssetsResponse>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/m
 ```
 
 
-##### Sdk.kyc_status()
+##### sdk.get_kyc_status()
 
 The `kyc_status` return the KYC status of a user based on a user_token, issued after the
 user signed a Sign Request (from your app) before (see Payloads - Intro).
@@ -142,12 +142,12 @@ Alternatively, KYC status can be retrieved for an XPRL account address: the addr
 XUMM when the session KYC was initiated by.
 
 ```python
-kyc_status = sdk.kyc_status('00000000-0000-0000-0000-000000000000')
+kyc_status = sdk.get_kyc_status('00000000-0000-0000-0000-000000000000')
 ```
 
 ... or using an account address:
 ```python
-kyc_status = sdk.kyc_status('rwu1dgaUq8DCj3ZLFXzRbc1Aco5xLykMMQ')
+kyc_status = sdk.get_kyc_status('rwu1dgaUq8DCj3ZLFXzRbc1Aco5xLykMMQ')
 ```
 
 Returns [`<keyof PossibleKycStatuses>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/src/types/Meta/KycStatusResponse.ts#L1).
@@ -157,7 +157,7 @@ Returns [`<keyof PossibleKycStatuses>`](https://github.com/XRPL-Labs/XUMM-SDK/bl
 - Once an account has successfully completed the XUMM KYC flow, the KYC flag will be applied to the account even if the identity document used to KYC expired. The flag shows that the account was **once** KYC'd by a real person with a real identity document.
 - Please note that the KYC flag provided by XUMM can't be seen as a "all good, let's go ahead" flag: it should be used as **one of the data points** to determine if an account can be trusted. There are situations where the KYC flag is still `true`, but an account can no longer be trusted. Eg. when account keys are compromised and the account is now controlled by a 3rd party. While unlikely, depending on the level of trust required for your application you may want to mitigate against these kinds of fraud.
 
-##### Sdk.xrpl_tx()
+##### sdk.get_transaction()
 
 The `xrpl_tx` method allows you to get the transaction outcome (mainnet)
 live from the XRP ledger, as fetched for you by the XUMM backend.
@@ -166,7 +166,7 @@ live from the XRP ledger, as fetched for you by the XUMM backend.
 [![npm version](https://badge.fury.io/js/xrpl-txdata.svg)](https://www.npmjs.com/xrpl-txdata)
 
 ```python
-tx_info = sdk.xrpl_tx(tx_hash)
+tx_info = sdk.get_transaction(tx_hash)
 ```
 
 Returns: `<XrplTransaction>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/src/types/Meta/XrplTransaction.ts)
@@ -179,19 +179,19 @@ Your XUMM APP storage is stored at the XUMM API backend, meaning it persists unt
 This data is private, and accessible only with your own API credentials. This private JSON data can be used to store credentials / config / bootstrap info / ... for your headless application (eg. POS device).
 
 ```python
-storage_set = await Sdk.storage.set({name: 'Wietse', age: 32, male: True})
+storage_set = await sdk.storage.set({name: 'Wietse', age: 32, male: True})
 print(storage_set)
 // true
 
-storage_get = sdk.storage_get()
+storage_get = sdk.storage.get()
 print(storage_get)
 // { name: 'Wietse', age: 32, male: True }
 
-storage_delete = sdk.storage_delete()
+storage_delete = sdk.storage.delete()
 print(storage_delete)
 // true
 
-storage_get_after_delete = sdk.storage_get()
+storage_get_after_delete = sdk.storage.get()
 print(storage_get_after_delete)
 // null
 ```
@@ -228,10 +228,10 @@ A more complex payload [could look like this](https://gist.github.com/WietseWind
 
 Instead of providing a `txjson` transaction, a transaction formatted as HEX blob (string) can be provided in a `txblob` property.
 
-##### Sdk.payload_get
+##### sdk.payload_get
 
 ```python
-sdk.payload_get (
+sdk.payload.get (
   payload: str | CreatedPayload,
   return_errors: bool = False
 ): Callable[XummPayload]>
@@ -245,26 +245,26 @@ You can `get()` a payload by:
 
 - Payload UUID  
   ```python
-  payload = sdk.payload_get('aaaaaaaa-bbbb-cccc-dddd-1234567890ab')
+  payload = sdk.payload.get('aaaaaaaa-bbbb-cccc-dddd-1234567890ab')
   ```
 
-- Passing a created Payload object (see: [sdk.payload_create](#sdkpayloadcreate))  
+- Passing a created Payload object (see: [sdk.payload.create](#sdkpayloadcreate))  
   ```python
   new_payload: xumm_types.created_payload = {txjson: {...}}
-  created = sdk.payload_create(new_payload)
-  payload = sdk.payload_get(created)
+  created = sdk.payload.create(new_payload)
+  payload = sdk.payload.get(created)
   ```
 
 If a payload can't be fetched (eg. doesn't exist), `null` will be returned, unless a second param (boolean) is provided to get the SDK to throw an Error in case a payload can't be retrieved:
 
 ```python
-sdk.payload_get('aaaaaaaa-bbbb-cccc-dddd-1234567890ab', True)
+sdk.payload.get('aaaaaaaa-bbbb-cccc-dddd-1234567890ab', True)
 ```
 
-##### Sdk.payload_create
+##### sdk.payload.create
 
 ```python
-sdk.payload_create (
+sdk.payload.create (
   payload: create_payload,
   return_errors: bool = False
 ): -> Callable<CreatedPayload | None>
@@ -291,20 +291,20 @@ The response (see: [Developer Docs](https://xumm.readme.io/docs/payload-response
 }
 ```
 
-The `next.always` URL is the URL to send the end user to, to scan a QR code or automatically open the XUMM app (if on mobile). If a `user_token` has been provided as part of the payload data provided to `sdk.payload_create()`, you can see if the payload has been pushed to the end user. A button "didn't receive a push notification" could then take the user to the `next.no_push_msg_received` URL. The 
+The `next.always` URL is the URL to send the end user to, to scan a QR code or automatically open the XUMM app (if on mobile). If a `user_token` has been provided as part of the payload data provided to `sdk.payload.create()`, you can see if the payload has been pushed to the end user. A button "didn't receive a push notification" could then take the user to the `next.no_push_msg_received` URL. The 
 
 Alternatively user routing / instruction flows can be custom built using the QR information provided in the `refs` object, and a subscription for live status updates (opened, signed, etc.) using a WebSocket client can be setup by conneting to the `refs.websocket_status` URL. **Please note: this SDK already offers subscriptions. There's no need to setup your own WebSocket client, see [Payload subscriptions: live updates](#payload-subscriptions-live-updates).** There's more information about the [payload workflow](https://xumm.readme.io/docs/payload-workflow) and a [paylaod lifecycle](https://xumm.readme.io/docs/doc-payload-life-cycle) in the Developer Docs.
 
-##### Sdk.payload_cancel
+##### sdk.payload.cancel
 
 ```python
-sdk.payload_cancel (
+sdk.payload.cancel (
   payload: str | XummPayload | CreatedPayload,
   return_errors: bool = False
 ): -> Callable<DeletedPayload | None>
 ```
 
-To cancel a payload, provide a payload UUID (string), a `<XummPayload>` (by performing a `sdk.payload_get()` first) or a `<CreatedPayload>` (by using the response of a `sdk.payload_create()` call). By cancelling an existing payload, the payload will be marked as expired and can no longer be opened by users. 
+To cancel a payload, provide a payload UUID (string), a `<XummPayload>` (by performing a `sdk.payload.get()` first) or a `<CreatedPayload>` (by using the response of a `sdk.payload.create()` call). By cancelling an existing payload, the payload will be marked as expired and can no longer be opened by users. 
 
 **Please note**: *if a user already opened the payload in XUMM APP, the payload cannot be cancelled: the user may still be resolving the payload in the XUMM App, and should have a chance to complete that process*.
 
@@ -339,10 +339,10 @@ The subscription will be closed by either:
 - Returning non-void in the *callback function* passed to the `ws_sdk.payload_subscribe()` method
 - Manually calling `<PayloadSubscription>.resolve()` on the object returned by the `ws_sdk.payload_subscribe()` method
 
-##### Sdk.payload.subscribe
+##### sdk.payload.subscribe
 
 ```python
-ws_sdk.payload_subscribe (
+ws_sdk.payload.subscribe (
   payload: str | XummPayload | CreatedPayload,
   callback?: onPayloadEvent
 ): -> Callable<PayloadSubscription>
@@ -375,7 +375,7 @@ Examples:
 ##### Sdk.payload_create_subscribe
 
 ```python
-ws_sdk.payload_create_subscribe (
+ws_sdk.payload.subscribe (
     payload: CreatePayload,
     callback?: onPayloadEvent
   ): -> Callable<PayloadAndSubscription>
@@ -383,12 +383,12 @@ ws_sdk.payload_create_subscribe (
 
 The [`<PayloadAndSubscription>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/src/types/Payload/PayloadAndSubscription.ts) object is basically a [`<PayloadSubscription>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/src/types/Payload/PayloadSubscription.ts) object with the created payload results in the `created` property:
 
-All information that applies on [`sdk.payload_create()`](#sdkpayloadcreate) and [`Sdk.payload_subscribe()`](#sdkpayloadsubscribe) applies. Differences are:
+All information that applies on [`sdk.payload.create()`](#sdkpayloadcreate) and [`sdk.payload.subscribe()`](#sdkpayloadsubscribe) applies. Differences are:
 
-1. The input for a `sdk.payload.payload_create_subscribe()` call isn't a payload UUID / existing payload, but a paykiad to create. 
+1. The input for a `sdk.payload.create_subscribe()` call isn't a payload UUID / existing payload, but a paykiad to create. 
 2. The response object also contains (`<PayloadAndSubscription>.created`) the response obtained when creating the payload
 
-## Debugging (logging)
+## TODO: Debugging (logging)
 
 The XUMM SDK will emit debugging info when invoked with a debug environment variable configured like: `DEBUG=xumm-sdk*` 
 
@@ -410,7 +410,7 @@ Please note: you most likely just want to **use** the XUMM SDK, to do so, fetch 
 
 If you actually want to change/test/develop/build/contribute (to) the source of the XUMM SDK:
 
-##### Build: TODO
+##### TODO: Build
 
 Please note: at least Python version **3.4+** is required!
 
@@ -420,7 +420,7 @@ To build the code, run `python3 install setup.py`.
 
 Lint the code using `python3 -m flake8 --output-file=./logs/linter.txt`, run tests (jest) using `python3 test.py tests/`
 
-##### Run development code: TODO
+##### TODO: Run development code
 
 Build, run, show debug output & watch `dist/samples/dev.js`, compiled from `samples/dev.ts` using `npm run dev`. The `samples/dev.ts` file is **not included by default**.
 

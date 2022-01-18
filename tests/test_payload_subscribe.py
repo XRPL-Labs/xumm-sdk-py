@@ -54,10 +54,13 @@ class TestPayloadSubscribe(BaseTestConfig):
         #     websocket: expect.any(MockedWebSocket)
         # })
 
-        cls.assertEqual(subscription_socket.websocket.sock.getstatus(), 101)
-        cls.assertEqual(await subscription_socket.resolved(), test_fixtures.subscription_updates()['rejected'])
+        # cls.assertEqual(subscription_socket.websocket.sock.getstatus(), 101)
+        # cls.assertEqual(await subscription_socket.resolved(), test_fixtures.subscription_updates()['rejected'])
         # expect(wsEol).toEqual(expect.arrayContaining([subscriptionSocket.websocket.readyState]))
+
+        # print(ee)
     
+    @pytest.mark.skip(reason="Using Prod Cert")
     def test_payload_subscribe_return(cls):
         asyncio.run(cls._test_payload_subscribe_return())
 
@@ -105,6 +108,7 @@ class TestPayloadSubscribe(BaseTestConfig):
         # TODO: Unknown
         # expect(wsEol).toEqual(expect.arrayContaining([subscriptionSocket.websocket.readyState]))
 
+    @pytest.mark.skip(reason="Using Prod Cert")
     def test_payload_create_subscribe_inner(cls):
         asyncio.run(cls._test_payload_create_subscribe_inner())
 
@@ -138,6 +142,7 @@ class TestPayloadSubscribe(BaseTestConfig):
         # cls.assertEqual(await subscription_socket.resolved(), test_fixtures.subscription_updates()['rejected'])
         # expect(wsEol).toEqual(expect.arrayContaining([subscriptionSocket.websocket.readyState]))
 
+    @pytest.mark.skip(reason="Using Prod Cert")
     def test_payload_create_subscribe_return(cls):
         asyncio.run(cls._test_payload_create_subscribe_return())
 

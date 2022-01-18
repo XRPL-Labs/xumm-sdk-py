@@ -76,7 +76,7 @@ class TestCommon(BaseTestConfig):
 
         mock_get.return_value = Mock(status_code=200)
         mock_get.return_value.json.return_value = cls.json_fixtures['curatedAssets']
-        cls.assertEqual(sdk.curated_assets().to_dict(), cls.json_fixtures['curatedAssets'])
+        cls.assertEqual(sdk.get_curated_assets().to_dict(), cls.json_fixtures['curatedAssets'])
 
     @patch('xumm.client.requests.get')
     def test_fetch_kyc_status(cls, mock_get):
@@ -88,7 +88,7 @@ class TestCommon(BaseTestConfig):
         user_token = 'rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY'
         mock_get.return_value = Mock(status_code=200)
         mock_get.return_value.json.return_value = cls.json_fixtures['kycStatus']['get']
-        cls.assertEqual(xumm.XummSdk().kyc_status(user_token).to_dict(), cls.json_fixtures['kycStatus']['get'])
+        cls.assertEqual(sdk.get_kyc_status(user_token).to_dict(), cls.json_fixtures['kycStatus']['get'])
 
     @patch('xumm.client.requests.post')
     def test_create_kyc_status(cls, mock_post):
@@ -102,7 +102,7 @@ class TestCommon(BaseTestConfig):
         mock_post.return_value = Mock(status_code=200)
         mock_post.return_value.json.return_value = cls.json_fixtures['kycStatus']['post']
 
-        cls.assertEqual(xumm.XummSdk().kyc_status(user_token).kyc_status, 'IN_PROGRESS')
+        cls.assertEqual(sdk.get_kyc_status(user_token).kyc_status, 'IN_PROGRESS')
 
     @patch('xumm.client.requests.get')
     def test_fetch_tx(cls, mock_get):
@@ -115,4 +115,4 @@ class TestCommon(BaseTestConfig):
         mock_get.return_value.json.return_value = cls.json_fixtures['xrplTx']
 
         # TODO: FIXUP BALANCE CHANGES MODEL
-        cls.assertEqual(sdk.xrpl_tx(cls.json_fixtures['xrplTx']['txid']).to_dict(), cls.json_fixtures['xrplTx'])
+        cls.assertEqual(sdk.get_transaction(cls.json_fixtures['xrplTx']['txid']).to_dict(), cls.json_fixtures['xrplTx'])

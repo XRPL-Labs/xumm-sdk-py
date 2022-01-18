@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 from __future__ import unicode_literals
 
 import requests
@@ -25,6 +28,7 @@ def get_env() -> str:
     return env
 
 
+# def get_headers() -> Dict[str: object]:
 def get_headers():
     from xumm import api_key, api_secret
 
