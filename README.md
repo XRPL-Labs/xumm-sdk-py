@@ -107,7 +107,7 @@ Returns [`<ApplicationDetails>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/mast
 
 ##### sdk.get_curated_assets()
 
-The `curated_assets` method allows you to get the list of trusted issuers and IOU's. This is the same list used to
+The `get_curated_assets` method allows you to get the list of trusted issuers and IOU's. This is the same list used to
 populate the "Add Asset" button at the XUMM home screan.
 
 ```python
@@ -131,7 +131,7 @@ Returns [`<CuratedAssetsResponse>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/m
 
 ##### sdk.get_kyc_status()
 
-The `kyc_status` return the KYC status of a user based on a user_token, issued after the
+The `get_kyc_status` return the KYC status of a user based on a user_token, issued after the
 user signed a Sign Request (from your app) before (see Payloads - Intro).
 
 If a user token specified is invalid, revoked, expired, etc. the method will always
@@ -159,7 +159,7 @@ Returns [`<keyof PossibleKycStatuses>`](https://github.com/XRPL-Labs/XUMM-SDK/bl
 
 ##### sdk.get_transaction()
 
-The `xrpl_tx` method allows you to get the transaction outcome (mainnet)
+The `get_transaction` method allows you to get the transaction outcome (mainnet)
 live from the XRP ledger, as fetched for you by the XUMM backend.
 
 **Note**: it's best to retrieve these results **yourself** instead of relying on the XUMM platform to get live XRPL transaction information! You can use the **[xrpl-txdata](https://www.npmjs.com/package/xrpl-txdata)** package to do this:  
