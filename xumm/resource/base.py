@@ -1,37 +1,65 @@
 from cmath import e
 import os
+from typing import Dict, Union, Any
 from xumm import (
     client,
     error
 )
 from xumm.resource import XummResource
-from xumm.util import (
-    cached_property,
-)
 import json
 import time
 import re
 import websocket
 
-from xumm.resource.ping import PongResponse  # noqa - avoid circular import
-from xumm.resource.curated_assets import CuratedAssetsResponse  # noqa - avoid circular import
+from xumm.ws_client import WSClient
+from xumm.resource.ping import PingRequest
+from xumm.resource.curated_assets import GetCuratedAssetsRequest
 from xumm.resource.kyc_status import (
-    GetKycResponse,  # noqa - avoid circular import
-    PostKycResponse,  # noqa - avoid circular import
+    GetKycStatusRequest,
+    PostKycStatusRequest,
 )
-from xumm.resource.xrpl_tx import XRPLTxResponse  # noqa - avoid circular import
+from xumm.resource.xrpl_tx import GetXrplTxRequest
 from xumm.resource.payload import (
+    PostPayloadRequest,
+    DeletePayloadRequest,
+    GetPayloadRequest,
     PayloadSubscription,
-    PostPayloadResponse,  # noqa - avoid circular import
-    DeletePayloadResponse,  # noqa - avoid circular import
-    GetPayloadResponse,  # noqa - avoid circular import
-    Payload  # noqa - avoid circular import
 )
 from xumm.resource.storage import (
-    SetStorageResponse,  # noqa - avoid circular import
-    GetStorageResponse,  # noqa - avoid circular import
-    DeleteStorageResponse  # noqa - avoid circular import
+    StorageSetRequest,
+    StorageGetRequest,
+    StorageDeleteRequest
 )
+
+from .types import (
+    CreatedPayload,
+    XummPayload,
+    XummPostPayloadBodyJson,
+    XummPostPayloadBodyBlob,
+    XummJsonTransaction,
+    XummPostPayloadResponse,
+    XummDeletePayloadResponse,
+    XummGetPayloadResponse,
+    StorageSetResponse,
+    StorageGetResponse,
+    StorageDeleteResponse,
+    CuratedAssetsResponse,
+    KycInfoResponse,
+    KycStatusResponse,
+    PongResponse,
+    XrplTransaction,
+)
+
+
+def resolve_payload(payload: Union[str, XummPayload, CreatedPayload]) -> XummPayload:
+    if isinstance(payload, str):
+        return client.payload_get(payload)
+    if isinstance(payload, CreatedPayload):
+        return client.payload_get(payload.uuid)
+    if isinstance(payload, XummPayload):
+        return payload
+
+    raise error.APIError('Could not resolve payload (not found)')
 
 class XummSdk(XummResource):
 
@@ -55,7 +83,6 @@ class XummSdk(XummResource):
             )
         # print('BASE KWARGS: {}'.format(kwargs))
 
-    # @cached_property
     def ping(cls) -> PongResponse:
         """Returns the dict as a model
 
@@ -63,10 +90,9 @@ class XummSdk(XummResource):
         :rtype: PongResponse
         """
         
-        res = client.get(PongResponse.get_url())
+        res = client.get(PingRequest.get_url())
         return PongResponse(**res)
 
-    # @cached_property
     def curated_assets(cls) -> CuratedAssetsResponse:
         """Returns the dict as a model
 
@@ -74,103 +100,113 @@ class XummSdk(XummResource):
         :rtype: CuratedAssetsResponse
         """
         
-        res = client.get(CuratedAssetsResponse.get_url())
+        res = client.get(GetCuratedAssetsRequest.get_url())
         return CuratedAssetsResponse(**res)
 
-    # @cached_property
-    def kyc_status(cls, id) -> GetKycResponse:
+    def kyc_status(cls, id: str=None) -> Union[KycInfoResponse, KycStatusResponse]:
         """Returns the dict as a model
 
-        :return: The GetKycResponse of this GetKycResponse.  # noqa: E501
-        :rtype: GetKycResponse
+        :return: The kyc_status of this kyc_status.  # noqa: E501
+        :rtype: kyc_status
         """
         if re.match('^r', id.strip()):
-            res = client.get(GetKycResponse.get_url(id))
-            return GetKycResponse(**res)
+            res = client.get(GetKycStatusRequest.get_url(id))
+            return KycInfoResponse(**res)
             # return call?.kycApproved ? 'SUCCESSFUL' : 'NONE'
         else:
-            res = client.post(PostKycResponse.post_url(), {
+            res = client.post(PostKycStatusRequest.post_url(), {
                 'user_token': id
             })
-            return PostKycResponse(**res)
+            return KycStatusResponse(**res)
             # return call?.kycStatus || 'NONE'
 
-    # @cached_property
-    def xrpl_tx(cls, id: str=None):
+    def xrpl_tx(cls, id: str=None) -> XrplTransaction:
         """Returns the dict as a model
 
-        :return: The XRPLTxResponse of this XRPLTxResponse.  # noqa: E501
-        :rtype: XRPLTxResponse
+        :return: The XrplTransaction of this XrplTransaction.  # noqa: E501
+        :rtype: XrplTransaction
         """
         
-        res = client.get(XRPLTxResponse.get_url(id))
-        return XRPLTxResponse(**res)
+        res = client.get(GetXrplTxRequest.get_url(id))
+        return XrplTransaction(**res)
 
-    # @cached_property
-    def payload_create(cls, payload) -> PostPayloadResponse:
+    # TODO: USE PAYLOAD MODEL
+    def payload_create(
+        cls, 
+        payload: Union[XummPostPayloadBodyJson, XummPostPayloadBodyBlob, XummJsonTransaction],
+        return_errors: bool=True
+    ) -> XummPostPayloadResponse:
         """Returns the dict as a model
 
-        :return: The PostPayloadResponse of this PostPayloadResponse.  # noqa: E501
-        :rtype: PostPayloadResponse
+        :param payload: The payload of this payload_create.
+        :type payload: XummPostPayloadBodyJson | XummPostPayloadBodyBlob | XummJsonTransaction
+        :param return_errors: The return_errors of this payload_create.
+        :type return_errors: bool
+
+        :return: The XummPostPayloadResponse of this XummPostPayloadResponse.  # noqa: E501
+        :rtype: XummPostPayloadResponse
         """
         
-        res = client.post(PostPayloadResponse.post_url(), payload)
-        return PostPayloadResponse(**res)
+        if not return_errors:
+            try:
+                res = client.post(PostPayloadRequest.post_url(), payload)
+                return XummPostPayloadResponse(**res)
+            except:
+                return None
 
-    # @cached_property
-    def payload_cancel(cls, id: str=None) -> DeletePayloadResponse:
+        res = client.post(PostPayloadRequest.post_url(), payload)
+        return XummPostPayloadResponse(**res)
+
+    def payload_cancel(cls, id: str=None) -> XummDeletePayloadResponse:
         """Returns the dict as a model
 
-        :return: The DeletePayloadResponse of this DeletePayloadResponse.  # noqa: E501
-        :rtype: DeletePayloadResponse
+        :return: The XummDeletePayloadResponse of this XummDeletePayloadResponse.  # noqa: E501
+        :rtype: XummDeletePayloadResponse
         """
         
-        res = client.delete(DeletePayloadResponse.delete_url(id))
-        return DeletePayloadResponse(**res)
+        res = client.delete(DeletePayloadRequest.delete_url(id))
+        return XummDeletePayloadResponse(**res)
         
-    # @cached_property
-    def payload_get(cls, id: str=None) -> GetPayloadResponse:
+    def payload_get(cls, id: str=None) -> XummGetPayloadResponse:
         """Returns the dict as a model
 
-        :return: The GetPayloadResponse of this GetPayloadResponse.  # noqa: E501
-        :rtype: GetPayloadResponse
+        :return: The XummGetPayloadResponse of this XummGetPayloadResponse.  # noqa: E501
+        :rtype: XummGetPayloadResponse
         """
         
-        res = client.get(GetPayloadResponse.get_url(id))
-        return GetPayloadResponse(**res)
+        res = client.get(GetPayloadRequest.get_url(id))
+        return XummGetPayloadResponse(**res)
 
-    # @cached_property
-    def storage_set(cls, data):
+    # TODO: USE PAYLOAD MODEL
+    def storage_set(cls, data) -> StorageSetResponse:
         """Returns the dict as a model
 
-        :return: The SetStorageResponse of this SetStorageResponse.  # noqa: E501
-        :rtype: SetStorageResponse
+        :return: The StorageSetResponse of this StorageSetResponse.  # noqa: E501
+        :rtype: StorageSetResponse
         """
         
-        res = client.post(SetStorageResponse.post_url(), data)
-        return SetStorageResponse(**res)
+        res = client.post(StorageSetRequest.post_url(), data)
+        return StorageSetResponse(**res)
 
-    # @cached_property
-    def storage_get(cls):
+    def storage_get(cls) -> StorageGetResponse:
         """Returns the dict as a model
 
-        :return: The GetStorageResponse of this GetStorageResponse.  # noqa: E501
-        :rtype: GetStorageResponse
+        :return: The StorageGetResponse of this StorageGetResponse.  # noqa: E501
+        :rtype: StorageGetResponse
         """
         
-        res = client.get(GetStorageResponse.get_url())
-        return GetStorageResponse(**res)
+        res = client.get(StorageGetRequest.get_url())
+        return StorageGetResponse(**res)
 
-    # @cached_property
-    def storage_delete(cls):
+    def storage_delete(cls) -> StorageDeleteResponse:
         """Returns the dict as a model
 
-        :return: The DeleteStorageResponse of this DeleteStorageResponse.  # noqa: E501
-        :rtype: DeleteStorageResponse
+        :return: The StorageDeleteResponse of this StorageDeleteResponse.  # noqa: E501
+        :rtype: StorageDeleteResponse
         """
         
-        res = client.delete(DeleteStorageResponse.delete_url())
-        return DeleteStorageResponse(**res)
+        res = client.delete(StorageDeleteRequest.delete_url())
+        return StorageDeleteResponse(**res)
 
     def __unicode__(cls):
         return '<{} {}>'.format(cls.__class__.__name__, cls.id)
@@ -178,48 +214,40 @@ class XummSdk(XummResource):
 class CallbackPromise:
 
     def __init__(cls):
-        cls.data = None
+        cls.data: object = None
         
-    def _resolve(cls, resolveData: any):
+    def _resolve(cls, resolveData):
         cls.data = resolveData
         return cls.data
 
     async def _resolved(cls):
         return cls.data
         
+import logging
+
 class XummWs(XummResource):
 
     def refresh_from(cls, **kwargs):
-        cls._callback = None
         cls._conn = None
-        cls._sock = None
+        cls._callback = None
+        cls._mock = True
 
     @classmethod
     async def subscribe(
         cls, 
         client: XummSdk, 
-        payload: Payload, 
+        payload: Union[str, XummPayload, CreatedPayload], 
         callback
     ) -> PayloadSubscription:
+        """Subscribe to a channel
+        :returns: PayloadSubscription
+        """
 
         callback_promise = CallbackPromise()
-
-        # TODO: add this to payload functions
-        def resolve_payload(payload):
-            if isinstance(payload, str):
-                return client.payload_get(payload)
-            if isinstance(payload, Payload):
-                return payload
         
         payload_details = resolve_payload(payload)
 
-        def on_message(ws, msg):
-            json_data: dict(str, object)
-            try:
-                json_data = json.loads(msg)
-            except Exception as e:
-                print('Payload {}: Received message, unable to parse as JSON: {}'.format(payload_details.meta.uuid, e))
-            
+        def on_message(json_data):
             if json_data and cls._callback and 'devapp_fetched' not in json_data:
                 try:
                     kwargs = {
@@ -238,35 +266,32 @@ class XummWs(XummResource):
 
                 except Exception as e:
                     print('Payload {}: Callback exception: {}'.format(payload_details.meta.uuid, e))
-                    raise e
 
-        def on_error(ws, error):
+        def on_error(error):
             raise error
 
-        def on_close(ws, close_status_code, close_msg):
+        # def on_close(ws, close_status_code, close_msg):
+        def on_close(close_status_code, close_msg):
             print('Payload {}: Subscription ended (WebSocket closed)'.format(payload_details.meta.uuid))
 
-        def on_open(ws):
-            cls._sock = ws.sock
+        def on_open(connection):
+            print(connection)
             print('Payload {}: Subscription active (WebSocket opened)'.format(payload_details.meta.uuid))
 
         if payload_details:
-            # self = XummWsClient()
-            # websocket.enableTrace(True)
             cls._callback = callback
-            cls._conn = websocket.WebSocketApp(
-                # 'wss://xumm.app/sign/'.format(payload_details.meta.uuid),
-                # 'wss://xumm.app/sign/'.format(payload),
-                # 'ws://xumm.local/{}'.format(payload_details.meta.uuid),
-                'ws://localhost:8765',
-                on_message = on_message,
+            cls._mock = False
+            cls._conn = WSClient(
+                # server='ws://localhost:8765',
+                # log_level=logging.DEBUG,
+                server='ws://localhost:8765' if cls._mock else 'wss://xumm.app/sign/{}'.format(payload_details.meta.uuid),
+                on_response = on_message,
                 on_error = on_error,
-                on_close = on_close
+                on_close = on_close,
+                on_open = on_open
             )
-            cls._conn.on_open = on_open
-            cls._conn.run_forever()
+            cls._conn.connect()
             
-            cls._conn.sock = cls._sock
             resp = {
                 'payload': payload_details.to_dict(),
                 'resolve': callback_promise._resolve,
@@ -283,9 +308,12 @@ class XummWs(XummResource):
     async def create_subscribe(
         cls, 
         client: XummSdk, 
-        payload: Payload, 
+        payload: CreatedPayload, 
         callback
     ) -> PayloadSubscription:
+        """Create payload and subscribe to a channel
+        :returns: PayloadSubscription
+        """
 
         created_payload = await client.payload_create(payload)
         if created_payload:

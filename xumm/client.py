@@ -25,6 +25,7 @@ def get_env() -> str:
     return env
 
 
+# def get_headers() -> Dict[str: object]:
 def get_headers():
     from xumm import api_key, api_secret
 
