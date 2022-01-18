@@ -1,21 +1,17 @@
-import os
+
 from xumm.resource import XummResource
-import six
-import json
 
-from typing import List, Dict  # noqa: F401
-
-class GetKycStatusRequest(XummResource):
+class KycStatusResource(XummResource):
 
     @classmethod
     def get_url(cls, id):
         """get_url."""
-        return super(GetKycStatusRequest, cls).platform_url() + 'kyc-status/' + id
-
-
-class PostKycStatusRequest(XummResource):
+        return super(KycStatusResource, cls).platform_url() + 'kyc-status/' + id
 
     @classmethod
     def post_url(cls):
         """post_url."""
-        return super(PostKycStatusRequest, cls).platform_url() + 'kyc-status/'
+        return super(KycStatusResource, cls).platform_url() + 'kyc-status/'
+
+    def refresh_from(cls, **kwargs):
+        return cls

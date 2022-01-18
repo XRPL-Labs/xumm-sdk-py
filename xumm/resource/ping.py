@@ -1,14 +1,11 @@
-import os
-from xumm import client
 from xumm.resource import XummResource
-import json
-import time
-import six
 
-
-class PingRequest(XummResource):
+class PingResource(XummResource):
 
     @classmethod
     def get_url(cls):
         """get_url."""
-        return super(PingRequest, cls).platform_url() + 'ping' + '/'
+        return super(PingResource, cls).platform_url() + 'ping' + '/'
+
+    def refresh_from(cls, **kwargs):
+        return cls

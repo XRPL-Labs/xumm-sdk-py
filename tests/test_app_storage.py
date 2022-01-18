@@ -13,7 +13,6 @@ class TestAppStorage(BaseTestConfig):
         xumm.api_key = cls.json_fixtures['api']['key']
         xumm.api_secret = cls.json_fixtures['api']['secret']
         cls.sdk = xumm.XummSdk()
-        cls.ws_sdk = xumm.XummWs()
 
     @patch('xumm.client.requests.post')
     def test_storage_set(cls, mock_post):
@@ -21,7 +20,7 @@ class TestAppStorage(BaseTestConfig):
         
         mock_post.return_value = Mock(status_code=200)
         mock_post.return_value.json.return_value = cls.json_fixtures['storage']['setResponse']
-        result = cls.sdk.storage_set({'name': 'Wietse'})
+        result = cls.sdk.storage.set({'name': 'Wietse'})
         cls.assertEqual(result.to_dict(), cls.json_fixtures['storage']['setResponse'])
     
     @patch('xumm.client.requests.get')
@@ -30,7 +29,7 @@ class TestAppStorage(BaseTestConfig):
 
         mock_get.return_value = Mock(status_code=200)
         mock_get.return_value.json.return_value = cls.json_fixtures['storage']['getResponse']
-        cls.assertEqual(cls.sdk.storage_get().to_dict(), cls.json_fixtures['storage']['getResponse'])
+        cls.assertEqual(cls.sdk.storage.get().to_dict(), cls.json_fixtures['storage']['getResponse'])
 
     @patch('xumm.client.requests.delete')
     def test_storage_delete(cls, mock_delete):
@@ -38,4 +37,4 @@ class TestAppStorage(BaseTestConfig):
 
         mock_delete.return_value = Mock(status_code=200)
         mock_delete.return_value.json.return_value = cls.json_fixtures['storage']['deleteResponse']
-        cls.assertEqual(cls.sdk.storage_delete().to_dict(), cls.json_fixtures['storage']['deleteResponse'])
+        cls.assertEqual(cls.sdk.storage.delete().to_dict(), cls.json_fixtures['storage']['deleteResponse'])

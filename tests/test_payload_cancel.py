@@ -13,7 +13,6 @@ class TestPayloadCancel(BaseTestConfig):
         xumm.api_key = cls.json_fixtures['api']['key']
         xumm.api_secret = cls.json_fixtures['api']['secret']
         cls.sdk = xumm.XummSdk()
-        cls.ws_sdk = xumm.XummWs()
 
     @patch('xumm.client.requests.delete')
     def test_payload_cancel(cls, mock_delete):
@@ -23,7 +22,7 @@ class TestPayloadCancel(BaseTestConfig):
         mock_delete.return_value = Mock(status_code=200)
         mock_delete.return_value.json.return_value = cls.json_fixtures['payload']['cancelled']
         
-        cls.assertEqual(cls.sdk.payload_cancel(payloadId).to_dict(), cls.json_fixtures['payload']['cancelled'])
+        cls.assertEqual(cls.sdk.payload.cancel(payloadId).to_dict(), cls.json_fixtures['payload']['cancelled'])
 
     @patch('xumm.client.requests.delete')
     def test_payload_not_found_null(cls, mock_delete):
@@ -34,7 +33,7 @@ class TestPayloadCancel(BaseTestConfig):
         mock_delete.return_value.json.return_value = cls.json_fixtures['payload']['notfound']
 
         try:
-            cls.sdk.payload_cancel(payloadId)
+            cls.sdk.payload.cancel(payloadId)
             cls.fail("payload_cancel() raised Exception unexpectedly!")
         except Exception as e:
             cls.assertEqual(e.error['reference'], cls.json_fixtures['payload']['notfound']['error']['reference'])
@@ -50,7 +49,7 @@ class TestPayloadCancel(BaseTestConfig):
         mock_delete.return_value.json.return_value = cls.json_fixtures['payload']['notfound']
 
         try:
-            cls.sdk.payload_cancel(payloadId)
+            cls.sdk.payload.cancel(payloadId)
             cls.fail("payload_cancel() raised Exception unexpectedly!")
         except Exception as e:
             cls.assertEqual(e.error['reference'], cls.json_fixtures['payload']['notfound']['error']['reference'])
@@ -65,11 +64,11 @@ class TestPayloadCancel(BaseTestConfig):
         mock_post.return_value = Mock(status_code=200)
         mock_post.return_value.json.return_value = cls.json_fixtures['payload']['created']
 
-        created_payload = cls.sdk.payload_create(test_fixtures.valid_payload())
+        created_payload = cls.sdk.payload.create(test_fixtures.valid_payload())
         if created_payload:
             mock_delete.return_value = Mock(status_code=200)
             mock_delete.return_value.json.return_value = cls.json_fixtures['payload']['cancelled']
-            cls.assertEqual(cls.sdk.payload_cancel(created_payload.uuid).to_dict(), cls.json_fixtures['payload']['cancelled'])
+            cls.assertEqual(cls.sdk.payload.cancel(created_payload.uuid).to_dict(), cls.json_fixtures['payload']['cancelled'])
 
     @patch('xumm.client.requests.delete')
     @patch('xumm.client.requests.get')
@@ -79,8 +78,8 @@ class TestPayloadCancel(BaseTestConfig):
         mock_get.return_value = Mock(status_code=200)
         mock_get.return_value.json.return_value = cls.json_fixtures['payload']['get']
 
-        get_payload = cls.sdk.payload_get(payloadId)
+        get_payload = cls.sdk.payload.get(payloadId)
         if get_payload:
             mock_delete.return_value = Mock(status_code=200)
             mock_delete.return_value.json.return_value = cls.json_fixtures['payload']['cancelled']
-            cls.assertEqual(cls.sdk.payload_cancel(get_payload.meta.uuid).to_dict(), cls.json_fixtures['payload']['cancelled'])
+            cls.assertEqual(cls.sdk.payload.cancel(get_payload.meta.uuid).to_dict(), cls.json_fixtures['payload']['cancelled'])

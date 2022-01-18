@@ -1,29 +1,60 @@
-import os
+#!/usr/bin/env python
+# coding: utf-8
+from xumm import client, error
 from xumm.resource import XummResource
-import six
-import json
-from typing import List, Dict  # noqa: F401
 
+from .types import (
+    StorageSetResponse,
+    StorageGetResponse,
+    StorageDeleteResponse,
+)
 
-class StorageSetRequest(XummResource):
+class StorageResource(XummResource):
 
     @classmethod
     def post_url(cls):
         """post_url."""
-        return super(StorageSetRequest, cls).platform_url() + 'storage' + '/'
-
-
-class StorageGetRequest(XummResource):
+        return super(StorageResource, cls).platform_url() + 'storage' + '/'
 
     @classmethod
     def get_url(cls):
         """get_url."""
-        return super(StorageGetRequest, cls).platform_url() + 'storage' + '/'
-
-
-class StorageDeleteRequest(XummResource):
+        return super(StorageResource, cls).platform_url() + 'storage' + '/'
 
     @classmethod
     def delete_url(cls):
         """delete_url."""
-        return super(StorageDeleteRequest, cls).platform_url() + 'storage' + '/'
+        return super(StorageResource, cls).platform_url() + 'storage' + '/'
+
+    def refresh_from(cls, **kwargs):
+        return cls
+
+    def set(cls, data) -> StorageSetResponse:
+        """Returns the dict as a model
+
+        :return: The StorageSetResponse of this StorageSetResponse.  # noqa: E501
+        :rtype: StorageSetResponse
+        """
+        
+        res = client.post(cls.post_url(), data)
+        return StorageSetResponse(**res)
+
+    def get(cls) -> StorageGetResponse:
+        """Returns the dict as a model
+
+        :return: The StorageGetResponse of this StorageGetResponse.  # noqa: E501
+        :rtype: StorageGetResponse
+        """
+        
+        res = client.get(cls.get_url())
+        return StorageGetResponse(**res)
+
+    def delete(cls) -> StorageDeleteResponse:
+        """Returns the dict as a model
+
+        :return: The StorageDeleteResponse of this StorageDeleteResponse.  # noqa: E501
+        :rtype: StorageDeleteResponse
+        """
+        
+        res = client.delete(cls.delete_url())
+        return StorageDeleteResponse(**res)

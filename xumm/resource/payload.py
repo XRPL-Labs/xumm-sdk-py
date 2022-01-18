@@ -1,35 +1,94 @@
+from cmath import e
 import os
+from typing import Callable, Dict, Union, Any
+from xumm import (
+    client,
+    error
+)
 from xumm.resource import XummResource
-import six
 import json
-
-from typing import List, Dict, Callable, Any  # noqa: F401
+import time
+import re
+import websocket
 from websocket import WebSocketApp
 
-from .types import CreatedPayload, XummPayload
 
-class PostPayloadRequest(XummResource):
+from .types import (
+    CreatedPayload,
+    XummPayload,
+    XummPostPayloadBodyJson,
+    XummPostPayloadBodyBlob,
+    XummJsonTransaction,
+    XummPostPayloadResponse,
+    XummDeletePayloadResponse,
+    XummGetPayloadResponse,
+)
+
+class PayloadResource(XummResource):
 
     @classmethod
     def post_url(cls):
         """post_url."""
-        return super(PostPayloadRequest, cls).platform_url() + 'payload' + '/'
-
-
-class GetPayloadRequest(XummResource):
+        return super(PayloadResource, cls).platform_url() + 'payload' + '/'
 
     @classmethod
     def get_url(cls, id):
         """get_url."""
-        return super(GetPayloadRequest, cls).platform_url() + 'payload' + '/' + id
-
-
-class DeletePayloadRequest(XummResource):
+        return super(PayloadResource, cls).platform_url() + 'payload' + '/' + id
 
     @classmethod
     def delete_url(cls, id):
         """delete_url."""
-        return super(DeletePayloadRequest, cls).platform_url() + 'payload' + '/' + id
+        return super(PayloadResource, cls).platform_url() + 'payload' + '/' + id
+
+    def refresh_from(cls, **kwargs):
+        return cls
+
+    def create(
+        cls, 
+        payload: Union[XummPostPayloadBodyJson, XummPostPayloadBodyBlob, XummJsonTransaction],
+        return_errors: bool=True
+    ) -> XummPostPayloadResponse:
+        """Returns the dict as a model
+
+        :param payload: The payload of this payload_create.
+        :type payload: XummPostPayloadBodyJson | XummPostPayloadBodyBlob | XummJsonTransaction
+        :param return_errors: The return_errors of this payload_create.
+        :type return_errors: bool
+
+        :return: The XummPostPayloadResponse of this XummPostPayloadResponse.  # noqa: E501
+        :rtype: XummPostPayloadResponse
+        """
+        
+        if not return_errors:
+            try:
+                res = client.post(cls.post_url(), payload)
+                return XummPostPayloadResponse(**res)
+            except:
+                return None
+
+        res = client.post(cls.post_url(), payload)
+        return XummPostPayloadResponse(**res)
+    
+    def cancel(cls, id: str=None) -> XummDeletePayloadResponse:
+        """Returns the dict as a model
+
+        :return: The XummDeletePayloadResponse of this XummDeletePayloadResponse.  # noqa: E501
+        :rtype: XummDeletePayloadResponse
+        """
+        
+        res = client.delete(cls.delete_url(id))
+        return XummDeletePayloadResponse(**res)
+        
+    def get(cls, id: str=None) -> XummGetPayloadResponse:
+        """Returns the dict as a model
+
+        :return: The XummGetPayloadResponse of this XummGetPayloadResponse.  # noqa: E501
+        :rtype: XummGetPayloadResponse
+        """
+        
+        res = client.get(cls.get_url(id))
+        return XummGetPayloadResponse(**res)
 
 
 class PayloadSubscription(XummResource):
