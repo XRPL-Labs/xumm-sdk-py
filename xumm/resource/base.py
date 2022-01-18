@@ -56,8 +56,6 @@ class XummSdk(XummResource):
                 'from the Xumm web interface.'
             )
             
-        # getTransaction
-        cls.xrpl_tx = XrplTxResource()
         cls.payload = PayloadResource()
         cls.storage = StorageResource()
 
