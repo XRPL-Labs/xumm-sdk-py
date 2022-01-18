@@ -1,6 +1,7 @@
-import os
-from typing import Callable, Any, Dict  # noqa: F401
+#!/usr/bin/env python
+# coding: utf-8
 
+from typing import Dict  # noqa: F401
 import json
 
 def read_json(path: str) -> Dict[str, object]:

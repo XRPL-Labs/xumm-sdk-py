@@ -32,13 +32,8 @@ class TestPayloadCancel(BaseTestConfig):
         mock_delete.return_value = Mock(status_code=404)
         mock_delete.return_value.json.return_value = cls.json_fixtures['payload']['notfound']
 
-        try:
-            cls.sdk.payload.cancel(payloadId)
-            cls.fail("payload_cancel() raised Exception unexpectedly!")
-        except Exception as e:
-            cls.assertEqual(e.error['reference'], cls.json_fixtures['payload']['notfound']['error']['reference'])
-            cls.assertEqual(e.error['code'], cls.json_fixtures['payload']['notfound']['error']['code'])
-            # cls.assertEqual(response.error['message'], cls.json_fixtures['payload']['notfound']['error']['message'])
+        response = cls.sdk.payload.cancel(payloadId)
+        cls.assertEqual(response, None)
 
     @patch('xumm.client.requests.delete')
     def test_payload_not_found_errors(cls, mock_delete):
@@ -49,7 +44,7 @@ class TestPayloadCancel(BaseTestConfig):
         mock_delete.return_value.json.return_value = cls.json_fixtures['payload']['notfound']
 
         try:
-            cls.sdk.payload.cancel(payloadId)
+            cls.sdk.payload.cancel(payloadId, True)
             cls.fail("payload_cancel() raised Exception unexpectedly!")
         except Exception as e:
             cls.assertEqual(e.error['reference'], cls.json_fixtures['payload']['notfound']['error']['reference'])

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
-from xumm import client, error
+
+from xumm import client
 from xumm.resource import XummResource
 
 from .types import (

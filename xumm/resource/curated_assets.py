@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-from xumm import client, error
+
 from xumm.resource import XummResource
 
 class CuratedAssetsResource(XummResource):

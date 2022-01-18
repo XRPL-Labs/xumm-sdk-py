@@ -37,13 +37,8 @@ class TestPayloadCreate(BaseTestConfig):
         mock_post.return_value = Mock(status_code=400)
         mock_post.return_value.json.return_value = cls.json_fixtures['payload']['error']
 
-        try:
-            cls.sdk.payload.create(test_fixtures.invalid_payload())
-            cls.fail("payload_create() raised Exception unexpectedly!")
-        except Exception as e:
-            cls.assertEqual(e.error['reference'], cls.json_fixtures['payload']['error']['error']['reference'])
-            cls.assertEqual(e.error['code'], cls.json_fixtures['payload']['error']['error']['code'])
-            # cls.assertEqual(e.error['message'], cls.json_fixtures['payload']['error']['error']['message'])
+        response = cls.sdk.payload.create(test_fixtures.invalid_payload())
+        cls.assertEqual(response, None)
 
     @patch('xumm.client.requests.post')
     def test_payload_create_invalid_errors(cls, mock_post):
@@ -53,7 +48,7 @@ class TestPayloadCreate(BaseTestConfig):
         mock_post.return_value.json.return_value = cls.json_fixtures['payload']['error']
 
         try:
-            cls.sdk.payload.create(test_fixtures.invalid_payload())
+            cls.sdk.payload.create(test_fixtures.invalid_payload(), True)
             cls.fail("payload_create() raised Exception unexpectedly!")
         except Exception as e:
             cls.assertEqual(e.error['reference'], cls.json_fixtures['payload']['error']['error']['reference'])

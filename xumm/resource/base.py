@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 import re
 from cmath import e
 from typing import Dict, Union, Any
@@ -6,7 +9,6 @@ from xumm import (
     error
 )
 from xumm.resource import XummResource
-import websocket
 
 from xumm.ws_client import WSClient
 
@@ -18,6 +20,8 @@ from .types import (
     PongResponse,
     CuratedAssetsResponse,
     XrplTransaction,
+    PayloadSubscription,
+    PayloadAndSubscription,
 )
 
 from xumm.resource.ping import PingResource
@@ -123,108 +127,108 @@ class CallbackPromise:
         
 import logging
 
-# class XummWs(XummResource):
+class XummWs(XummResource):
 
-#     def refresh_from(cls, **kwargs):
-#         cls._conn = None
-#         cls._callback = None
-#         cls._mock = True
+    def refresh_from(cls, **kwargs):
+        cls._conn = None
+        cls._callback = None
+        cls._mock = True
 
-#     @classmethod
-#     async def subscribe(
-#         cls, 
-#         client: XummSdk, 
-#         payload: Union[str, XummPayload, CreatedPayload], 
-#         callback
-#     ) -> PayloadSubscription:
-#         """Subscribe to a channel
-#         :returns: PayloadSubscription
-#         """
+    @classmethod
+    async def subscribe(
+        cls, 
+        client: XummSdk, 
+        payload: Union[str, XummPayload, CreatedPayload], 
+        callback
+    ) -> PayloadSubscription:
+        """Subscribe to a channel
+        :returns: PayloadSubscription
+        """
 
-#         callback_promise = CallbackPromise()
+        callback_promise = CallbackPromise()
         
-#         payload_details = resolve_payload(payload)
+        payload_details = resolve_payload(payload)
 
-#         def on_message(json_data):
-#             if json_data and cls._callback and 'devapp_fetched' not in json_data:
-#                 try:
-#                     kwargs = {
-#                         'payload': payload_details.to_dict(),
-#                         'websocket': cls._conn
-#                     }
-#                     callback_result = cls._callback({
-#                         'uuid': payload_details.meta.uuid,
-#                         'data': json_data,
-#                         'resolve': callback_promise._resolve,
-#                         'payload': payload_details
-#                     })
+        def on_message(json_data):
+            if json_data and cls._callback and 'devapp_fetched' not in json_data:
+                try:
+                    kwargs = {
+                        'payload': payload_details.to_dict(),
+                        'websocket': cls._conn
+                    }
+                    callback_result = cls._callback({
+                        'uuid': payload_details.meta.uuid,
+                        'data': json_data,
+                        'resolve': callback_promise._resolve,
+                        'payload': payload_details
+                    })
 
-#                     if callback_result:
-#                         callback_promise._resolve(callback_result)
+                    if callback_result:
+                        callback_promise._resolve(callback_result)
 
-#                 except Exception as e:
-#                     print('Payload {}: Callback exception: {}'.format(payload_details.meta.uuid, e))
+                except Exception as e:
+                    print('Payload {}: Callback exception: {}'.format(payload_details.meta.uuid, e))
 
-#         def on_error(error):
-#             raise error
+        def on_error(error):
+            raise error
 
-#         # def on_close(ws, close_status_code, close_msg):
-#         def on_close(close_status_code, close_msg):
-#             print('Payload {}: Subscription ended (WebSocket closed)'.format(payload_details.meta.uuid))
+        # def on_close(ws, close_status_code, close_msg):
+        def on_close(close_status_code, close_msg):
+            print('Payload {}: Subscription ended (WebSocket closed)'.format(payload_details.meta.uuid))
 
-#         def on_open(connection):
-#             print(connection)
-#             print('Payload {}: Subscription active (WebSocket opened)'.format(payload_details.meta.uuid))
+        def on_open(connection):
+            print(connection)
+            print('Payload {}: Subscription active (WebSocket opened)'.format(payload_details.meta.uuid))
 
-#         if payload_details:
-#             cls._callback = callback
-#             cls._mock = False
-#             cls._conn = WSClient(
-#                 # server='ws://localhost:8765',
-#                 # log_level=logging.DEBUG,
-#                 server='ws://localhost:8765' if cls._mock else 'wss://xumm.app/sign/{}'.format(payload_details.meta.uuid),
-#                 on_response = on_message,
-#                 on_error = on_error,
-#                 on_close = on_close,
-#                 on_open = on_open
-#             )
-#             cls._conn.connect()
+        if payload_details:
+            cls._callback = callback
+            cls._mock = False
+            cls._conn = WSClient(
+                # server='ws://localhost:8765',
+                # log_level=logging.DEBUG,
+                server='ws://localhost:8765' if cls._mock else 'wss://xumm.app/sign/{}'.format(payload_details.meta.uuid),
+                on_response = on_message,
+                on_error = on_error,
+                on_close = on_close,
+                on_open = on_open
+            )
+            cls._conn.connect()
             
-#             resp = {
-#                 'payload': payload_details.to_dict(),
-#                 'resolve': callback_promise._resolve,
-#                 'resolved': callback_promise._resolved,
-#                 'websocket': cls._conn
-#             }
-#             return PayloadSubscription(**resp)
+            resp = {
+                'payload': payload_details.to_dict(),
+                'resolve': callback_promise._resolve,
+                'resolved': callback_promise._resolved,
+                'websocket': cls._conn
+            }
+            return PayloadSubscription(**resp)
 
-#         # throwIfError(payloadDetails)
+        # throwIfError(payloadDetails)
 
-#         # raise ValueError('Could not subscribe: could not fetch payload')
+        # raise ValueError('Could not subscribe: could not fetch payload')
 
-#     @classmethod
-#     async def create_subscribe(
-#         cls, 
-#         client: XummSdk, 
-#         payload: CreatedPayload, 
-#         callback
-#     ) -> PayloadSubscription:
-#         """Create payload and subscribe to a channel
-#         :returns: PayloadSubscription
-#         """
+    @classmethod
+    async def create_subscribe(
+        cls, 
+        client: XummSdk, 
+        payload: CreatedPayload, 
+        callback
+    ) -> PayloadAndSubscription:
+        """Create payload and subscribe to a channel
+        :returns: PayloadAndSubscription
+        """
 
-#         created_payload = await client.payload_create(payload)
-#         if created_payload:
-#             subscription = await cls.subscribe(created_payload, callback)
-#             return {
-#                 'created': created_payload,
-#                 'subscription': subscription
-#             }
-#         raise ValueError('Error creating payload or subscribing to created payload')
+        created_payload = await client.payload_create(payload)
+        if created_payload:
+            subscription = await cls.subscribe(created_payload, callback)
+            return {
+                'created': created_payload,
+                'subscription': subscription
+            }
+        raise ValueError('Error creating payload or subscribing to created payload')
 
-#     @classmethod
-#     def unsubscribe(cls):
-#         """Unsubscribe to a channel
-#         :returns: None
-#         """
-#         cls._conn.close()
+    @classmethod
+    def unsubscribe(cls):
+        """Unsubscribe to a channel
+        :returns: None
+        """
+        cls._conn.close()

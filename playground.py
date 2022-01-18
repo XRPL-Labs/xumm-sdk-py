@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 import asyncio
 import xumm
 from unittest.mock import Mock, patch

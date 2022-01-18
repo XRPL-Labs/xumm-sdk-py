@@ -43,13 +43,8 @@ class TestPayloadGet(BaseTestConfig):
         mock_get.return_value = Mock(status_code=400)
         mock_get.return_value.json.return_value = cls.json_fixtures['payload']['notfound']
 
-        try:
-            cls.sdk.payload.get('00000000-0000-4839-af2f-f794874a80b0')
-            cls.fail("payload_get() raised Exception unexpectedly!")
-        except Exception as e:
-            cls.assertEqual(e.error['reference'], cls.json_fixtures['payload']['notfound']['error']['reference'])
-            cls.assertEqual(e.error['code'], cls.json_fixtures['payload']['notfound']['error']['code'])
-            # cls.assertEqual(e.error['message'], cls.json_fixtures['payload']['error']['error']['message'])
+        response = cls.sdk.payload.get('00000000-0000-4839-af2f-f794874a80b0')
+        cls.assertEqual(response, None)
 
     @patch('xumm.client.requests.get')
     def test_payload_get_invalid_errors(cls, mock_get):
@@ -59,7 +54,7 @@ class TestPayloadGet(BaseTestConfig):
         mock_get.return_value.json.return_value = cls.json_fixtures['payload']['notfound']
 
         try:
-            cls.sdk.payload.get('00000000-0000-4839-af2f-f794874a80b0')
+            cls.sdk.payload.get('00000000-0000-4839-af2f-f794874a80b0', True)
             cls.fail("payload_get() raised Exception unexpectedly!")
         except Exception as e:
             cls.assertEqual(e.error['reference'], cls.json_fixtures['payload']['notfound']['error']['reference'])

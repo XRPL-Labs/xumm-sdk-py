@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 # export * from './xumm-api'
 from .xumm_api import *
 
@@ -26,6 +29,11 @@ from .meta.xrpl_transaction import XrplTransaction
 # export type {PayloadAndSubscription} from './Payload/PayloadAndSubscription'
 # export type {PayloadSubscription} from './Payload/PayloadSubscription'
 # export type {SubscriptionCallbackParams} from './Payload/SubscriptionCallbackParams'
+
+# from .payload.on_payload_event import on_payload_event # TODO: Fix this
+from .payload.payload_and_subscription import PayloadAndSubscription
+from .payload.payload_subscription import PayloadSubscription
+from .payload.subscription_callback_params import SubscriptionCallbackParams # TODO: Review and finish
 
 
 # export type {StorageDeleteResponse} from './Storage/StorageDeleteResponse'
