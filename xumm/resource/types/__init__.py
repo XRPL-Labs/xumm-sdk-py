@@ -11,11 +11,11 @@ from .xumm_api import *
 # export type {RatesResponse} from './Meta/RatesResponse'
 
 # from .meta.any_json import AnyJson # TODO: add whatever is needed here
-from .meta.application_details import ApplicAationDetails
+from .meta.application_details import ApplicationDetails
 from .meta.curated_assets_response import CuratedAssetsResponse
 from .meta.kyc_status_response import (
     KycStatusResponse,
-    PossibleKycStatuses
+    # PossibleKycStatuses
 )
 from .meta.kyc_info_response import KycInfoResponse
 from .meta.pong import PongResponse # TODO: this was renamed...
