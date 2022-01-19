@@ -36,13 +36,12 @@ class StorageSetResponse(XummResource):
         :return: The StorageSetResponse of this StorageSetResponse.  # noqa: E501
         :rtype: StorageSetResponse
         """
-        # print(json.dumps(kwargs, indent=4, sort_keys=True))
         cls._application = None
         cls._stored = None
         cls._data = None
-        cls._application = StorageResponse(**kwargs['application'])
-        cls._stored = kwargs['stored']
-        cls._data = kwargs['data']
+        cls.application = StorageResponse(**kwargs['application'])
+        cls.stored = kwargs['stored']
+        cls.data = kwargs['data']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""

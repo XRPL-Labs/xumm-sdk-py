@@ -29,8 +29,8 @@ class KycInfoResponse(XummResource):
         # print(json.dumps(kwargs, indent=4, sort_keys=True))
         cls._account = None
         cls._kyc_approved = None
-        cls._account = kwargs['account']
-        cls._kyc_approved = kwargs['kycApproved']
+        cls.account = kwargs['account']
+        cls.kyc_approved = kwargs['kycApproved']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""

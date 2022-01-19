@@ -31,9 +31,9 @@ class TxMeta(XummResource):
         cls._transaction_index = None
         cls._transaction_result = None
         cls._delivered_amount = None
-        cls._transaction_index = kwargs['TransactionIndex']
-        cls._transaction_result = kwargs['TransactionResult']
-        cls._delivered_amount = kwargs['delivered_amount']
+        cls.transaction_index = kwargs['TransactionIndex']
+        cls.transaction_result = kwargs['TransactionResult']
+        cls.delivered_amount = kwargs['delivered_amount']
     
     def to_dict(cls):
         """Returns the model properties as a dict"""
@@ -178,16 +178,16 @@ class Transaction(XummResource):
         cls._transaction_type = None
         cls._meta = None
         cls._validated = None
-        cls._account = kwargs['Account']
-        cls._amount = kwargs['Amount']
-        cls._destination = kwargs['Destination']
-        cls._fee = kwargs['Fee']
-        cls._flags = kwargs['Flags']
-        cls._sequence = kwargs['Sequence']
-        cls._signing_pub_key = kwargs['SigningPubKey']
-        cls._transaction_type = kwargs['TransactionType']
-        cls._meta = TxMeta(**kwargs['meta'])
-        cls._validated = kwargs['validated']
+        cls.account = kwargs['Account']
+        cls.amount = kwargs['Amount']
+        cls.destination = kwargs['Destination']
+        cls.fee = kwargs['Fee']
+        cls.flags = kwargs['Flags']
+        cls.sequence = kwargs['Sequence']
+        cls.signing_pub_key = kwargs['SigningPubKey']
+        cls.transaction_type = kwargs['TransactionType']
+        cls.meta = TxMeta(**kwargs['meta'])
+        cls.validated = kwargs['validated']
     
     def to_dict(cls):
         """Returns the model properties as a dict"""
@@ -473,9 +473,9 @@ class BalanceChange(XummResource):
         cls._counterparty = None
         cls._currency = None
         cls._value = None
-        cls._counterparty = kwargs['counterparty']
-        cls._currency = kwargs['currency']
-        cls._value = kwargs['value']
+        cls.counterparty = kwargs['counterparty']
+        cls.currency = kwargs['currency']
+        cls.value = kwargs['value']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
@@ -599,10 +599,10 @@ class XrplTransaction(XummResource):
         cls._balance_changes = None
         cls._node = None
         cls._transaction = None
-        cls._txid = kwargs['txid']
-        cls._balance_changes = {k: [BalanceChange(**b).to_dict() for b in v] for k, v in kwargs['balanceChanges'].items()}
-        cls._node = kwargs['node']
-        cls._transaction = Transaction(**kwargs['transaction'])
+        cls.txid = kwargs['txid']
+        cls.balance_changes = {k: [BalanceChange(**b).to_dict() for b in v] for k, v in kwargs['balanceChanges'].items()}
+        cls.node = kwargs['node']
+        cls.transaction = Transaction(**kwargs['transaction'])
 
     def to_dict(cls):
         """Returns the model properties as a dict"""

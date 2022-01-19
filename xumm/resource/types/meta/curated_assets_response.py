@@ -42,13 +42,13 @@ class Currency(XummResource):
         cls._name = None
         cls._avatar = None
         cls._shortlist = None
-        cls._id = kwargs['id']
-        cls._issuer_id = kwargs['issuer_id']
-        cls._issuer = kwargs['issuer']
-        cls._currency = kwargs['currency']
-        cls._name = kwargs['name']
-        cls._avatar = kwargs['avatar']
-        cls._shortlist = kwargs['shortlist']
+        cls.id = kwargs['id']
+        cls.issuer_id = kwargs['issuer_id']
+        cls.issuer = kwargs['issuer']
+        cls.currency = kwargs['currency']
+        cls.name = kwargs['name']
+        cls.avatar = kwargs['avatar']
+        cls.shortlist = kwargs['shortlist']
     
     def to_dict(cls):
         """Returns the model properties as a dict"""
@@ -269,12 +269,12 @@ class Asset(XummResource):
         cls._avatar = None
         cls._shortlist = None
         cls._currencies = None
-        cls._id = kwargs['id']
-        cls._name = kwargs['name']
-        cls._domain = kwargs['domain']
-        cls._avatar = kwargs['avatar']
-        cls._shortlist = kwargs['shortlist']
-        cls._currencies = {k: Currency(**v) for k, v in kwargs['currencies'].items()}
+        cls.id = kwargs['id']
+        cls.name = kwargs['name']
+        cls.domain = kwargs['domain']
+        cls.avatar = kwargs['avatar']
+        cls.shortlist = kwargs['shortlist']
+        cls.currencies = {k: Currency(**v) for k, v in kwargs['currencies'].items()}
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
@@ -470,9 +470,9 @@ class CuratedAssetsResponse(XummResource):
         cls._issuers = None
         cls._currencies = None
         cls._details = None
-        cls._issuers = kwargs['issuers']
-        cls._currencies = kwargs['currencies']
-        cls._details = {k: Asset(**v) for k, v in kwargs['details'].items()}
+        cls.issuers = kwargs['issuers']
+        cls.currencies = kwargs['currencies']
+        cls.details = {k: Asset(**v) for k, v in kwargs['details'].items()}
 
     def to_dict(cls):
         """Returns the model properties as a dict"""

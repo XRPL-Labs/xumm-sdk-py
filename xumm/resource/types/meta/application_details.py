@@ -25,7 +25,7 @@ class Call(XummResource):
         :rtype: Call
         """
         cls._uuidv4 = None
-        cls._uuidv4 = kwargs['uuidv4']
+        cls.uuidv4 = kwargs['uuidv4']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
@@ -102,14 +102,15 @@ class Application(XummResource):
         :return: The Application of this Application.  # noqa: E501
         :rtype: Application
         """
+        # cls.sanity_check(kwargs)
         cls._name = None
         cls._uuidv4 = None
         cls._webhookurl = None
         cls._disabled = None
-        cls._name = kwargs['name']
-        cls._uuidv4 = kwargs['uuidv4']
-        cls._webhookurl = kwargs['webhookurl']
-        cls._disabled = kwargs['disabled']
+        cls.name = kwargs['name']
+        cls.uuidv4 = kwargs['uuidv4']
+        cls.webhookurl = kwargs['webhookurl']
+        cls.disabled = kwargs['disabled']
     
     def to_dict(cls):
         """Returns the model properties as a dict"""
@@ -289,7 +290,7 @@ class Quota(XummResource):
         """
         cls._ratelimit = None
         if 'ratelimit' in kwargs:
-            cls._ratelimit = kwargs['ratelimit']
+            cls.ratelimit = kwargs['ratelimit']
     
     def to_dict(cls):
         """Returns the model properties as a dict"""
@@ -368,10 +369,9 @@ class ApplicationDetails(XummResource):
         cls._quota = None
         cls._application = None
         cls._call = None
-        cls._quota = Quota(**kwargs['quota'])
-        print(cls._quota.to_dict())
-        cls._application = Application(**kwargs['application'])
-        cls._call = Call(**kwargs['call'])
+        cls.quota = Quota(**kwargs['quota'])
+        cls.application = Application(**kwargs['application'])
+        cls.call = Call(**kwargs['call'])
 
     def to_dict(cls):
         """Returns the model properties as a dict"""

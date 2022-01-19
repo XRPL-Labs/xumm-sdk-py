@@ -110,8 +110,8 @@ class XummSdk(XummResource):
         res = client.get(XrplTxResource.get_url(id))
         return XrplTransaction(**res)
 
-    def __unicode__(cls):
-        return '<{} {}>'.format(cls.__class__.__name__, cls.id)
+    # def __unicode__(cls):
+    #     return '<{} {}>'.format(cls.__class__.__name__, cls.id)
 
 class CallbackPromise:
 

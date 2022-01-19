@@ -36,13 +36,12 @@ class StorageDeleteResponse(XummResource):
         :return: The StorageDeleteResponse of this StorageDeleteResponse.  # noqa: E501
         :rtype: StorageDeleteResponse
         """
-        # print(json.dumps(kwargs, indent=4, sort_keys=True))
         cls._application = None
         cls._stored = None
         cls._data = None
-        cls._application = StorageResponse(**kwargs['application'])
-        cls._stored = kwargs['stored']
-        cls._data = kwargs['data']
+        cls.application = StorageResponse(**kwargs['application'])
+        cls.stored = kwargs['stored']
+        cls.data = kwargs['data']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
@@ -137,7 +136,7 @@ class StorageDeleteResponse(XummResource):
         :param data: The data of this StorageDeleteResponse.
         :type data: Dict[str, object]
         """
-        if data is None:
-            raise ValueError("Invalid value for `data`, must not be `None`")  # noqa: E501
+        # if data is None:
+        #     raise ValueError("Invalid value for `data`, must not be `None`")  # noqa: E501
 
         self._data = data

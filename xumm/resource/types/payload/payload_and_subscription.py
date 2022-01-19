@@ -47,16 +47,14 @@ class PayloadAndSubscription(XummResource):
         :return: The PayloadAndSubscription of this PayloadAndSubscription.  # noqa: E501
         :rtype: PayloadAndSubscription
         """
-        # print(kwargs)
-        # print(json.dumps(kwargs, indent=4, sort_keys=True))
         cls._payload = None
-        cls._payload = XummPayload(**kwargs['payload'])
         cls._resolve = None
-        cls._resolve = kwargs['resolve']
         cls._resolved = None
-        cls._resolved = kwargs['resolved']
         cls._websocket = None
-        cls._websocket = kwargs['websocket']
+        cls.payload = XummPayload(**kwargs['payload'])
+        cls.resolve = kwargs['resolve']
+        cls.resolved = kwargs['resolved']
+        cls.websocket = kwargs['websocket']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""

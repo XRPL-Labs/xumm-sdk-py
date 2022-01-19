@@ -26,9 +26,8 @@ class StorageResponse(XummResource):
         """
         cls._name = None
         cls._uuidv4 = None
-
-        cls._name = kwargs['name']
-        cls._uuidv4 = kwargs['uuidv4']
+        cls.name = kwargs['name']
+        cls.uuidv4 = kwargs['uuidv4']
     
     def to_dict(cls):
         """Returns the model properties as a dict"""
