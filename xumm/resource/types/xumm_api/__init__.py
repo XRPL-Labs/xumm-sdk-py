@@ -69,7 +69,6 @@ xumm_cancel_reason = 'ALREADY_CANCELLED' or 'ALREADY_RESOLVED' or 'ALREADY_OPENE
 # XummJsonTransaction()
 class XummJsonTransaction(XummResource):
     def refresh_from(cls, **kwargs):
-        print()
         cls._kwargs = kwargs
 
     def refresh_from(cls, transaction_type: Union[XummTransactionType, XrplTransactionType]):
@@ -247,7 +246,8 @@ class XummPayloadMeta(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    model_types = {
+
+    required = {
         'exists': True,
         'uuid': True,
         'multisign': True,

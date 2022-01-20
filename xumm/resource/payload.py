@@ -24,6 +24,7 @@ from .types import (
 
 from xumm.ws_client import WSClient
 
+logger = logging.getLogger('app')
 
 class CallbackPromise:
 
@@ -179,19 +180,19 @@ class PayloadResource(XummResource):
                         callback_promise._resolve(callback_result)
 
                 except Exception as e:
-                    print('Payload {}: Callback exception: {}'.format(payload_details.meta.uuid, e))
+                    logger.info('Payload {}: Callback exception: {}'.format(payload_details.meta.uuid, e))
 
         def on_error(error):
-            print('Payload {}: Received message, unable to parse as JSON'.format(payload_details.meta.uuid))
+            logger.info('Payload {}: Received message, unable to parse as JSON'.format(payload_details.meta.uuid))
             cls._conn.disconnect()
             # raise error
 
         # def on_close(ws, close_status_code, close_msg):
         def on_close():
-            print('Payload {}: Subscription ended (WebSocket closed)'.format(payload_details.meta.uuid))
+            logger.info('Payload {}: Subscription ended (WebSocket closed)'.format(payload_details.meta.uuid))
 
         def on_open(connection):
-            print('Payload {}: Subscription active (WebSocket opened)'.format(payload_details.meta.uuid))
+            logger.info('Payload {}: Subscription active (WebSocket opened)'.format(payload_details.meta.uuid))
 
         if payload_details:
             cls._callback = callback

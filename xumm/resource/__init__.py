@@ -48,8 +48,6 @@ class PrintableResource(object):
                 
 
             # Error if value is instance of attribute type
-            print(value)
-            print(is_type)
             if not isinstance(value, is_type):
                 raise ValueError("Invalid value for `{}`, must be a `{}`".format(attr, is_type))
 
