@@ -234,7 +234,7 @@ Instead of providing a `txjson` transaction, a transaction formatted as HEX blob
 sdk.payload.get (
   payload: str | CreatedPayload,
   return_errors: bool = False
-): Callable[XummPayload]>
+): -> Callable[XummPayload]
 ```
 
 To get payload details, status and if resolved & signed: results (transaction, transaction hash, etc.) you can `get()` a payload.
@@ -267,7 +267,7 @@ sdk.payload.get('aaaaaaaa-bbbb-cccc-dddd-1234567890ab', True)
 sdk.payload.create (
   payload: create_payload,
   return_errors: bool = False
-): -> Callable<CreatedPayload | None>
+): -> Callable[CreatedPayload | None]
 ```
 
 To create a payload, a `txjson` XRPL transaction can be provided. Alternatively, a transaction formatted as HEX blob (string) can be provided in a `txblob` property. **See the [intro](#intro) for more information about payloads.** Take a look at the [Developer Docs for more information about payloads](https://xumm.readme.io/docs/your-first-payload).
@@ -301,7 +301,7 @@ Alternatively user routing / instruction flows can be custom built using the QR 
 sdk.payload.cancel (
   payload: str | XummPayload | CreatedPayload,
   return_errors: bool = False
-): -> Callable<DeletedPayload | None>
+): -> Callable[DeletedPayload | None]
 ```
 
 To cancel a payload, provide a payload UUID (string), a `<XummPayload>` (by performing a `sdk.payload.get()` first) or a `<CreatedPayload>` (by using the response of a `sdk.payload.create()` call). By cancelling an existing payload, the payload will be marked as expired and can no longer be opened by users. 
@@ -332,20 +332,20 @@ To subscribe to live payload status updates, the XUMM SDK can setup a WebSocket 
 
 More information about the status update events & sample event data [can be found in the Developer Docs](https://xumm.readme.io/docs/payload-status).
 
-Status updates can be processed by providing a *callback function* to the `ws_sdk.payload_subscribe()` method. Alternatively, the (by the `ws_sdk.payload_subscribe()` method) returned raw websocket can be used to listen for WebSocket `onmessage` events.
+Status updates can be processed by providing a *callback function* to the `ws_sdk.payload.subscribe()` method. Alternatively, the (by the `sdk.payload.subscribe()` method) returned raw websocket can be used to listen for WebSocket `onmessage` events.
 
 The subscription will be closed by either:
 
-- Returning non-void in the *callback function* passed to the `ws_sdk.payload_subscribe()` method
-- Manually calling `<PayloadSubscription>.resolve()` on the object returned by the `ws_sdk.payload_subscribe()` method
+- Returning non-void in the *callback function* passed to the `sdk.payload.subscribe()` method
+- Manually calling `<PayloadSubscription>.resolve()` on the object returned by the `sdk.payload.subscribe()` method
 
 ##### sdk.payload.subscribe
 
 ```python
-ws_sdk.payload.subscribe (
+sdk.payload.subscribe (
   payload: str | XummPayload | CreatedPayload,
   callback?: onPayloadEvent
-): -> Callable<PayloadSubscription>
+): -> Callable[PayloadSubscription]
 ```
 
 If a callback function is not provided, the subscription will stay active until the `<PayloadSubscription>.resolve()` method is called manually, eg. based on handling `<PayloadSubscription>.websocket.onmessage` events.
@@ -375,10 +375,10 @@ Examples:
 ##### sdk.payload.create_subscribe
 
 ```python
-ws_sdk.payload.create_subscribe (
+sdk.payload.create_and_subscribe (
     payload: CreatePayload,
     callback?: onPayloadEvent
-  ): -> Callable<PayloadAndSubscription>
+  ): -> Callable[PayloadAndSubscription]
 ```
 
 The [`<PayloadAndSubscription>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/src/types/Payload/PayloadAndSubscription.ts) object is basically a [`<PayloadSubscription>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/src/types/Payload/PayloadSubscription.ts) object with the created payload results in the `created` property:
@@ -390,18 +390,18 @@ All information that applies on [`sdk.payload.create()`](#sdkpayloadcreate) and 
 
 ## TODO: Debugging (logging)
 
-The XUMM SDK will emit debugging info when invoked with a debug environment variable configured like: `DEBUG=xumm-sdk*` 
+The XUMM SDK will emit debugging info when invoked with a debug environment variable configured like: `DEBUG=xumm-sdk*`
 
 You'll see the XUMM SDK debug messages if you invoke your script instead of this:
 
 ```
-node myApp.js
+python3 playground.js
 ```
 
 like this:
 
 ```
-DEBUG=xumm-sdk* node myApp.js
+DEBUG=xumm-sdk-py* python3 playground.js
 ```
 
 ## Development
@@ -410,7 +410,7 @@ Please note: you most likely just want to **use** the XUMM SDK, to do so, fetch 
 
 If you actually want to change/test/develop/build/contribute (to) the source of the XUMM SDK:
 
-##### TODO: Build
+##### Build
 
 Please note: at least Python version **3.4+** is required!
 
@@ -418,10 +418,10 @@ To build the code, run `python3 install setup.py`.
 
 ##### Lint & test
 
-Lint the code using `python3 -m flake8 --output-file=./logs/linter.txt`, run tests (jest) using `python3 test.py tests/`
+Lint the code using `python3 -m flake8 --output-file=./logs/linter.txt`, run tests (pytest) using `python3 test.py tests/`
 
 ##### TODO: Run development code
 
-Build, run, show debug output & watch `dist/samples/dev.js`, compiled from `samples/dev.ts` using `npm run dev`. The `samples/dev.ts` file is **not included by default**.
+Build, run, show debug output & watch `dist/samples/dev.py`, compiled from `samples/dev.py` using `python3`. The `samples/dev.py` file is **not included by default**.
 
-[Here's a sample `samples/dev.ts` file](https://gist.github.com/WietseWind/e2e9729619872cb736fe29b486e9c623).
+[Here's a sample `samples/dev.py` file](https://gist.github.com/WietseWind/e2e9729619872cb736fe29b486e9c623).
