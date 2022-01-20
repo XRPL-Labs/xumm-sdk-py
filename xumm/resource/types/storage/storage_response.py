@@ -6,9 +6,14 @@ import six
 
 class StorageResponse(XummResource):
 
+    required = {
+        'name': True,
+        'uuidv4': True
+    }
+
     model_types = {
-        'name': 'str',
-        'uuidv4': 'str'
+        'name': str,
+        'uuidv4': str
     }
 
     attribute_map = {
@@ -24,6 +29,7 @@ class StorageResponse(XummResource):
         :return: The StorageResponse of this StorageResponse.  # noqa: E501
         :rtype: StorageResponse
         """
+        cls.sanity_check(kwargs)
         cls._name = None
         cls._uuidv4 = None
         cls.name = kwargs['name']
@@ -33,7 +39,7 @@ class StorageResponse(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):

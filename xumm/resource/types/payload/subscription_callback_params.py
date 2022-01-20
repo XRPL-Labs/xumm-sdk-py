@@ -22,11 +22,18 @@ class SubscriptionCallbackParams(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    required = {
+        'uuid': True,
+        'data': True,
+        'payload': True,
+        'resolve': True,
+    }
+
     model_types = {
-        'uuid': 'str',
-        'data': 'dict(str, any)',
-        'payload': 'XummPayload',
-        'resolve': 'Callable[[Any], Any]',
+        'uuid': str,
+        'data': dict,
+        'payload': dict,
+        'resolve': Callable,
     }
 
     attribute_map = {
@@ -45,6 +52,7 @@ class SubscriptionCallbackParams(XummResource):
         :return: The PayloadSubscription of this PayloadSubscription.  # noqa: E501
         :rtype: PayloadSubscription
         """
+        cls.sanity_check(kwargs)
         cls._uuid = None
         cls._data = None
         cls._payload = None

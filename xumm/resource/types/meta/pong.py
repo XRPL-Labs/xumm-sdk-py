@@ -9,16 +9,20 @@ from .application_details import ApplicationDetails
 
 class PongResponse(XummResource):
 
+    required = {
+        'pong': True,
+        'auth': True
+    }
+
     model_types = {
-        'pong': 'bool',
-        'auth': 'ApplicationDetails'
+        'pong': bool,
+        'auth': dict
     }
 
     attribute_map = {
         'pong': 'pong',
         'auth': 'auth',
     }
-        
 
     def refresh_from(cls, **kwargs):
         """Returns the dict as a model
@@ -28,7 +32,7 @@ class PongResponse(XummResource):
         :return: The PongResponse of this PongResponse.  # noqa: E501
         :rtype: PongResponse
         """
-        # print(json.dumps(kwargs, indent=4, sort_keys=True))
+        cls.sanity_check(kwargs)
         cls._pong = None
         cls._auth = None
         cls.pong = kwargs['pong']
@@ -38,7 +42,7 @@ class PongResponse(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):

@@ -23,12 +23,21 @@ class PayloadAndSubscription(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+
+    required = {
+        'created': True,
+        'payload': True,
+        'resolve': True,
+        'resolved': True,
+        'websocket': True,
+    }
+
     model_types = {
-        'created': 'CreatedPayload',
-        'payload': 'XummPayload',
-        'resolve': 'Callable[[Any], Any]',
-        'resolved': 'Callable[[Any], Any]',
-        'websocket': 'WSClient',
+        'created': dict,
+        'payload': dict,
+        'resolve': Callable,
+        'resolved': Callable,
+        'websocket': WSClient,
     }
 
     attribute_map = {
@@ -47,6 +56,7 @@ class PayloadAndSubscription(XummResource):
         :return: The PayloadAndSubscription of this PayloadAndSubscription.  # noqa: E501
         :rtype: PayloadAndSubscription
         """
+        cls.sanity_check(kwargs)
         cls._payload = None
         cls._resolve = None
         cls._resolved = None
@@ -60,7 +70,7 @@ class PayloadAndSubscription(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if attr == 'websocket' or attr == 'resolve':
