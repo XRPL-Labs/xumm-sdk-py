@@ -33,30 +33,29 @@ class PrintableResource(object):
 
             # Use the attribute map for RECEIVING json data (Camelcase)
             attr = cls.attribute_map[_attr]
-            
+
             # Error if attribute not in json and attribute in required
             if attr not in kwargs and attr in cls.required:
-                raise ValueError("Invalid value for `{}`, must not be `None`".format(attr))
+                raise ValueError("Invalid value for `{}`, must not be `None`".format(attr))  # noqa: E501
 
             # Skip option attributes if non exists in json
             if attr not in kwargs and attr not in cls.required:
                 continue
-            
+
             # set value for attribute
             value = kwargs[attr]
 
             # Skip nullable attributes if empty json, list or None
-            if attr in cls.nullable and value == {} or value == [] or value == None or value == '':
+            if attr in cls.nullable and value == {} or value == [] or value is None or value == '':  # noqa: E501
                 continue
-                
 
             # Error if value is instance of attribute type
             if not isinstance(value, is_type):
-                raise ValueError("Invalid value for `{}`, must be a `{}`".format(attr, is_type))
+                raise ValueError("Invalid value for `{}`, must be a `{}`".format(attr, is_type))  # noqa: E501
 
-            # Error if attribute is required and value is None: 2x of ^^^ Prod Delete in final
+            # Error if attribute is required and value is None: 2x of ^^^ Prod Delete in final  # noqa: E501
             if attr in cls.required and value is None:
-                raise ValueError("Invalid value for `{}`, must not be `None`".format(attr))
+                raise ValueError("Invalid value for `{}`, must not be `None`".format(attr))  # noqa: E501
 
     # def from_dict(self):
     #     """Returns the model properties as a dict

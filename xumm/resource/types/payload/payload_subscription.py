@@ -15,6 +15,7 @@ from ..xumm_api import XummGetPayloadResponse as XummPayload
 #   websocket: WebSocket
 # }
 
+
 class PayloadSubscription(XummResource):
     """
     Attributes:
@@ -43,7 +44,6 @@ class PayloadSubscription(XummResource):
         'resolve': 'resolve',
         'websocket': 'websocket',
     }
-        
 
     def refresh_from(cls, **kwargs):
         """Returns the dict as a model
@@ -116,7 +116,7 @@ class PayloadSubscription(XummResource):
             raise ValueError("Invalid value for `payload`, must not be `None`")  # noqa: E501
 
         cls._payload = payload
-        
+
     @property
     def resolved(cls) -> Callable[[Any], Any]:
         """Gets the resolved of this PayloadSubscription.

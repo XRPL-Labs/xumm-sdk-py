@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-from urllib import request
 from xumm.resource import XummResource
 import six
 from typing import Union, List, Dict, Callable, Any  # noqa: F401
@@ -15,7 +14,6 @@ class Currency(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-
     required = {
         'id': True,
         'issuer_id': True,
@@ -69,7 +67,7 @@ class Currency(XummResource):
         cls.name = kwargs['name']
         cls.avatar = kwargs['avatar']
         cls.shortlist = kwargs['shortlist']
-    
+
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
@@ -264,7 +262,6 @@ class Asset(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-
     required = {
         'id': True,
         'name': True,
@@ -312,7 +309,9 @@ class Asset(XummResource):
         cls.domain = kwargs['domain']
         cls.avatar = kwargs['avatar']
         cls.shortlist = kwargs['shortlist']
-        cls.currencies = {k: Currency(**v) for k, v in kwargs['currencies'].items()}
+        cls.currencies = {
+            k: Currency(**v) for k, v in kwargs['currencies'].items()
+        }
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
@@ -489,7 +488,6 @@ class CuratedAssetsResponse(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-
     required = {
         'issuers': True,
         'currencies': True,

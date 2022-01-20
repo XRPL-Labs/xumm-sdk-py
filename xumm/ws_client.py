@@ -14,12 +14,13 @@ from websocket import (
     WebSocketApp
 )
 
+
 class WSClient(Thread):
     """
     Higher level of APIs are provided.
     The interface is like JavaScript WebSocket object.
     """
-    def __init__(cls, server=None, timeout=None, log_level=None, *args, **kwargs):
+    def __init__(cls, server=None, timeout=None, log_level=None, *args, **kwargs):  # noqa: E501
         """
         Args:
             server: rippled node url.
@@ -28,19 +29,20 @@ class WSClient(Thread):
             on_open: callable object which is called at opening websocket.
             on_reconnect: callable object which is called at reconnecting
             on_error: callable object which is called when we get error.
-            on_close: callable object which is called when closed the connection.
-            on_response: callback object which is called when we recieve message
+            on_close: callable object which is called when closed the connection.  # noqa: E501
+            on_response: callback object which is called when we recieve message  # noqa: E501
         """
 
         # assing any callback method
         available_callbacks = [
             'on_open',
             'on_reconnect',
-            'on_close','on_error',
+            'on_close',
+            'on_error',
             'on_response'
-       ]
+        ]
 
-        for key,value in kwargs.items():
+        for key, value in kwargs.items():
             if(key in available_callbacks):
                 setattr(cls, key, value)
 
@@ -78,7 +80,7 @@ class WSClient(Thread):
 
         # Logging stuff
         cls.log = logging.getLogger(cls.__module__)
-        logging.basicConfig(stream=sys.stdout, format="[%(filename)s:%(lineno)s - %(funcName)10s() : %(message)s")
+        logging.basicConfig(stream=sys.stdout, format="[%(filename)s:%(lineno)s - %(funcName)10s() : %(message)s")  # noqa: E501
         if log_level == logging.DEBUG:
             enableTrace(True)
         cls.log.setLevel(level=log_level if log_level else logging.ERROR)
@@ -87,7 +89,7 @@ class WSClient(Thread):
         Thread.__init__(cls)
         cls.daemon = False
 
-    def connect(cls, nowait = True):
+    def connect(cls, nowait: bool = True):
         """
         Simulate cls.start(), run the main thread
         :return:
@@ -152,8 +154,7 @@ class WSClient(Thread):
 
         while cls.reconnect_required.is_set():
             if not cls.disconnect_called.is_set():
-                cls.log.info("Attempting to connect again in %s seconds."
-                              % cls.reconnect_interval)
+                cls.log.info("Attempting to connect again in {} seconds.".format(cls.reconnect_interval))  # noqa: E501
                 cls.state = "unavailable"
                 time.sleep(cls.reconnect_interval)
 
@@ -187,7 +188,7 @@ class WSClient(Thread):
 
         try:
             data = json.loads(raw)
-        except json.JSONDecodeError as e:
+        except json.JSONDecodeError:
             cls.log.info("Unknown Response.")
             return
 
@@ -281,8 +282,7 @@ class WSClient(Thread):
             cls.pong_received = False
         else:
             # reconnect
-            cls.log.debug("Pong not received in time."
-                           "Issuing reconnect..")
+            cls.log.debug("Pong not received in time. Issuing reconnect..")  # noqa: E501
             cls.reconnect()
 
     def _connection_timed_out(cls):
@@ -335,4 +335,4 @@ class WSClient(Thread):
                     t.setDaemon(True)
                     t.start()
             except Exception as e:
-                cls.log.error("error from callback {}: {}".format(_callback, e))
+                cls.log.error("error from callback {}: {}".format(_callback, e))  # noqa: E501

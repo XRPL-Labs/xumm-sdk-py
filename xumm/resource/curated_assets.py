@@ -9,7 +9,7 @@ class CuratedAssetsResource(XummResource):
     @classmethod
     def get_url(cls):
         """get_url."""
-        return super(CuratedAssetsResource, cls).platform_url() + 'curated_assets' + '/'
+        return super(CuratedAssetsResource, cls).platform_url() + 'curated_assets' + '/'  # noqa: E501
 
     def refresh_from(cls, **kwargs):
         return cls

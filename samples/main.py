@@ -6,6 +6,7 @@ import xumm
 import logging
 logger = logging.getLogger('app')
 
+
 def main():
 
     try:

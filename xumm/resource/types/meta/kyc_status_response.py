@@ -14,7 +14,6 @@ class KycStatusResponse(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-
     required = {
         'kyc_status': True,
         'possible_statuses': True,
@@ -29,7 +28,6 @@ class KycStatusResponse(XummResource):
         'kyc_status': 'kycStatus',
         'possible_statuses': 'possibleStatuses'
     }
-        
 
     def refresh_from(cls, **kwargs):
         """Returns the dict as a model
@@ -111,7 +109,7 @@ class KycStatusResponse(XummResource):
         """Sets the possible_statuses of this KycStatusResponse.
 
 
-        :param possible_statuses: The possible_statuses of this KycStatusResponse.
+        :param possible_statuses: The possible_statuses of this KycStatusResponse.    # noqa: E501
         :type possible_statuses: bool
         """
         if possible_statuses is None:

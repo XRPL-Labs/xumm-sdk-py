@@ -9,7 +9,7 @@ class KycStatusResource(XummResource):
     @classmethod
     def get_url(cls, id):
         """get_url."""
-        return super(KycStatusResource, cls).platform_url() + 'kyc-status/' + id
+        return super(KycStatusResource, cls).platform_url() + 'kyc-status/' + id  # noqa: E501
 
     @classmethod
     def post_url(cls):

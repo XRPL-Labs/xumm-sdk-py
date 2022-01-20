@@ -6,6 +6,7 @@ import xumm
 
 # https://gist.github.com/WietseWind/1afaf3a23b8ea18ded526bbbf1b577dd
 
+
 async def main():
 
     payload_by_uuid = '289e9ae-7d5d-4d5f-b89c-18633112ce09'

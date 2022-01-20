@@ -2,8 +2,7 @@
 # coding: utf-8
 
 import re
-from cmath import e
-from typing import Dict, Union, Any
+from typing import Union, List, Dict, Callable, Any  # noqa: F401
 from xumm import (
     client,
     error
@@ -43,7 +42,7 @@ class XummSdk(XummResource):
                 '"xumm.api_secret = <API-SECRET>"). You can generate API keys '
                 'from the Xumm web interface.'
             )
-            
+
         cls.payload = PayloadResource()
         cls.storage = StorageResource()
 
@@ -53,11 +52,11 @@ class XummSdk(XummResource):
         :return: The PongResponse of this PongResponse.  # noqa: E501
         :rtype: PongResponse
         """
-        
+
         res = client.get(PingResource.get_url())
         return PongResponse(**res)
 
-    def get_kyc_status(cls, id: str=None) -> Union[KycInfoResponse, KycStatusResponse]:
+    def get_kyc_status(cls, id: str = None) -> Union[KycInfoResponse, KycStatusResponse]:  # noqa: E501
         """Returns the dict as a model
 
         :return: The kyc_status of this kyc_status.  # noqa: E501
@@ -80,16 +79,16 @@ class XummSdk(XummResource):
         :return: The CuratedAssetsResponse of this CuratedAssetsResponse.  # noqa: E501
         :rtype: CuratedAssetsResponse
         """
-        
+
         res = client.get(CuratedAssetsResource.get_url())
         return CuratedAssetsResponse(**res)
 
-    def get_transaction(cls, id: str=None) -> XrplTransaction:
+    def get_transaction(cls, id: str = None) -> XrplTransaction:
         """Returns the dict as a model
 
         :return: The XrplTransaction of this XrplTransaction.  # noqa: E501
         :rtype: XrplTransaction
         """
-        
+
         res = client.get(XrplTxResource.get_url(id))
         return XrplTransaction(**res)

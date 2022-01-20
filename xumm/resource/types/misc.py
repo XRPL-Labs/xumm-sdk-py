@@ -969,7 +969,6 @@ class Application(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-
     required = {
         'name': True,
         'description': True,
@@ -1012,7 +1011,6 @@ class Application(XummResource):
         cls._disabled = None
         cls._icon_url = None
         cls._issued_user_token = None
-
         cls._name = kwargs['name']
         if 'description' in kwargs:
             cls._description = kwargs['description']
@@ -1023,7 +1021,7 @@ class Application(XummResource):
             cls._icon_url = kwargs['icon_url']
         if 'issued_user_token' in kwargs:
             cls._issued_user_token = kwargs['issued_user_token']
-    
+
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
@@ -1192,7 +1190,6 @@ class Result(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-
     required = {
         'cancelled': True,
         'reason': True
@@ -1305,7 +1302,6 @@ class Refs(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-
     required = {
         'qr_png': True,
         'qr_matrix': True,
@@ -1326,7 +1322,7 @@ class Refs(XummResource):
         'qr_uri_quality_opts': 'qr_uri_quality_opts',
         'websocket_status': 'websocket_status'
     }
-        
+
     def refresh_from(cls, **kwargs):
         """Returns the dict as a model
 
@@ -1344,7 +1340,7 @@ class Refs(XummResource):
         cls.qr_matrix = kwargs['qr_matrix']
         cls.qr_uri_quality_opts = kwargs['qr_uri_quality_opts']
         cls.websocket_status = kwargs['websocket_status']
-        
+
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
@@ -1372,7 +1368,7 @@ class Refs(XummResource):
                 result[key] = value
 
         return {k: v for k, v in result.items() if v is not None}
-    
+
     @property
     def qr_png(cls) -> str:
         """Gets the qr_png of this Refs.
@@ -1474,7 +1470,6 @@ class Next(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-
     required = {
         'always': True
     }
@@ -1486,7 +1481,7 @@ class Next(XummResource):
     attribute_map = {
         'always': 'always'
     }
-        
+
     def refresh_from(cls, **kwargs):
         """Returns the dict as a model
 

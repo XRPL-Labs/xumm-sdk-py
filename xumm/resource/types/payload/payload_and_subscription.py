@@ -15,6 +15,7 @@ from ..xumm_api import (
 #   created: CreatedPayload
 # }
 
+
 class PayloadAndSubscription(XummResource):
     """
     Attributes:
@@ -23,7 +24,6 @@ class PayloadAndSubscription(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-
     required = {
         'created': True,
         'payload': True,
@@ -46,7 +46,6 @@ class PayloadAndSubscription(XummResource):
         'resolved': 'resolved',
         'websocket': 'websocket',
     }
-        
 
     def refresh_from(cls, **kwargs):
         """Returns the dict as a model
@@ -165,7 +164,7 @@ class PayloadAndSubscription(XummResource):
             raise ValueError("Invalid value for `resolve`, must not be `None`")  # noqa: E501
 
         cls._resolve = resolve
-        
+
     @property
     def resolved(cls) -> Callable[[Any], Any]:
         """Gets the resolved of this PayloadAndSubscription.

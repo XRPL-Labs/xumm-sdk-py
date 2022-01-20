@@ -7,6 +7,7 @@ from typing import Union, List, Dict, Callable, Any  # noqa: F401
 
 from .application_details import ApplicationDetails
 
+
 class PongResponse(XummResource):
     """
     Attributes:
@@ -15,7 +16,6 @@ class PongResponse(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-
     required = {
         'pong': True,
         'auth': True
@@ -95,7 +95,7 @@ class PongResponse(XummResource):
             raise ValueError("Invalid value for `pong`, must not be `None`")  # noqa: E501
 
         cls._pong = pong
-    
+
     @property
     def auth(cls) -> ApplicationDetails:
         """Gets the auth of this PongResponse.

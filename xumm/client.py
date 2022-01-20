@@ -107,7 +107,7 @@ def handle_request_error(e: ConnectionError):
     raise error.APIConnectionError(msg)
 
 
-def handle_error_code(json: Dict[str, object], status_code: int, headers: Dict[str, object]):
+def handle_error_code(json: Dict[str, object], status_code: int, headers: Dict[str, object]):  # noqa: E501
     if status_code == 400:
         err = json.get('error', 'Bad request')
         raise error.InvalidRequestError(err, status_code, headers)
@@ -125,7 +125,7 @@ def handle_error_code(json: Dict[str, object], status_code: int, headers: Dict[s
         raise error.APIError(err, status_code, headers)
 
 
-def handle_parse_error(e: ValueError, status_code: int, headers: Dict[str, object]):
+def handle_parse_error(e: ValueError, status_code: int, headers: Dict[str, object]):  # noqa: E501
     err = '{}: {}'.format(type(e).__name__, e)
     msg = 'Error parsing Xumm JSON response. \n\n{}'.format(err)
     raise error.APIError(msg, status_code, headers)

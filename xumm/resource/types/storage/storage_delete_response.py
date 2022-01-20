@@ -7,6 +7,7 @@ from typing import Union, List, Dict, Callable, Any  # noqa: F401
 
 from .storage_response import StorageResponse
 
+
 class StorageDeleteResponse(XummResource):
     """
     Attributes:
@@ -32,7 +33,6 @@ class StorageDeleteResponse(XummResource):
         'stored': 'stored',
         'data': 'data',
     }
-        
 
     def refresh_from(cls, **kwargs):
         """Returns the dict as a model
