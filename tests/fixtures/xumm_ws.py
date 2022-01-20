@@ -17,9 +17,6 @@ json_fixtures = read_json('./tests/fixtures/xumm_api.json')
 async def start_server(ws, path):
     try:
         print('MOCK SOCKET OPEN: {}'.format(ws.open))
-        
-        # received = await ws.recv()
-        # print('RECEIVED: {}'.format(received))
 
         await asyncio.sleep(1)
 
@@ -36,16 +33,15 @@ async def start_server(ws, path):
         await ws.send(json.dumps(test_fixtures.subscription_updates()['rejected']))
         print('SENT REJECTED')
 
-        # await ws.close()
     except KeyboardInterrupt as e:
         ws.close()
         
     except Exception as e:
         print('on_open Error: {}'.format(e))
-        ws.close()
+        # ws.close()
 
+async def main():
+    async with websockets.serve(start_server, "localhost", 8765):
+        await asyncio.Future()  # run forever
 
-def start():
-    websockets.serve(start_server, 'localhost', 8765)
-    asyncio.get_event_loop().run_until_complete(mock_ws)
-    asyncio.get_event_loop().run_forever()
+asyncio.run(main())
