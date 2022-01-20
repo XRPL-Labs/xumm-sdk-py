@@ -26,23 +26,34 @@ class PrintableResource(object):
     def sanity_check(cls, kwargs):
         """Runs a sanity check on the model"""
 
-        for attr, is_type in six.iteritems(cls.model_types):
+        for _attr, is_type in six.iteritems(cls.model_types):
+
+            # Use the attribute map for RECEIVING json data (Camelcase)
+            attr = cls.attribute_map[_attr]
+            
+            # Error if attribute not in json and attribute in required
             if attr not in kwargs and attr in cls.required:
                 raise ValueError("Invalid value for `{}`, must not be `None`".format(attr))
 
-            if attr not in kwargs and attr in cls.nullable:
+            # Skip option attributes if non exists in json
+            if attr not in kwargs and attr not in cls.required:
                 continue
             
+            # set value for attribute
             value = kwargs[attr]
 
-            if attr in cls.nullable and value == {} or value == None:
+            # Skip nullable attributes if empty json, list or None
+            if attr in cls.nullable and value == {} or value == [] or value == None or value == '':
                 continue
                 
 
-            # validate type if required
+            # Error if value is instance of attribute type
+            print(value)
+            print(is_type)
             if not isinstance(value, is_type):
                 raise ValueError("Invalid value for `{}`, must be a `{}`".format(attr, is_type))
 
+            # Error if attribute is required and value is None: 2x of ^^^ Prod Delete in final
             if attr in cls.required and value is None:
                 raise ValueError("Invalid value for `{}`, must not be `None`".format(attr))
 

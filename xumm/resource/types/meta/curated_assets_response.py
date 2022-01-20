@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+from urllib import request
 from xumm.resource import XummResource
 import six
 from typing import Union, List, Dict, Callable, Any  # noqa: F401
@@ -8,16 +9,27 @@ from typing import Union, List, Dict, Callable, Any  # noqa: F401
 
 class Currency(XummResource):
 
-    model_types = {
-        'id': 'int',
-        'issuer_id': 'int',
-        'issuer': 'str',
-        'currency': 'str',
-        'name': 'str',
-        'avatar': 'str',
-        'shortlist': 'int'
+    required = {
+        'id': True,
+        'issuer_id': True,
+        'issuer': True,
+        'currency': True,
+        'name': True,
+        'avatar': True,
+        'shortlist': True
     }
-    attribute_list = {
+
+    model_types = {
+        'id': int,
+        'issuer_id': int,
+        'issuer': str,
+        'currency': str,
+        'name': str,
+        'avatar': str,
+        'shortlist': int
+    }
+
+    attribute_map = {
         'id': 'id',
         'issuer_id': 'issuer_id',
         'issuer': 'issuer',
@@ -35,6 +47,7 @@ class Currency(XummResource):
         :return: The Currency of this Currency.  # noqa: E501
         :rtype: Currency
         """
+        cls.sanity_check(kwargs)
         cls._id = None
         cls._issuer_id = None
         cls._issuer = None
@@ -54,9 +67,9 @@ class Currency(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
-            attr = cls.attribute_list[attr]
+            attr = cls.attribute_map[attr]
             if isinstance(value, list):
                 result[attr] = list(map(
                     lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
@@ -238,15 +251,25 @@ class Currency(XummResource):
 
 class Asset(XummResource):
 
-    model_types = {
-        'id': 'int',
-        'name': 'str',
-        'domain': 'str',
-        'avatar': 'str',
-        'shortlist': 'int',
-        'currencies': 'dict(str, Currency)'
+    required = {
+        'id': True,
+        'name': True,
+        'domain': True,
+        'avatar': True,
+        'shortlist': True,
+        'currencies': True
     }
-    attribute_list = {
+
+    model_types = {
+        'id': int,
+        'name': str,
+        'domain': str,
+        'avatar': str,
+        'shortlist': int,
+        'currencies': dict
+    }
+
+    attribute_map = {
         'id': 'id',
         'name': 'name',
         'domain': 'domain',
@@ -263,6 +286,7 @@ class Asset(XummResource):
         :return: The Asset of this Asset.  # noqa: E501
         :rtype: Asset
         """
+        cls.sanity_check(kwargs)
         cls._id = None
         cls._name = None
         cls._domain = None
@@ -280,10 +304,10 @@ class Asset(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             print(attr)
-            attr = cls.attribute_list[attr]
+            attr = cls.attribute_map[attr]
             if isinstance(value, list):
                 result[attr] = list(map(
                     lambda x: x.to_dict() if hasattr(x, "to_dict") else x,

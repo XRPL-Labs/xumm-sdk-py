@@ -14,7 +14,7 @@ import xumm
 import asyncio
 
 import pytest
-# @pytest.mark.skip(reason="Using Prod Cert")
+@pytest.mark.skip(reason="Using Prod Cert")
 class TestPayloadSubscribe(BaseTestConfig):
 
     @classmethod
