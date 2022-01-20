@@ -161,7 +161,7 @@ class PayloadSubscription(XummResource):
 
 
         :return: The websocket of this PayloadSubscription.
-        :rtype: Payload
+        :rtype: WSClient
         """
         return cls._websocket
 
@@ -171,7 +171,7 @@ class PayloadSubscription(XummResource):
 
 
         :param websocket: The websocket of this PayloadSubscription.
-        :type meta: Payload
+        :type meta: WSClient
         """
         if websocket is None:
             raise ValueError("Invalid value for `websocket`, must not be `None`")  # noqa: E501
