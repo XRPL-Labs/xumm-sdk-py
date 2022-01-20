@@ -20,7 +20,7 @@ class TestTypes(BaseTestConfig):
                 "disabled": 0
             },
             "call": {
-            "uuidv4": "2904b05f-5b37-4f3e-a624-940ad817943c"
+                "uuidv4": "2904b05f-5b37-4f3e-a624-940ad817943c"
             }
         }
         cls.assertEqual(ApplicationDetails(**dict).to_dict(), dict)
@@ -37,7 +37,7 @@ class TestTypes(BaseTestConfig):
                 "disabled": 0
             },
             "call": {
-            "uuidv4": "2904b05f-5b37-4f3e-a624-940ad817943c"
+                "uuidv4": "2904b05f-5b37-4f3e-a624-940ad817943c"
             }
         }
         try:
