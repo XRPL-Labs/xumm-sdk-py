@@ -469,6 +469,13 @@ from typing import Union, List, Dict, Callable, Any  # noqa: F401
 
 
 class BalanceChange(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
 
     required = {
         'counterparty': True,
@@ -597,8 +604,14 @@ class BalanceChange(XummResource):
         cls._value = value
 
 class XrplTransaction(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
 
-    # Review..
     required = {
         'txid': True,
         'node': True,

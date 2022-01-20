@@ -7,6 +7,13 @@ from typing import Union, List, Dict, Callable, Any  # noqa: F401
 
 
 class Call(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
 
     required = {
         'uuidv4': True
@@ -84,6 +91,13 @@ class Call(XummResource):
         cls._uuidv4 = uuidv4
 
 class Application(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
 
     required = {
         'name': True,
@@ -283,6 +297,13 @@ class Application(XummResource):
         cls._icon_url = icon_url
 
 class Quota(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
 
     model_types = {
         'ratelimit': str
@@ -358,6 +379,13 @@ class Quota(XummResource):
 
 
 class ApplicationDetails(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
 
     required = {
         'quota': True,

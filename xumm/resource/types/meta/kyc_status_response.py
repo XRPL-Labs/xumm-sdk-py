@@ -7,6 +7,13 @@ from typing import Union, List, Dict, Callable, Any  # noqa: F401
 
 
 class KycStatusResponse(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
 
     required = {
         'kyc_status': True,

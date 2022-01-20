@@ -5,6 +5,13 @@ from xumm.resource import XummResource
 import six
 
 class StorageResponse(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
 
     required = {
         'name': True,
