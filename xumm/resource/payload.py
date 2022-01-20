@@ -24,12 +24,14 @@ from .types import (
 
 from xumm.ws_client import WSClient
 
+logger = logging.getLogger('app')
+
 
 class CallbackPromise:
 
     def __init__(cls):
         cls.data: object = None
-        
+
     def _resolve(cls, resolveData):
         cls.data = resolveData
         return cls.data
@@ -52,12 +54,12 @@ class PayloadResource(XummResource):
     @classmethod
     def get_url(cls, id):
         """get_url."""
-        return super(PayloadResource, cls).platform_url() + 'payload' + '/' + id
+        return super(PayloadResource, cls).platform_url() + 'payload' + '/' + id  # noqa: E501
 
     @classmethod
     def delete_url(cls, id):
         """delete_url."""
-        return super(PayloadResource, cls).platform_url() + 'payload' + '/' + id
+        return super(PayloadResource, cls).platform_url() + 'payload' + '/' + id  # noqa: E501
 
     def refresh_from(cls, **kwargs):
         return cls
@@ -78,9 +80,13 @@ class PayloadResource(XummResource):
 
     @classmethod
     def create(
-        cls, 
-        payload: Union[XummPostPayloadBodyJson, XummPostPayloadBodyBlob, XummJsonTransaction],
-        return_errors: bool=False
+        cls,
+        payload: Union[
+            XummPostPayloadBodyJson,
+            XummPostPayloadBodyBlob,
+            XummJsonTransaction
+        ],
+        return_errors: bool = False
     ) -> XummPostPayloadResponse:
         """Returns the dict as a model
 
@@ -92,22 +98,22 @@ class PayloadResource(XummResource):
         :return: The XummPostPayloadResponse of this XummPostPayloadResponse.  # noqa: E501
         :rtype: XummPostPayloadResponse
         """
-        
+
         if not return_errors:
             try:
                 res = client.post(cls.post_url(), payload)
                 return XummPostPayloadResponse(**res)
-            except:
+            except:  # noqa: E722
                 return None
 
         res = client.post(cls.post_url(), payload)
         return XummPostPayloadResponse(**res)
-    
+
     @classmethod
     def cancel(
-        cls, 
-        id: str=None,
-        return_errors: bool=False
+        cls,
+        id: str = None,
+        return_errors: bool = False
     ) -> XummDeletePayloadResponse:
         """Returns the dict as a model
 
@@ -119,17 +125,17 @@ class PayloadResource(XummResource):
             try:
                 res = client.delete(cls.delete_url(id))
                 return XummDeletePayloadResponse(**res)
-            except:
+            except:  # noqa: E722
                 return None
-        
+
         res = client.delete(cls.delete_url(id))
         return XummDeletePayloadResponse(**res)
-        
+
     @classmethod
     def get(
-        cls, 
-        id: str=None,
-        return_errors: bool=False
+        cls,
+        id: str = None,
+        return_errors: bool = False
     ) -> XummGetPayloadResponse:
         """Returns the dict as a model
 
@@ -141,16 +147,16 @@ class PayloadResource(XummResource):
             try:
                 res = client.get(cls.get_url(id))
                 return XummGetPayloadResponse(**res)
-            except:
+            except:  # noqa: E722
                 return None
-        
+
         res = client.get(cls.get_url(id))
         return XummGetPayloadResponse(**res)
 
     @classmethod
     async def subscribe(
-        cls, 
-        payload: Union[str, XummPayload, CreatedPayload], 
+        cls,
+        payload: Union[str, XummPayload, CreatedPayload],
         callback
     ) -> PayloadSubscription:
         """Subscribe to a channel
@@ -158,16 +164,16 @@ class PayloadResource(XummResource):
         """
 
         callback_promise = CallbackPromise()
-        
+
         payload_details = cls.resolve_payload(payload)
 
         def on_message(json_data):
-            if json_data and cls._callback and 'devapp_fetched' not in json_data:
+            if json_data and cls._callback and 'devapp_fetched' not in json_data:  # noqa: E501
                 try:
-                    kwargs = {
-                        'payload': payload_details.to_dict(),
-                        'websocket': cls._conn
-                    }
+                    # kwargs = {
+                    #     'payload': payload_details.to_dict(),
+                    #     'websocket': cls._conn
+                    # }
                     callback_result = cls._callback({
                         'uuid': payload_details.meta.uuid,
                         'data': json_data,
@@ -179,32 +185,32 @@ class PayloadResource(XummResource):
                         callback_promise._resolve(callback_result)
 
                 except Exception as e:
-                    print('Payload {}: Callback exception: {}'.format(payload_details.meta.uuid, e))
+                    logger.info('Payload {}: Callback exception: {}'.format(payload_details.meta.uuid, e))  # noqa: E501
 
         def on_error(error):
-            print('Payload {}: Received message, unable to parse as JSON'.format(payload_details.meta.uuid))
+            logger.info('Payload {}: Received message, unable to parse as JSON'.format(payload_details.meta.uuid))  # noqa: E501
             cls._conn.disconnect()
             # raise error
 
         # def on_close(ws, close_status_code, close_msg):
         def on_close():
-            print('Payload {}: Subscription ended (WebSocket closed)'.format(payload_details.meta.uuid))
+            logger.info('Payload {}: Subscription ended (WebSocket closed)'.format(payload_details.meta.uuid))  # noqa: E501
 
         def on_open(connection):
-            print('Payload {}: Subscription active (WebSocket opened)'.format(payload_details.meta.uuid))
+            logger.info('Payload {}: Subscription active (WebSocket opened)'.format(payload_details.meta.uuid))  # noqa: E501
 
         if payload_details:
             cls._callback = callback
             cls._conn = WSClient(
                 log_level=logging.ERROR if cls.mock else logging.ERROR,
-                server='ws://localhost:8765' if getattr(cls, '_mock') == True else 'wss://xumm.app/sign/{}'.format(payload_details.meta.uuid),
-                on_response = on_message,
-                on_error = on_error,
-                on_close = on_close,
-                on_open = on_open
+                server='ws://localhost:8765' if getattr(cls, '_mock') is True else 'wss://xumm.app/sign/{}'.format(payload_details.meta.uuid),  # noqa: E501
+                on_response=on_message,
+                on_error=on_error,
+                on_close=on_close,
+                on_open=on_open
             )
             cls._conn.connect()
-            
+
             resp = {
                 'payload': payload_details.to_dict(),
                 'resolve': callback_promise._resolve,
@@ -232,7 +238,7 @@ class PayloadResource(XummResource):
                 'created': created_payload,
                 'subscription': subscription
             }
-        raise ValueError('Error creating payload or subscribing to created payload')
+        raise ValueError('Error creating payload or subscribing to created payload')  # noqa: E501
 
     @classmethod
     def unsubscribe(cls):

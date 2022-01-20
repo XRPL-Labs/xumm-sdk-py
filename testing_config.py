@@ -5,13 +5,10 @@ from unittest import TestCase
 
 from xumm.util import read_json
 
-import xumm
-
 
 class BaseTestConfig(TestCase):
 
     sdk = None
-    ws_sdk = None
     json_fixtures = {}
 
     @classmethod

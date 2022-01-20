@@ -14,6 +14,7 @@ from ..xumm_api import XummGetPayloadResponse as XummPayload
 #   payload: XummPayload
 # }
 
+
 class SubscriptionCallbackParams(XummResource):
     """
     Attributes:
@@ -42,7 +43,6 @@ class SubscriptionCallbackParams(XummResource):
         'payload': 'payload',
         'resolve': 'resolve',
     }
-        
 
     def refresh_from(cls, **kwargs):
         """Returns the dict as a model

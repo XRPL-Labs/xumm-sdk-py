@@ -10,6 +10,7 @@ from .types import (
     StorageDeleteResponse,
 )
 
+
 class StorageResource(XummResource):
 
     @classmethod
@@ -36,7 +37,7 @@ class StorageResource(XummResource):
         :return: The StorageSetResponse of this StorageSetResponse.  # noqa: E501
         :rtype: StorageSetResponse
         """
-        
+
         res = client.post(cls.post_url(), data)
         return StorageSetResponse(**res)
 
@@ -46,7 +47,7 @@ class StorageResource(XummResource):
         :return: The StorageGetResponse of this StorageGetResponse.  # noqa: E501
         :rtype: StorageGetResponse
         """
-        
+
         res = client.get(cls.get_url())
         return StorageGetResponse(**res)
 
@@ -56,6 +57,6 @@ class StorageResource(XummResource):
         :return: The StorageDeleteResponse of this StorageDeleteResponse.  # noqa: E501
         :rtype: StorageDeleteResponse
         """
-        
+
         res = client.delete(cls.delete_url())
         return StorageDeleteResponse(**res)

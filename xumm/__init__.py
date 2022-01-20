@@ -11,5 +11,4 @@ env = 'production'
 
 from xumm.resource.base import (  # noqa
     XummSdk,
-    # XummWs,
 )

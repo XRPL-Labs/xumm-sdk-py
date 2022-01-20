@@ -412,13 +412,13 @@ If you actually want to change/test/develop/build/contribute (to) the source of 
 
 ##### TODO: Build
 
-Please note: at least Python version **3.4+** is required!
+Please note: at least Python version **3.6+** is required!
 
-To build the code, run `python3 install setup.py`.
+To build the code, run `python setup.py install`.
 
 ##### Lint & test
 
-Lint the code using `python3 -m flake8 --output-file=./logs/linter.txt`, run tests (jest) using `python3 test.py tests/`
+Lint the code using `python3 -m flake8 --output-file=./logs/linter.txt --exclude="./samples/, ./build/, ./tests/"`, run tests (jest) using `python3 test.py tests/`
 
 ##### TODO: Run development code
 

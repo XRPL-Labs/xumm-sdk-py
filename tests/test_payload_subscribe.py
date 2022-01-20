@@ -4,8 +4,8 @@ import time
 from testing_config import BaseTestConfig
 from tests.fixtures import (
     xumm_api as test_fixtures,
-    xumm_ws,
 )
+from tests.fixtures.xumm_ws import main as ws_main
 from unittest.mock import Mock, patch
 from xumm.ws_client import WSClient
 from typing import Callable
@@ -23,6 +23,7 @@ class TestPayloadSubscribe(BaseTestConfig):
         xumm.api_key = cls.json_fixtures['api']['key']
         xumm.api_secret = cls.json_fixtures['api']['secret']
         cls.sdk = xumm.XummSdk()
+        # asyncio.run(ws_main())
 
     def tearDown(cls):
         print('TEAR DOWN TEST')

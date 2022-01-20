@@ -1,14 +1,19 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-from urllib import request
 from xumm.resource import XummResource
 import six
 from typing import Union, List, Dict, Callable, Any  # noqa: F401
 
 
 class Currency(XummResource):
-
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
     required = {
         'id': True,
         'issuer_id': True,
@@ -62,7 +67,7 @@ class Currency(XummResource):
         cls.name = kwargs['name']
         cls.avatar = kwargs['avatar']
         cls.shortlist = kwargs['shortlist']
-    
+
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
@@ -250,7 +255,13 @@ class Currency(XummResource):
 
 
 class Asset(XummResource):
-
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
     required = {
         'id': True,
         'name': True,
@@ -298,7 +309,9 @@ class Asset(XummResource):
         cls.domain = kwargs['domain']
         cls.avatar = kwargs['avatar']
         cls.shortlist = kwargs['shortlist']
-        cls.currencies = {k: Currency(**v) for k, v in kwargs['currencies'].items()}
+        cls.currencies = {
+            k: Currency(**v) for k, v in kwargs['currencies'].items()
+        }
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
@@ -306,7 +319,6 @@ class Asset(XummResource):
 
         for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
-            print(attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
                 result[attr] = list(map(
@@ -469,18 +481,30 @@ class Asset(XummResource):
 
 
 class CuratedAssetsResponse(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
+    required = {
+        'issuers': True,
+        'currencies': True,
+        'details': True
+    }
 
     model_types = {
-        'issuers': 'list[str]',
-        'currencies': 'list[str]',
-        'details': 'dict(str, Asset)'
+        'issuers': list,
+        'currencies': list,
+        'details': dict
     }
-    attribute_list = {
+
+    attribute_map = {
         'issuers': 'issuers',
         'currencies': 'currencies',
         'details': 'details'
     }
-        
 
     def refresh_from(cls, **kwargs):
         """Returns the dict as a model
@@ -490,7 +514,7 @@ class CuratedAssetsResponse(XummResource):
         :return: The CuratedAssetsResponse of this CuratedAssetsResponse.  # noqa: E501
         :rtype: CuratedAssetsResponse
         """
-        # print(json.dumps(kwargs, indent=4, sort_keys=True))
+        cls.sanity_check(kwargs)
         cls._issuers = None
         cls._currencies = None
         cls._details = None
@@ -502,9 +526,9 @@ class CuratedAssetsResponse(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
-            attr = cls.attribute_list[attr]
+            attr = cls.attribute_map[attr]
             if isinstance(value, list):
                 result[attr] = list(map(
                     lambda x: x.to_dict() if hasattr(x, "to_dict") else x,

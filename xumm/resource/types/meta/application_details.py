@@ -7,7 +7,13 @@ from typing import Union, List, Dict, Callable, Any  # noqa: F401
 
 
 class Call(XummResource):
-
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
     required = {
         'uuidv4': True
     }
@@ -83,8 +89,15 @@ class Call(XummResource):
 
         cls._uuidv4 = uuidv4
 
-class Application(XummResource):
 
+class Application(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
     required = {
         'name': True,
         'uuidv4': True,
@@ -123,7 +136,7 @@ class Application(XummResource):
         cls.uuidv4 = kwargs['uuidv4']
         cls.webhookurl = kwargs['webhookurl']
         cls.disabled = kwargs['disabled']
-    
+
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
@@ -282,8 +295,15 @@ class Application(XummResource):
 
         cls._icon_url = icon_url
 
-class Quota(XummResource):
 
+class Quota(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
     model_types = {
         'ratelimit': str
     }
@@ -304,7 +324,7 @@ class Quota(XummResource):
         cls._ratelimit = None
         if 'ratelimit' in kwargs:
             cls.ratelimit = kwargs['ratelimit']
-    
+
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
@@ -358,7 +378,13 @@ class Quota(XummResource):
 
 
 class ApplicationDetails(XummResource):
-
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
     required = {
         'quota': True,
         'application': True,

@@ -7,7 +7,13 @@ from typing import Union, List, Dict, Callable, Any  # noqa: F401
 
 
 class KycInfoResponse(XummResource):
-
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
     required = {
         'account': True,
         'kyc_approved': True,
@@ -22,7 +28,7 @@ class KycInfoResponse(XummResource):
         'account': 'account',
         'kyc_approved': 'kycApproved'
     }
-        
+
     def refresh_from(cls, **kwargs):
         """Returns the dict as a model
 

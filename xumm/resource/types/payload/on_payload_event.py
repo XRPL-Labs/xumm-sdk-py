@@ -3,4 +3,4 @@
 
 # import type {SubscriptionCallbackParams} from './SubscriptionCallbackParams'
 
-# export type onPayloadEvent = (subscriptionCallback: SubscriptionCallbackParams) => unknown | Promise<unknown> | void
+# export type onPayloadEvent = (subscriptionCallback: SubscriptionCallbackParams) => unknown | Promise<unknown> | void  # noqa: E501

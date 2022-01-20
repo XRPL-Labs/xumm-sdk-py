@@ -5,6 +5,7 @@ from xumm.resource import XummResource
 import six
 from typing import Union, List, Dict, Callable, Any  # noqa: F401
 
+
 class ReturnUrl(XummResource):
     """
     Attributes:
@@ -13,9 +14,14 @@ class ReturnUrl(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    required = {
+        'app': True,
+        'web': True
+    }
+
     model_types = {
-        'app': 'str',
-        'web': 'str'
+        'app': str,
+        'web': str
     }
 
     attribute_map = {
@@ -31,6 +37,7 @@ class ReturnUrl(XummResource):
         :return: The ReturnUrl of this ReturnUrl.  # noqa: E501
         :rtype: ReturnUrl
         """
+        cls.sanity_check(kwargs)
         cls._app = None
         cls._web = None
         if 'app' in kwargs:
@@ -108,6 +115,7 @@ class ReturnUrl(XummResource):
 
         self._web = web
 
+
 class Options(XummResource):
     """
     Attributes:
@@ -116,10 +124,16 @@ class Options(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    required = {
+        'submit': True,
+        'expire': True,
+        'return_url': True
+    }
+
     model_types = {
-        'submit': 'bool',
-        'expire': 'int',
-        'return_url': 'ReturnUrl'
+        'submit': bool,
+        'expire': int,
+        'return_url': dict
     }
 
     attribute_map = {
@@ -147,7 +161,7 @@ class Options(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -249,15 +263,26 @@ class Response(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    required = {
+        'hex': True,
+        'txid': True,
+        'resolved_at': True,
+        'dispatched_to': True,
+        'dispatched_result': True,
+        'dispatched_nodetype': True,
+        'multisign_account': True,
+        'account': True
+    }
+
     model_types = {
-        'hex': 'str',
-        'txid': 'str',
-        'resolved_at': 'str',
-        'dispatched_to': 'str',
-        'dispatched_result': 'str',
-        'dispatched_nodetype': 'str',
-        'multisign_account': 'str',
-        'account': 'str'
+        'hex': str,
+        'txid': str,
+        'resolved_at': str,
+        'dispatched_to': str,
+        'dispatched_result': str,
+        'dispatched_nodetype': str,
+        'multisign_account': str,
+        'account': str
     }
 
     attribute_map = {
@@ -279,6 +304,7 @@ class Response(XummResource):
         :return: The Response of this Response.  # noqa: E501
         :rtype: Response
         """
+        cls.sanity_check(kwargs)
         cls._hex = None
         cls._txid = None
         cls._resolved_at = None
@@ -308,7 +334,7 @@ class Response(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -516,6 +542,7 @@ class Response(XummResource):
 
         cls._account = account
 
+
 class RequestJson(XummResource):
     """
     Attributes:
@@ -524,9 +551,13 @@ class RequestJson(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    required = {
+        'transaction_type': True,
+        'sign_in': True
+    }
     model_types = {
-        'transaction_type': 'str',
-        'sign_in': 'bool'
+        'transaction_type': str,
+        'sign_in': bool
     }
 
     attribute_map = {
@@ -542,6 +573,7 @@ class RequestJson(XummResource):
         :return: The RequestJson of this RequestJson.  # noqa: E501
         :rtype: RequestJson
         """
+        cls.sanity_check(kwargs)
         cls._transaction_type = None
         cls._sign_in = None
         cls.transaction_type = kwargs['transaction_type']
@@ -621,6 +653,7 @@ class RequestJson(XummResource):
 
         cls._sign_in = sign_in
 
+
 class Payload(XummResource):
     """
     Attributes:
@@ -629,16 +662,28 @@ class Payload(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    required = {
+        'tx_type': True,
+        'tx_destination': True,
+        'tx_destination_tag': True,
+        'request_json': True,
+        'origintype': True,
+        'signmethod': True,
+        'created_at': True,
+        'expires_at': True,
+        'expires_in_seconds': True
+    }
+
     model_types = {
-        'tx_type': 'str',
-        'tx_destination': 'str',
-        'tx_destination_tag': 'str',
-        'request_json': 'RequestJson',
-        'origintype': 'str',
-        'signmethod': 'str',
-        'created_at': 'str',
-        'expires_at': 'str',
-        'expires_in_seconds': 'int'
+        'tx_type': str,
+        'tx_destination': str,
+        'tx_destination_tag': str,
+        'request_json': dict,
+        'origintype': str,
+        'signmethod': str,
+        'created_at': str,
+        'expires_at': str,
+        'expires_in_seconds': int
     }
 
     attribute_map = {
@@ -661,6 +706,7 @@ class Payload(XummResource):
         :return: The Payload of this Payload.  # noqa: E501
         :rtype: Payload
         """
+        cls.sanity_check(kwargs)
         cls._tx_type = None
         cls._tx_destination = None
         cls._tx_destination_tag = None
@@ -684,7 +730,7 @@ class Payload(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -916,14 +962,29 @@ class Payload(XummResource):
 
 
 class Application(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
+    required = {
+        'name': True,
+        'description': True,
+        'uuidv4': True,
+        'disabled': True,
+        'icon_url': True,
+        'issued_user_token': True
+    }
 
     model_types = {
-        'name': 'str',
-        'description': 'str',
-        'uuidv4': 'str',
-        'disabled': 'int',
-        'icon_url': 'str',
-        'issued_user_token': 'str'
+        'name': str,
+        'description': str,
+        'uuidv4': str,
+        'disabled': int,
+        'icon_url': str,
+        'issued_user_token': str
     }
 
     attribute_map = {
@@ -943,13 +1004,13 @@ class Application(XummResource):
         :return: The Application of this Application.  # noqa: E501
         :rtype: Application
         """
+        cls.sanity_check(kwargs)
         cls._name = None
         cls._description = None
         cls._uuidv4 = None
         cls._disabled = None
         cls._icon_url = None
         cls._issued_user_token = None
-
         cls._name = kwargs['name']
         if 'description' in kwargs:
             cls._description = kwargs['description']
@@ -960,12 +1021,12 @@ class Application(XummResource):
             cls._icon_url = kwargs['icon_url']
         if 'issued_user_token' in kwargs:
             cls._issued_user_token = kwargs['issued_user_token']
-    
+
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -1129,9 +1190,14 @@ class Result(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    required = {
+        'cancelled': True,
+        'reason': True
+    }
+
     model_types = {
-        'cancelled': 'bool',
-        'reason': 'str'
+        'cancelled': bool,
+        'reason': str
     }
 
     attribute_map = {
@@ -1147,14 +1213,17 @@ class Result(XummResource):
         :return: The Result of this Result.  # noqa: E501
         :rtype: Result
         """
-        cls._cancelled = kwargs['cancelled']
-        cls._reason = kwargs['reason']
+        cls.sanity_check(kwargs)
+        cls._cancelled = None
+        cls._reason = None
+        cls.cancelled = kwargs['cancelled']
+        cls.reason = kwargs['reason']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -1233,12 +1302,18 @@ class Refs(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    required = {
+        'qr_png': True,
+        'qr_matrix': True,
+        'qr_uri_quality_opts': True,
+        'websocket_status': True
+    }
 
     model_types = {
-        'qr_png': 'str',
-        'qr_matrix': 'str',
-        'qr_uri_quality_opts': 'str',
-        'websocket_status': 'str'
+        'qr_png': str,
+        'qr_matrix': str,
+        'qr_uri_quality_opts': str,
+        'websocket_status': str
     }
 
     attribute_map = {
@@ -1247,7 +1322,7 @@ class Refs(XummResource):
         'qr_uri_quality_opts': 'qr_uri_quality_opts',
         'websocket_status': 'websocket_status'
     }
-        
+
     def refresh_from(cls, **kwargs):
         """Returns the dict as a model
 
@@ -1256,16 +1331,21 @@ class Refs(XummResource):
         :return: The Refs of this Refs.  # noqa: E501
         :rtype: Refs
         """
-        cls._qr_png = kwargs['qr_png']
-        cls._qr_matrix = kwargs['qr_matrix']
-        cls._qr_uri_quality_opts = kwargs['qr_uri_quality_opts']
-        cls._websocket_status = kwargs['websocket_status']
-        
+        cls.sanity_check(kwargs)
+        cls._qr_png = None
+        cls._qr_matrix = None
+        cls._qr_uri_quality_opts = None
+        cls._websocket_status = None
+        cls.qr_png = kwargs['qr_png']
+        cls.qr_matrix = kwargs['qr_matrix']
+        cls.qr_uri_quality_opts = kwargs['qr_uri_quality_opts']
+        cls.websocket_status = kwargs['websocket_status']
+
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -1288,7 +1368,7 @@ class Refs(XummResource):
                 result[key] = value
 
         return {k: v for k, v in result.items() if v is not None}
-    
+
     @property
     def qr_png(cls) -> str:
         """Gets the qr_png of this Refs.
@@ -1390,15 +1470,18 @@ class Next(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    required = {
+        'always': True
+    }
 
     model_types = {
-        'always': 'str'
+        'always': str
     }
 
     attribute_map = {
         'always': 'always'
     }
-        
+
     def refresh_from(cls, **kwargs):
         """Returns the dict as a model
 
@@ -1407,13 +1490,15 @@ class Next(XummResource):
         :return: The Next of this Next.  # noqa: E501
         :rtype: Next
         """
-        cls._always = kwargs['always']
+        cls.sanity_check(kwargs)
+        cls._always = None
+        cls.always = kwargs['always']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):

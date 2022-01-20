@@ -7,6 +7,7 @@ from typing import Union, List, Dict, Callable, Any  # noqa: F401
 
 from .storage_response import StorageResponse
 
+
 class StorageGetResponse(XummResource):
     """
     Attributes:
@@ -29,7 +30,6 @@ class StorageGetResponse(XummResource):
         'application': 'application',
         'data': 'data',
     }
-        
 
     def refresh_from(cls, **kwargs):
         """Returns the dict as a model

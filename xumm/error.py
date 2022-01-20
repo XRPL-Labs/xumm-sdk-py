@@ -3,12 +3,13 @@
 
 from typing import Dict  # noqa: F401
 
+
 class RPCError(Exception):
     def __init__(
-        cls, 
-        error: str, 
-        status_code: int=None, 
-        headers: Dict[str, object]=None
+        cls,
+        error: str,
+        status_code: int = None,
+        headers: Dict[str, object] = None
     ):
         super(RPCError, cls).__init__(error)
 

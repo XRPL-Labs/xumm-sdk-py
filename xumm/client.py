@@ -9,12 +9,12 @@ from typing import List, Dict  # noqa: F401
 from requests.exceptions import ConnectionError
 
 from xumm import (
-    api_version, 
-    api_base, 
+    api_base,
     error,
 )
 
-def build_url(endpoint: str=None) -> str:
+
+def build_url(endpoint: str = None) -> str:
     url = api_base
 
     if endpoint:
@@ -28,12 +28,9 @@ def get_env() -> str:
     return env
 
 
-# def get_headers() -> Dict[str: object]:
+# def get_headers() -> Dict[str, object]:
 def get_headers():
     from xumm import api_key, api_secret
-
-    print(api_key)
-    print(api_secret)
 
     if api_key is None:
         raise error.AuthenticationError(
@@ -58,7 +55,6 @@ def get_headers():
 
 def get(url: str):
     try:
-        print(url)
         res = requests.get(url, headers=get_headers())
     except Exception as e:
         handle_request_error(e)
@@ -72,9 +68,9 @@ def post(url: str, data: Dict[str, object]):
         handle_request_error(e)
     return handle_response(res)
 
+
 def delete(url: str):
     try:
-        print(url)
         res = requests.delete(url, headers=get_headers())
     except Exception as e:
         handle_request_error(e)
@@ -111,7 +107,7 @@ def handle_request_error(e: ConnectionError):
     raise error.APIConnectionError(msg)
 
 
-def handle_error_code(json: Dict[str, object], status_code: int, headers: Dict[str, object]):
+def handle_error_code(json: Dict[str, object], status_code: int, headers: Dict[str, object]):  # noqa: E501
     if status_code == 400:
         err = json.get('error', 'Bad request')
         raise error.InvalidRequestError(err, status_code, headers)
@@ -129,7 +125,7 @@ def handle_error_code(json: Dict[str, object], status_code: int, headers: Dict[s
         raise error.APIError(err, status_code, headers)
 
 
-def handle_parse_error(e: ValueError, status_code: int, headers: Dict[str, object]):
+def handle_parse_error(e: ValueError, status_code: int, headers: Dict[str, object]):  # noqa: E501
     err = '{}: {}'.format(type(e).__name__, e)
     msg = 'Error parsing Xumm JSON response. \n\n{}'.format(err)
     raise error.APIError(msg, status_code, headers)
