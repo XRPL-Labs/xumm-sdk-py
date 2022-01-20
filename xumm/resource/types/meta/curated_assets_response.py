@@ -502,7 +502,7 @@ class CuratedAssetsResponse(XummResource):
         'details': dict
     }
 
-    attribute_list = {
+    attribute_map = {
         'issuers': 'issuers',
         'currencies': 'currencies',
         'details': 'details'
@@ -528,9 +528,9 @@ class CuratedAssetsResponse(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
-            attr = cls.attribute_list[attr]
+            attr = cls.attribute_map[attr]
             if isinstance(value, list):
                 result[attr] = list(map(
                     lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
