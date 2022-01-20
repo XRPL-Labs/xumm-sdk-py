@@ -26,6 +26,7 @@ from xumm.ws_client import WSClient
 
 logger = logging.getLogger('app')
 
+
 class CallbackPromise:
 
     def __init__(cls):

@@ -3,6 +3,7 @@
 
 from xumm.resource import XummResource
 
+
 class PingResource(XummResource):
 
     @classmethod

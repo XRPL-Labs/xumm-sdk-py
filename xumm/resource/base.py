@@ -11,15 +11,11 @@ from xumm import (
 from xumm.resource import XummResource
 
 from .types import (
-    CreatedPayload,
-    XummPayload,
     KycInfoResponse,
     KycStatusResponse,
     PongResponse,
     CuratedAssetsResponse,
     XrplTransaction,
-    PayloadSubscription,
-    PayloadAndSubscription,
 )
 
 from xumm.resource.ping import PingResource
@@ -28,6 +24,7 @@ from xumm.resource.curated_assets import CuratedAssetsResource
 from xumm.resource.xrpl_tx import XrplTxResource
 from xumm.resource.payload import PayloadResource
 from xumm.resource.storage import StorageResource
+
 
 class XummSdk(XummResource):
 
@@ -96,6 +93,3 @@ class XummSdk(XummResource):
         
         res = client.get(XrplTxResource.get_url(id))
         return XrplTransaction(**res)
-
-    # def __unicode__(cls):
-    #     return '<{} {}>'.format(cls.__class__.__name__, cls.id)

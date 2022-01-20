@@ -1,9 +1,12 @@
+#!/usr/bin/env python
+# coding: utf-8
+
 from __future__ import unicode_literals
 from xumm import client
 
 import pprint
-
 import six
+
 
 class PrintableResource(object):
 

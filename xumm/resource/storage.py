@@ -10,6 +10,7 @@ from .types import (
     StorageDeleteResponse,
 )
 
+
 class StorageResource(XummResource):
 
     @classmethod

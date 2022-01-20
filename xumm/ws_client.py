@@ -4,8 +4,7 @@
 import logging
 import time
 import json
-import sys, inspect
-import random, uuid
+import sys
 from multiprocessing import Queue
 from threading import Thread, Event, Timer
 from typing import Dict, Any
@@ -14,8 +13,6 @@ from websocket import (
     enableTrace,
     WebSocketApp
 )
-
-from .error import ResponseFormatError, TimeoutError
 
 class WSClient(Thread):
     """
@@ -37,7 +34,9 @@ class WSClient(Thread):
 
         # assing any callback method
         available_callbacks = [
-            'on_open','on_reconnect', 'on_close','on_error',
+            'on_open',
+            'on_reconnect',
+            'on_close','on_error',
             'on_response'
        ]
 
@@ -88,7 +87,7 @@ class WSClient(Thread):
         Thread.__init__(cls)
         cls.daemon = False
 
-    def connect(cls, nowait=True):
+    def connect(cls, nowait = True):
         """
         Simulate cls.start(), run the main thread
         :return:

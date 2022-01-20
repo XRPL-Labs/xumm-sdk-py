@@ -3,6 +3,7 @@
 
 from xumm.resource import XummResource
 
+
 class CuratedAssetsResource(XummResource):
 
     @classmethod

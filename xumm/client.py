@@ -9,12 +9,12 @@ from typing import List, Dict  # noqa: F401
 from requests.exceptions import ConnectionError
 
 from xumm import (
-    api_version, 
-    api_base, 
+    api_base,
     error,
 )
 
-def build_url(endpoint: str=None) -> str:
+
+def build_url(endpoint: str = None) -> str:
     url = api_base
 
     if endpoint:
@@ -28,7 +28,7 @@ def get_env() -> str:
     return env
 
 
-# def get_headers() -> Dict[str: object]:
+# def get_headers() -> Dict[str, object]:
 def get_headers():
     from xumm import api_key, api_secret
 
@@ -67,6 +67,7 @@ def post(url: str, data: Dict[str, object]):
     except Exception as e:
         handle_request_error(e)
     return handle_response(res)
+
 
 def delete(url: str):
     try:
