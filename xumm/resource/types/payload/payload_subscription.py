@@ -23,11 +23,18 @@ class PayloadSubscription(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    required = {
+        'payload': True,
+        'resolved': True,
+        'resolve': True,
+        'websocket': True,
+    }
+
     model_types = {
-        'payload': 'XummPayload',
-        'resolved': 'Callable[[Any], Any]',
-        'resolve': 'Callable[[Any], Any]',
-        'websocket': 'WSClient',
+        'payload': dict,
+        'resolved': Callable,
+        'resolve': Callable,
+        'websocket': WSClient,
     }
 
     attribute_map = {
@@ -46,22 +53,21 @@ class PayloadSubscription(XummResource):
         :return: The PayloadSubscription of this PayloadSubscription.  # noqa: E501
         :rtype: PayloadSubscription
         """
-        # print(kwargs)
-        # print(json.dumps(kwargs, indent=4, sort_keys=True))
+        cls.sanity_check(kwargs)
         cls._payload = None
         cls._resolved = None
         cls._resolve = None
         cls._websocket = None
-        cls._payload = XummPayload(**kwargs['payload'])
-        cls._resolved = kwargs['resolved']
-        cls._resolve = kwargs['resolve']
-        cls._websocket = kwargs['websocket']
+        cls.payload = XummPayload(**kwargs['payload'])
+        cls.resolved = kwargs['resolved']
+        cls.resolve = kwargs['resolve']
+        cls.websocket = kwargs['websocket']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if attr == 'websocket' or attr == 'resolve':
@@ -163,7 +169,7 @@ class PayloadSubscription(XummResource):
 
 
         :return: The websocket of this PayloadSubscription.
-        :rtype: Payload
+        :rtype: WSClient
         """
         return cls._websocket
 
@@ -173,7 +179,7 @@ class PayloadSubscription(XummResource):
 
 
         :param websocket: The websocket of this PayloadSubscription.
-        :type meta: Payload
+        :type meta: WSClient
         """
         if websocket is None:
             raise ValueError("Invalid value for `websocket`, must not be `None`")  # noqa: E501

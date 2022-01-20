@@ -22,11 +22,18 @@ class SubscriptionCallbackParams(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    required = {
+        'uuid': True,
+        'data': True,
+        'payload': True,
+        'resolve': True,
+    }
+
     model_types = {
-        'uuid': 'str',
-        'data': 'dict(str, any)',
-        'payload': 'XummPayload',
-        'resolve': 'Callable[[Any], Any]',
+        'uuid': str,
+        'data': dict,
+        'payload': dict,
+        'resolve': Callable,
     }
 
     attribute_map = {
@@ -45,15 +52,15 @@ class SubscriptionCallbackParams(XummResource):
         :return: The PayloadSubscription of this PayloadSubscription.  # noqa: E501
         :rtype: PayloadSubscription
         """
-        # print(json.dumps(kwargs, indent=4, sort_keys=True))
+        cls.sanity_check(kwargs)
         cls._uuid = None
         cls._data = None
         cls._payload = None
         cls._resolve = None
-        cls._uuid = kwargs['uuid']
-        cls._data = kwargs['data']
-        cls._payload = XummPayload(**kwargs['payload'])
-        cls._resolve = kwargs['resolve']
+        cls.uuid = kwargs['uuid']
+        cls.data = kwargs['data']
+        cls.payload = XummPayload(**kwargs['payload'])
+        cls.resolve = kwargs['resolve']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
@@ -83,8 +90,8 @@ class SubscriptionCallbackParams(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
-        # return {k: v for k, v in result.items() if v is not None}
+        # return result
+        return {k: v for k, v in result.items() if v is not None}
 
     @property
     def uuid(cls) -> str:

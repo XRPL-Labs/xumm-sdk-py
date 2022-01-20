@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+from urllib import request
 from xumm.resource import XummResource
 import six
 from typing import Union, List, Dict, Callable, Any  # noqa: F401
@@ -8,16 +9,27 @@ from typing import Union, List, Dict, Callable, Any  # noqa: F401
 
 class Currency(XummResource):
 
-    model_types = {
-        'id': 'int',
-        'issuer_id': 'int',
-        'issuer': 'str',
-        'currency': 'str',
-        'name': 'str',
-        'avatar': 'str',
-        'shortlist': 'int'
+    required = {
+        'id': True,
+        'issuer_id': True,
+        'issuer': True,
+        'currency': True,
+        'name': True,
+        'avatar': True,
+        'shortlist': True
     }
-    attribute_list = {
+
+    model_types = {
+        'id': int,
+        'issuer_id': int,
+        'issuer': str,
+        'currency': str,
+        'name': str,
+        'avatar': str,
+        'shortlist': int
+    }
+
+    attribute_map = {
         'id': 'id',
         'issuer_id': 'issuer_id',
         'issuer': 'issuer',
@@ -35,6 +47,7 @@ class Currency(XummResource):
         :return: The Currency of this Currency.  # noqa: E501
         :rtype: Currency
         """
+        cls.sanity_check(kwargs)
         cls._id = None
         cls._issuer_id = None
         cls._issuer = None
@@ -42,21 +55,21 @@ class Currency(XummResource):
         cls._name = None
         cls._avatar = None
         cls._shortlist = None
-        cls._id = kwargs['id']
-        cls._issuer_id = kwargs['issuer_id']
-        cls._issuer = kwargs['issuer']
-        cls._currency = kwargs['currency']
-        cls._name = kwargs['name']
-        cls._avatar = kwargs['avatar']
-        cls._shortlist = kwargs['shortlist']
+        cls.id = kwargs['id']
+        cls.issuer_id = kwargs['issuer_id']
+        cls.issuer = kwargs['issuer']
+        cls.currency = kwargs['currency']
+        cls.name = kwargs['name']
+        cls.avatar = kwargs['avatar']
+        cls.shortlist = kwargs['shortlist']
     
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
-            attr = cls.attribute_list[attr]
+            attr = cls.attribute_map[attr]
             if isinstance(value, list):
                 result[attr] = list(map(
                     lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
@@ -238,15 +251,25 @@ class Currency(XummResource):
 
 class Asset(XummResource):
 
-    model_types = {
-        'id': 'int',
-        'name': 'str',
-        'domain': 'str',
-        'avatar': 'str',
-        'shortlist': 'int',
-        'currencies': 'dict(str, Currency)'
+    required = {
+        'id': True,
+        'name': True,
+        'domain': True,
+        'avatar': True,
+        'shortlist': True,
+        'currencies': True
     }
-    attribute_list = {
+
+    model_types = {
+        'id': int,
+        'name': str,
+        'domain': str,
+        'avatar': str,
+        'shortlist': int,
+        'currencies': dict
+    }
+
+    attribute_map = {
         'id': 'id',
         'name': 'name',
         'domain': 'domain',
@@ -263,27 +286,28 @@ class Asset(XummResource):
         :return: The Asset of this Asset.  # noqa: E501
         :rtype: Asset
         """
+        cls.sanity_check(kwargs)
         cls._id = None
         cls._name = None
         cls._domain = None
         cls._avatar = None
         cls._shortlist = None
         cls._currencies = None
-        cls._id = kwargs['id']
-        cls._name = kwargs['name']
-        cls._domain = kwargs['domain']
-        cls._avatar = kwargs['avatar']
-        cls._shortlist = kwargs['shortlist']
-        cls._currencies = {k: Currency(**v) for k, v in kwargs['currencies'].items()}
+        cls.id = kwargs['id']
+        cls.name = kwargs['name']
+        cls.domain = kwargs['domain']
+        cls.avatar = kwargs['avatar']
+        cls.shortlist = kwargs['shortlist']
+        cls.currencies = {k: Currency(**v) for k, v in kwargs['currencies'].items()}
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             print(attr)
-            attr = cls.attribute_list[attr]
+            attr = cls.attribute_map[attr]
             if isinstance(value, list):
                 result[attr] = list(map(
                     lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
@@ -470,9 +494,9 @@ class CuratedAssetsResponse(XummResource):
         cls._issuers = None
         cls._currencies = None
         cls._details = None
-        cls._issuers = kwargs['issuers']
-        cls._currencies = kwargs['currencies']
-        cls._details = {k: Asset(**v) for k, v in kwargs['details'].items()}
+        cls.issuers = kwargs['issuers']
+        cls.currencies = kwargs['currencies']
+        cls.details = {k: Asset(**v) for k, v in kwargs['details'].items()}
 
     def to_dict(cls):
         """Returns the model properties as a dict"""

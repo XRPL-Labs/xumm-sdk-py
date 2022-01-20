@@ -15,10 +15,16 @@ class StorageSetResponse(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    required = {
+        'application': True,
+        'stored': True,
+        'data': True,
+    }
+
     model_types = {
-        'application': 'StorageResponse',
-        'stored': 'bool',
-        'data': '(str, object)',
+        'application': dict,
+        'stored': bool,
+        'data': dict,
     }
 
     attribute_map = {
@@ -36,19 +42,19 @@ class StorageSetResponse(XummResource):
         :return: The StorageSetResponse of this StorageSetResponse.  # noqa: E501
         :rtype: StorageSetResponse
         """
-        # print(json.dumps(kwargs, indent=4, sort_keys=True))
+        cls.sanity_check(kwargs)
         cls._application = None
         cls._stored = None
         cls._data = None
-        cls._application = StorageResponse(**kwargs['application'])
-        cls._stored = kwargs['stored']
-        cls._data = kwargs['data']
+        cls.application = StorageResponse(**kwargs['application'])
+        cls.stored = kwargs['stored']
+        cls.data = kwargs['data']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):

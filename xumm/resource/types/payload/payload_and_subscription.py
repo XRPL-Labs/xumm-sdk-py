@@ -23,12 +23,21 @@ class PayloadAndSubscription(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+
+    required = {
+        'created': True,
+        'payload': True,
+        'resolve': True,
+        'resolved': True,
+        'websocket': True,
+    }
+
     model_types = {
-        'created': 'CreatedPayload',
-        'payload': 'XummPayload',
-        'resolve': 'Callable[[Any], Any]',
-        'resolved': 'Callable[[Any], Any]',
-        'websocket': 'WSClient',
+        'created': dict,
+        'payload': dict,
+        'resolve': Callable,
+        'resolved': Callable,
+        'websocket': WSClient,
     }
 
     attribute_map = {
@@ -47,22 +56,21 @@ class PayloadAndSubscription(XummResource):
         :return: The PayloadAndSubscription of this PayloadAndSubscription.  # noqa: E501
         :rtype: PayloadAndSubscription
         """
-        # print(kwargs)
-        # print(json.dumps(kwargs, indent=4, sort_keys=True))
+        cls.sanity_check(kwargs)
         cls._payload = None
-        cls._payload = XummPayload(**kwargs['payload'])
         cls._resolve = None
-        cls._resolve = kwargs['resolve']
         cls._resolved = None
-        cls._resolved = kwargs['resolved']
         cls._websocket = None
-        cls._websocket = kwargs['websocket']
+        cls.payload = XummPayload(**kwargs['payload'])
+        cls.resolve = kwargs['resolve']
+        cls.resolved = kwargs['resolved']
+        cls.websocket = kwargs['websocket']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if attr == 'websocket' or attr == 'resolve':

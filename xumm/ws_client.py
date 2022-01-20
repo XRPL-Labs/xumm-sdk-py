@@ -8,8 +8,12 @@ import sys, inspect
 import random, uuid
 from multiprocessing import Queue
 from threading import Thread, Event, Timer
+from typing import Dict, Any
 
-import websocket
+from websocket import (
+    enableTrace,
+    WebSocketApp
+)
 
 from .error import ResponseFormatError, TimeoutError
 
@@ -41,8 +45,8 @@ class WSClient(Thread):
             if(key in available_callbacks):
                 setattr(cls, key, value)
 
-        cls.socket = None
-        cls.server = server
+        cls.socket: WebSocketApp = None
+        cls.server = server or 'wss://xumm.app/sign'
         cls.responseEvents = dict()
         cls.q = Queue()
 
@@ -77,7 +81,7 @@ class WSClient(Thread):
         cls.log = logging.getLogger(cls.__module__)
         logging.basicConfig(stream=sys.stdout, format="[%(filename)s:%(lineno)s - %(funcName)10s() : %(message)s")
         if log_level == logging.DEBUG:
-            websocket.enableTrace(True)
+            enableTrace(True)
         cls.log.setLevel(level=log_level if log_level else logging.ERROR)
 
         # Call init of Thread and pass remaining args and kwargs
@@ -110,6 +114,14 @@ class WSClient(Thread):
 
         cls.join(timeout=1)
 
+    def status(cls) -> int:
+        """
+        Get socket status.
+        :return:
+        """
+        if cls.socket.sock:
+            return cls.socket.sock.getstatus()
+
     def reconnect(cls):
         """
         Issues a reconnection by setting the reconnect_required event.
@@ -128,7 +140,7 @@ class WSClient(Thread):
         :return:
         """
         cls.log.debug("Initializing Connection..")
-        cls.socket = websocket.WebSocketApp(
+        cls.socket = WebSocketApp(
             cls.server,
             on_open=cls._on_open,
             on_message=cls._on_message,
@@ -172,10 +184,12 @@ class WSClient(Thread):
         raw, received_at = message, time.time()
         cls.log.debug("Received new message %s at %s", raw, received_at)
 
+        data: Dict[str, Any] = None
+
         try:
             data = json.loads(raw)
-        except json.JSONDecodeError:
-            # Something wrong with this data, log and discard
+        except json.JSONDecodeError as e:
+            cls.log.info("Unknown Response.")
             return
 
         if isinstance(data, dict):
@@ -196,7 +210,6 @@ class WSClient(Thread):
         cls.log.info("Connection opened")
         cls.connected.set()
         cls.send_ping()
-        # cls._subscribe_ledger()
         cls._start_timers()
         if cls.reconnect_required.is_set():
             cls.log.info("Connection reconnected.")
@@ -235,7 +248,6 @@ class WSClient(Thread):
         Resets and starts timers for API data and connection.
         :return:
         """
-        cls.log.debug("Resetting timers..")
         cls._stop_timers()
 
         # Sends a ping at ping_interval to see if API still responding
@@ -243,8 +255,10 @@ class WSClient(Thread):
         cls.ping_timer.start()
 
         # Automatically reconnect if we did not receive data
-        cls.connection_timer = Timer(cls.connection_timeout,
-                                      cls._connection_timed_out)
+        cls.connection_timer = Timer(
+            cls.connection_timeout,
+            cls._connection_timed_out
+        )
         cls.connection_timer.start()
 
     def send_ping(cls):
@@ -307,7 +321,6 @@ class WSClient(Thread):
         :return:
         """
         cls._callback('on_response', data)
-        return
 
     def _callback(cls, callback, *args):
         """Emit a callback in a thread

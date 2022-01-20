@@ -8,8 +8,12 @@ from typing import Union, List, Dict, Callable, Any  # noqa: F401
 
 class Call(XummResource):
 
+    required = {
+        'uuidv4': True
+    }
+
     model_types = {
-        'uuidv4': 'str'
+        'uuidv4': str
     }
 
     attribute_map = {
@@ -24,8 +28,9 @@ class Call(XummResource):
         :return: The Call of this Call.  # noqa: E501
         :rtype: Call
         """
+        cls.sanity_check(kwargs)
         cls._uuidv4 = None
-        cls._uuidv4 = kwargs['uuidv4']
+        cls.uuidv4 = kwargs['uuidv4']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
@@ -80,11 +85,18 @@ class Call(XummResource):
 
 class Application(XummResource):
 
+    required = {
+        'name': True,
+        'uuidv4': True,
+        'webhookurl': True,
+        'disabled': True
+    }
+
     model_types = {
-        'name': 'str',
-        'uuidv4': 'str',
-        'webhookurl': 'str',
-        'disabled': 'int'
+        'name': str,
+        'uuidv4': str,
+        'webhookurl': str,
+        'disabled': int
     }
 
     attribute_map = {
@@ -102,20 +114,21 @@ class Application(XummResource):
         :return: The Application of this Application.  # noqa: E501
         :rtype: Application
         """
+        cls.sanity_check(kwargs)
         cls._name = None
         cls._uuidv4 = None
         cls._webhookurl = None
         cls._disabled = None
-        cls._name = kwargs['name']
-        cls._uuidv4 = kwargs['uuidv4']
-        cls._webhookurl = kwargs['webhookurl']
-        cls._disabled = kwargs['disabled']
+        cls.name = kwargs['name']
+        cls.uuidv4 = kwargs['uuidv4']
+        cls.webhookurl = kwargs['webhookurl']
+        cls.disabled = kwargs['disabled']
     
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -272,7 +285,7 @@ class Application(XummResource):
 class Quota(XummResource):
 
     model_types = {
-        'ratelimit': 'str'
+        'ratelimit': str
     }
 
     attribute_map = {
@@ -287,9 +300,10 @@ class Quota(XummResource):
         :return: The Quota of this Quota.  # noqa: E501
         :rtype: Quota
         """
+        cls.sanity_check(kwargs)
         cls._ratelimit = None
         if 'ratelimit' in kwargs:
-            cls._ratelimit = kwargs['ratelimit']
+            cls.ratelimit = kwargs['ratelimit']
     
     def to_dict(cls):
         """Returns the model properties as a dict"""
@@ -345,10 +359,16 @@ class Quota(XummResource):
 
 class ApplicationDetails(XummResource):
 
+    required = {
+        'quota': True,
+        'application': True,
+        'call': True
+    }
+
     model_types = {
-        'quota': 'Quota',
-        'application': 'Application',
-        'call': 'Call'
+        'quota': dict,
+        'application': dict,
+        'call': dict
     }
 
     attribute_map = {
@@ -365,19 +385,19 @@ class ApplicationDetails(XummResource):
         :return: The PongResponse of this PongResponse.  # noqa: E501
         :rtype: PongResponse
         """
+        cls.sanity_check(kwargs)
         cls._quota = None
         cls._application = None
         cls._call = None
-        cls._quota = Quota(**kwargs['quota'])
-        print(cls._quota.to_dict())
-        cls._application = Application(**kwargs['application'])
-        cls._call = Call(**kwargs['call'])
+        cls.quota = Quota(**kwargs['quota'])
+        cls.application = Application(**kwargs['application'])
+        cls.call = Call(**kwargs['call'])
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):

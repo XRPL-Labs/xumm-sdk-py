@@ -8,9 +8,14 @@ from typing import Union, List, Dict, Callable, Any  # noqa: F401
 
 class KycStatusResponse(XummResource):
 
+    required = {
+        'kyc_status': True,
+        'possible_statuses': True,
+    }
+
     model_types = {
-        'kyc_status': 'str',
-        'possible_statuses': 'dict(str, object)'
+        'kyc_status': str,
+        'possible_statuses': dict
     }
 
     attribute_map = {
@@ -27,17 +32,17 @@ class KycStatusResponse(XummResource):
         :return: The KycStatusResponse of this KycStatusResponse.  # noqa: E501
         :rtype: KycStatusResponse
         """
-        # print(json.dumps(kwargs, indent=4, sort_keys=True))
+        cls.sanity_check(kwargs)
         cls._kyc_status = None
         cls._possible_statuses = None
-        cls._kyc_status = kwargs['kycStatus']
-        cls._possible_statuses = kwargs['possibleStatuses']
+        cls.kyc_status = kwargs['kycStatus']
+        cls.possible_statuses = kwargs['possibleStatuses']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):

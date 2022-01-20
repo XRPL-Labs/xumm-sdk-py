@@ -107,7 +107,7 @@ Returns [`<ApplicationDetails>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/mast
 
 ##### sdk.get_curated_assets()
 
-The `curated_assets` method allows you to get the list of trusted issuers and IOU's. This is the same list used to
+The `get_curated_assets` method allows you to get the list of trusted issuers and IOU's. This is the same list used to
 populate the "Add Asset" button at the XUMM home screan.
 
 ```python
@@ -131,7 +131,7 @@ Returns [`<CuratedAssetsResponse>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/m
 
 ##### sdk.get_kyc_status()
 
-The `kyc_status` return the KYC status of a user based on a user_token, issued after the
+The `get_kyc_status` return the KYC status of a user based on a user_token, issued after the
 user signed a Sign Request (from your app) before (see Payloads - Intro).
 
 If a user token specified is invalid, revoked, expired, etc. the method will always
@@ -159,7 +159,7 @@ Returns [`<keyof PossibleKycStatuses>`](https://github.com/XRPL-Labs/XUMM-SDK/bl
 
 ##### sdk.get_transaction()
 
-The `xrpl_tx` method allows you to get the transaction outcome (mainnet)
+The `get_transaction` method allows you to get the transaction outcome (mainnet)
 live from the XRP ledger, as fetched for you by the XUMM backend.
 
 **Note**: it's best to retrieve these results **yourself** instead of relying on the XUMM platform to get live XRPL transaction information! You can use the **[xrpl-txdata](https://www.npmjs.com/package/xrpl-txdata)** package to do this:  
@@ -272,7 +272,7 @@ sdk.payload.create (
 
 To create a payload, a `txjson` XRPL transaction can be provided. Alternatively, a transaction formatted as HEX blob (string) can be provided in a `txblob` property. **See the [intro](#intro) for more information about payloads.** Take a look at the [Developer Docs for more information about payloads](https://xumm.readme.io/docs/your-first-payload).
 
-The response (see: [Developer Docs](https://xumm.readme.io/docs/payload-response-resources)) of a `Sdk.payload.create()` operation, a `<CreatedPayload>` object, looks like this:
+The response (see: [Developer Docs](https://xumm.readme.io/docs/payload-response-resources)) of a `sdk.payload.create()` operation, a `<CreatedPayload>` object, looks like this:
 
 ```python
 {
@@ -372,10 +372,10 @@ Examples:
 - [Await based on resolving a callback event](https://gist.github.com/WietseWind/1afaf3a23b8ea18ded526bbbf1b577dd)
 - [Await based on resolving without using a callback function](https://gist.github.com/WietseWind/76890afd39a01e9876c8a629b3e58174)
 
-##### Sdk.payload_create_subscribe
+##### sdk.payload.create_subscribe
 
 ```python
-ws_sdk.payload.subscribe (
+ws_sdk.payload.create_subscribe (
     payload: CreatePayload,
     callback?: onPayloadEvent
   ): -> Callable<PayloadAndSubscription>
@@ -383,7 +383,7 @@ ws_sdk.payload.subscribe (
 
 The [`<PayloadAndSubscription>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/src/types/Payload/PayloadAndSubscription.ts) object is basically a [`<PayloadSubscription>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/src/types/Payload/PayloadSubscription.ts) object with the created payload results in the `created` property:
 
-All information that applies on [`sdk.payload.create()`](#sdkpayloadcreate) and [`sdk.payload.subscribe()`](#sdkpayloadsubscribe) applies. Differences are:
+All information that applies on [`sdk.payload.create()`](#sdkpayloadcreate) and [`sdk.payload.create_subscribe()`](#sdkpayloadsubscribe) applies. Differences are:
 
 1. The input for a `sdk.payload.create_subscribe()` call isn't a payload UUID / existing payload, but a paykiad to create. 
 2. The response object also contains (`<PayloadAndSubscription>.created`) the response obtained when creating the payload

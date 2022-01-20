@@ -5,455 +5,481 @@ from xumm.resource import XummResource
 import six
 from typing import Union, List, Dict, Callable, Any  # noqa: F401
 
+# class TxMeta(XummResource):
 
-class TxMeta(XummResource):
+#     required = {
+#         'transaction_index': 'int',
+#         'transaction_result': 'str',
+#         'delivered_amount': 'str'
+#     }
 
-    model_types = {
-        'transaction_index': 'int',
-        'transaction_result': 'str',
-        'delivered_amount': 'str'
-    }
+#     model_types = {
+#         'transaction_index': 'int',
+#         'transaction_result': 'str',
+#         'delivered_amount': 'str'
+#     }
 
-    attribute_map = {
-        'transaction_index': 'TransactionIndex',
-        'transaction_result': 'TransactionResult',
-        'delivered_amount': 'delivered_amount'
-    }
+#     attribute_map = {
+#         'transaction_index': 'TransactionIndex',
+#         'transaction_result': 'TransactionResult',
+#         'delivered_amount': 'delivered_amount'
+#     }
 
-    def refresh_from(cls, **kwargs):
-        """Returns the dict as a model
+#     def refresh_from(cls, **kwargs):
+#         """Returns the dict as a model
 
-        :param kwargs: A dict.
-        :type: dict
-        :return: The TxMeta of this TxMeta.  # noqa: E501
-        :rtype: TxMeta
-        """
-        cls._transaction_index = None
-        cls._transaction_result = None
-        cls._delivered_amount = None
-        cls._transaction_index = kwargs['TransactionIndex']
-        cls._transaction_result = kwargs['TransactionResult']
-        cls._delivered_amount = kwargs['delivered_amount']
+#         :param kwargs: A dict.
+#         :type: dict
+#         :return: The TxMeta of this TxMeta.  # noqa: E501
+#         :rtype: TxMeta
+#         """
+#         cls.sanity_check(kwargs)
+#         cls._transaction_index = None
+#         cls._transaction_result = None
+#         cls._delivered_amount = None
+#         cls.transaction_index = kwargs['TransactionIndex']
+#         cls.transaction_result = kwargs['TransactionResult']
+#         cls.delivered_amount = kwargs['delivered_amount']
     
-    def to_dict(cls):
-        """Returns the model properties as a dict"""
-        result = {}
+#     def to_dict(cls):
+#         """Returns the model properties as a dict"""
+#         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
-            value = getattr(cls, attr)
-            attr = cls.attribute_map[attr]
-            if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
-            elif hasattr(value, "to_dict"):
-                result[attr] = value.to_dict()
-            elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
-            else:
-                result[attr] = value
-        if issubclass(TxMeta, dict):
-            for key, value in cls.items():
-                result[key] = value
+#         for attr, _ in six.iteritems(cls.model_types):
+#             value = getattr(cls, attr)
+#             attr = cls.attribute_map[attr]
+#             if isinstance(value, list):
+#                 result[attr] = list(map(
+#                     lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+#                     value
+#                 ))
+#             elif hasattr(value, "to_dict"):
+#                 result[attr] = value.to_dict()
+#             elif isinstance(value, dict):
+#                 result[attr] = dict(map(
+#                     lambda item: (item[0], item[1].to_dict())
+#                     if hasattr(item[1], "to_dict") else item,
+#                     value.items()
+#                 ))
+#             else:
+#                 result[attr] = value
+#         if issubclass(TxMeta, dict):
+#             for key, value in cls.items():
+#                 result[key] = value
 
-        return {k: v for k, v in result.items() if v is not None}
+#         return {k: v for k, v in result.items() if v is not None}
 
-    @property
-    def transaction_index(cls) -> int:
-        """Gets the transaction_index of this TxMeta.
-
-
-        :return: The transaction_index of this TxMeta.
-        :rtype: int
-        """
-        return cls._transaction_index
-
-    @transaction_index.setter
-    def transaction_index(cls, transaction_index: int):
-        """Sets the transaction_index of this TxMeta.
+#     @property
+#     def transaction_index(cls) -> int:
+#         """Gets the transaction_index of this TxMeta.
 
 
-        :param transaction_index: The transaction_index of this TxMeta.
-        :type transaction_index: int
-        """
-        if transaction_index is None:
-            raise ValueError("Invalid value for `transaction_index`, must not be `None`")  # noqa: E501
+#         :return: The transaction_index of this TxMeta.
+#         :rtype: int
+#         """
+#         return cls._transaction_index
 
-        cls._transaction_index = transaction_index
-
-    @property
-    def transaction_result(cls) -> str:
-        """Gets the transaction_result of this TxMeta.
+#     @transaction_index.setter
+#     def transaction_index(cls, transaction_index: int):
+#         """Sets the transaction_index of this TxMeta.
 
 
-        :return: The transaction_result of this TxMeta.
-        :rtype: str
-        """
-        return cls._transaction_result
+#         :param transaction_index: The transaction_index of this TxMeta.
+#         :type transaction_index: int
+#         """
+#         if transaction_index is None:
+#             raise ValueError("Invalid value for `transaction_index`, must not be `None`")  # noqa: E501
 
-    @transaction_result.setter
-    def transaction_result(cls, transaction_result: str):
-        """Sets the transaction_result of this TxMeta.
+#         cls._transaction_index = transaction_index
 
-
-        :param transaction_result: The transaction_result of this TxMeta.
-        :type transaction_result: str
-        """
-        if transaction_result is None:
-            raise ValueError("Invalid value for `transaction_result`, must not be `None`")  # noqa: E501
-
-        cls._transaction_result = transaction_result
-
-    @property
-    def delivered_amount(cls) -> str:
-        """Gets the delivered_amount of this TxMeta.
+#     @property
+#     def transaction_result(cls) -> str:
+#         """Gets the transaction_result of this TxMeta.
 
 
-        :return: The delivered_amount of this TxMeta.
-        :rtype: str
-        """
-        return cls._delivered_amount
+#         :return: The transaction_result of this TxMeta.
+#         :rtype: str
+#         """
+#         return cls._transaction_result
 
-    @delivered_amount.setter
-    def delivered_amount(cls, delivered_amount: str):
-        """Sets the delivered_amount of this TxMeta.
+#     @transaction_result.setter
+#     def transaction_result(cls, transaction_result: str):
+#         """Sets the transaction_result of this TxMeta.
 
 
-        :param delivered_amount: The delivered_amount of this TxMeta.
-        :type delivered_amount: str
-        """
-        if delivered_amount is None:
-            raise ValueError("Invalid value for `delivered_amount`, must not be `None`")  # noqa: E501
+#         :param transaction_result: The transaction_result of this TxMeta.
+#         :type transaction_result: str
+#         """
+#         if transaction_result is None:
+#             raise ValueError("Invalid value for `transaction_result`, must not be `None`")  # noqa: E501
 
-        cls._delivered_amount = delivered_amount
+#         cls._transaction_result = transaction_result
 
-class Transaction(XummResource):
+#     @property
+#     def delivered_amount(cls) -> str:
+#         """Gets the delivered_amount of this TxMeta.
 
-    model_types = {
-        'account': 'str',
-        'amount': 'str',
-        'destination': 'str',
-        'fee': 'str',
-        'flags': 'int',
-        'sequence': 'int',
-        'signing_pub_key': 'str',
-        'transaction_type': 'str',
-        'meta': 'TxMeta',
-        'validated': 'bool'
-    }
 
-    attribute_map = {
-        'account': 'Account',
-        'amount': 'Amount',
-        'destination': 'Destination',
-        'fee': 'Fee',
-        'flags': 'Flags',
-        'sequence': 'Sequence',
-        'signing_pub_key': 'SigningPubKey',
-        'transaction_type': 'TransactionType',
-        'meta': 'meta',
-        'validated': 'validated'
-    }
+#         :return: The delivered_amount of this TxMeta.
+#         :rtype: str
+#         """
+#         return cls._delivered_amount
 
-    def refresh_from(cls, **kwargs):
-        """Returns the dict as a model
+#     @delivered_amount.setter
+#     def delivered_amount(cls, delivered_amount: str):
+#         """Sets the delivered_amount of this TxMeta.
 
-        :param kwargs: A dict.
-        :type: dict
-        :return: The Transaction of this Transaction.  # noqa: E501
-        :rtype: Transaction
-        """
-        cls._account = None
-        cls._amount = None
-        cls._destination = None
-        cls._fee = None
-        cls._flags = None
-        cls._sequence = None
-        cls._signing_pub_key = None
-        cls._transaction_type = None
-        cls._meta = None
-        cls._validated = None
-        cls._account = kwargs['Account']
-        cls._amount = kwargs['Amount']
-        cls._destination = kwargs['Destination']
-        cls._fee = kwargs['Fee']
-        cls._flags = kwargs['Flags']
-        cls._sequence = kwargs['Sequence']
-        cls._signing_pub_key = kwargs['SigningPubKey']
-        cls._transaction_type = kwargs['TransactionType']
-        cls._meta = TxMeta(**kwargs['meta'])
-        cls._validated = kwargs['validated']
+
+#         :param delivered_amount: The delivered_amount of this TxMeta.
+#         :type delivered_amount: str
+#         """
+#         if delivered_amount is None:
+#             raise ValueError("Invalid value for `delivered_amount`, must not be `None`")  # noqa: E501
+
+#         cls._delivered_amount = delivered_amount
+
+# class Transaction(XummResource):
+
+#     required = {
+#         'account': 'str',
+#         'amount': 'str',
+#         'destination': 'str',
+#         'fee': 'str',
+#         'flags': 'int',
+#         'sequence': 'int',
+#         'signing_pub_key': 'str',
+#         'transaction_type': 'str',
+#         'meta': 'TxMeta',
+#         'validated': 'bool'
+#     }
     
-    def to_dict(cls):
-        """Returns the model properties as a dict"""
-        result = {}
+#     model_types = {
+#         'account': 'str',
+#         'amount': 'str',
+#         'destination': 'str',
+#         'fee': 'str',
+#         'flags': 'int',
+#         'sequence': 'int',
+#         'signing_pub_key': 'str',
+#         'transaction_type': 'str',
+#         'meta': 'TxMeta',
+#         'validated': 'bool'
+#     }
+
+#     attribute_map = {
+#         'account': 'Account',
+#         'amount': 'Amount',
+#         'destination': 'Destination',
+#         'fee': 'Fee',
+#         'flags': 'Flags',
+#         'sequence': 'Sequence',
+#         'signing_pub_key': 'SigningPubKey',
+#         'transaction_type': 'TransactionType',
+#         'meta': 'meta',
+#         'validated': 'validated'
+#     }
+
+#     def refresh_from(cls, **kwargs):
+#         """Returns the dict as a model
+
+#         :param kwargs: A dict.
+#         :type: dict
+#         :return: The Transaction of this Transaction.  # noqa: E501
+#         :rtype: Transaction
+#         """
+#         cls.sanity_check(kwargs)
+#         cls._account = None
+#         cls._amount = None
+#         cls._destination = None
+#         cls._fee = None
+#         cls._flags = None
+#         cls._sequence = None
+#         cls._signing_pub_key = None
+#         cls._transaction_type = None
+#         cls._meta = None
+#         cls._validated = None
+#         cls.account = kwargs['Account']
+#         cls.amount = kwargs['Amount']
+#         cls.destination = kwargs['Destination']
+#         cls.fee = kwargs['Fee']
+#         cls.flags = kwargs['Flags']
+#         cls.sequence = kwargs['Sequence']
+#         cls.signing_pub_key = kwargs['SigningPubKey']
+#         cls.transaction_type = kwargs['TransactionType']
+#         cls.meta = TxMeta(**kwargs['meta'])
+#         cls.validated = kwargs['validated']
+    
+#     def to_dict(cls):
+#         """Returns the model properties as a dict"""
+#         result = {}
+
+#         for attr, _ in six.iteritems(cls.model_types):
+#             value = getattr(cls, attr)
+#             attr = cls.attribute_map[attr]
+#             if isinstance(value, list):
+#                 result[attr] = list(map(
+#                     lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
+#                     value
+#                 ))
+#             elif hasattr(value, "to_dict"):
+#                 result[attr] = value.to_dict()
+#             elif isinstance(value, dict):
+#                 result[attr] = dict(map(
+#                     lambda item: (item[0], item[1].to_dict())
+#                     if hasattr(item[1], "to_dict") else item,
+#                     value.items()
+#                 ))
+#             else:
+#                 result[attr] = value
+#         if issubclass(Transaction, dict):
+#             for key, value in cls.items():
+#                 result[key] = value
+
+#         return {k: v for k, v in result.items() if v is not None}
+
+#     @property
+#     def account(cls) -> str:
+#         """Gets the account of this Transaction.
+
+
+#         :return: The account of this Transaction.
+#         :rtype: str
+#         """
+#         return cls._account
+
+#     @account.setter
+#     def account(cls, account: str):
+#         """Sets the account of this Transaction.
+
+
+#         :param account: The account of this Transaction.
+#         :type account: str
+#         """
+#         if account is None:
+#             raise ValueError("Invalid value for `account`, must not be `None`")  # noqa: E501
 
-        for attr, _ in six.iteritems(cls.model_types):
-            value = getattr(cls, attr)
-            attr = cls.attribute_map[attr]
-            if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
-            elif hasattr(value, "to_dict"):
-                result[attr] = value.to_dict()
-            elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
-            else:
-                result[attr] = value
-        if issubclass(Transaction, dict):
-            for key, value in cls.items():
-                result[key] = value
+#         cls._account = account
 
-        return {k: v for k, v in result.items() if v is not None}
+#     @property
+#     def amount(cls) -> str:
+#         """Gets the amount of this Transaction.
 
-    @property
-    def account(cls) -> str:
-        """Gets the account of this Transaction.
 
+#         :return: The amount of this Transaction.
+#         :rtype: str
+#         """
+#         return cls._amount
 
-        :return: The account of this Transaction.
-        :rtype: str
-        """
-        return cls._account
+#     @amount.setter
+#     def amount(cls, amount: str):
+#         """Sets the amount of this Transaction.
 
-    @account.setter
-    def account(cls, account: str):
-        """Sets the account of this Transaction.
 
+#         :param amount: The amount of this Transaction.
+#         :type amount: str
+#         """
+#         if amount is None:
+#             raise ValueError("Invalid value for `amount`, must not be `None`")  # noqa: E501
 
-        :param account: The account of this Transaction.
-        :type account: str
-        """
-        if account is None:
-            raise ValueError("Invalid value for `account`, must not be `None`")  # noqa: E501
+#         cls._amount = amount
 
-        cls._account = account
+#     @property
+#     def destination(cls) -> str:
+#         """Gets the destination of this Transaction.
 
-    @property
-    def amount(cls) -> str:
-        """Gets the amount of this Transaction.
 
+#         :return: The destination of this Transaction.
+#         :rtype: str
+#         """
+#         return cls._destination
 
-        :return: The amount of this Transaction.
-        :rtype: str
-        """
-        return cls._amount
+#     @destination.setter
+#     def destination(cls, destination: str):
+#         """Sets the destination of this Transaction.
 
-    @amount.setter
-    def amount(cls, amount: str):
-        """Sets the amount of this Transaction.
 
+#         :param destination: The destination of this Transaction.
+#         :type destination: str
+#         """
+#         if destination is None:
+#             raise ValueError("Invalid value for `destination`, must not be `None`")  # noqa: E501
 
-        :param amount: The amount of this Transaction.
-        :type amount: str
-        """
-        if amount is None:
-            raise ValueError("Invalid value for `amount`, must not be `None`")  # noqa: E501
+#         cls._destination = destination
 
-        cls._amount = amount
+#     @property
+#     def fee(cls) -> str:
+#         """Gets the fee of this Transaction.
 
-    @property
-    def destination(cls) -> str:
-        """Gets the destination of this Transaction.
 
+#         :return: The fee of this Transaction.
+#         :rtype: str
+#         """
+#         return cls._fee
 
-        :return: The destination of this Transaction.
-        :rtype: str
-        """
-        return cls._destination
+#     @fee.setter
+#     def fee(cls, fee: str):
+#         """Sets the fee of this Transaction.
 
-    @destination.setter
-    def destination(cls, destination: str):
-        """Sets the destination of this Transaction.
 
+#         :param fee: The fee of this Transaction.
+#         :type fee: str
+#         """
+#         if fee is None:
+#             raise ValueError("Invalid value for `fee`, must not be `None`")  # noqa: E501
 
-        :param destination: The destination of this Transaction.
-        :type destination: str
-        """
-        if destination is None:
-            raise ValueError("Invalid value for `destination`, must not be `None`")  # noqa: E501
+#         cls._fee = fee
 
-        cls._destination = destination
+#     @property
+#     def flags(cls) -> int:
+#         """Gets the flags of this Transaction.
 
-    @property
-    def fee(cls) -> str:
-        """Gets the fee of this Transaction.
 
+#         :return: The flags of this Transaction.
+#         :rtype: int
+#         """
+#         return cls._flags
 
-        :return: The fee of this Transaction.
-        :rtype: str
-        """
-        return cls._fee
+#     @flags.setter
+#     def flags(cls, flags: int):
+#         """Sets the flags of this Transaction.
 
-    @fee.setter
-    def fee(cls, fee: str):
-        """Sets the fee of this Transaction.
 
+#         :param flags: The flags of this Transaction.
+#         :type flags: int
+#         """
+#         if flags is None:
+#             raise ValueError("Invalid value for `flags`, must not be `None`")  # noqa: E501
 
-        :param fee: The fee of this Transaction.
-        :type fee: str
-        """
-        if fee is None:
-            raise ValueError("Invalid value for `fee`, must not be `None`")  # noqa: E501
+#         cls._flags = flags
 
-        cls._fee = fee
+#     @property
+#     def sequence(cls) -> int:
+#         """Gets the sequence of this Transaction.
 
-    @property
-    def flags(cls) -> int:
-        """Gets the flags of this Transaction.
 
+#         :return: The sequence of this Transaction.
+#         :rtype: int
+#         """
+#         return cls._sequence
 
-        :return: The flags of this Transaction.
-        :rtype: int
-        """
-        return cls._flags
+#     @sequence.setter
+#     def sequence(cls, sequence: int):
+#         """Sets the sequence of this Transaction.
 
-    @flags.setter
-    def flags(cls, flags: int):
-        """Sets the flags of this Transaction.
 
+#         :param sequence: The sequence of this Transaction.
+#         :type sequence: int
+#         """
+#         if sequence is None:
+#             raise ValueError("Invalid value for `sequence`, must not be `None`")  # noqa: E501
 
-        :param flags: The flags of this Transaction.
-        :type flags: int
-        """
-        if flags is None:
-            raise ValueError("Invalid value for `flags`, must not be `None`")  # noqa: E501
+#         cls._sequence = sequence
 
-        cls._flags = flags
+#     @property
+#     def signing_pub_key(cls) -> str:
+#         """Gets the signing_pub_key of this Transaction.
 
-    @property
-    def sequence(cls) -> int:
-        """Gets the sequence of this Transaction.
 
+#         :return: The signing_pub_key of this Transaction.
+#         :rtype: str
+#         """
+#         return cls._signing_pub_key
 
-        :return: The sequence of this Transaction.
-        :rtype: int
-        """
-        return cls._sequence
+#     @signing_pub_key.setter
+#     def signing_pub_key(cls, signing_pub_key: str):
+#         """Sets the signing_pub_key of this Transaction.
 
-    @sequence.setter
-    def sequence(cls, sequence: int):
-        """Sets the sequence of this Transaction.
 
+#         :param signing_pub_key: The signing_pub_key of this Transaction.
+#         :type signing_pub_key: str
+#         """
+#         if signing_pub_key is None:
+#             raise ValueError("Invalid value for `signing_pub_key`, must not be `None`")  # noqa: E501
 
-        :param sequence: The sequence of this Transaction.
-        :type sequence: int
-        """
-        if sequence is None:
-            raise ValueError("Invalid value for `sequence`, must not be `None`")  # noqa: E501
+#         cls._signing_pub_key = signing_pub_key
 
-        cls._sequence = sequence
+#     @property
+#     def transaction_type(cls) -> str:
+#         """Gets the transaction_type of this Transaction.
 
-    @property
-    def signing_pub_key(cls) -> str:
-        """Gets the signing_pub_key of this Transaction.
 
+#         :return: The transaction_type of this Transaction.
+#         :rtype: str
+#         """
+#         return cls._transaction_type
 
-        :return: The signing_pub_key of this Transaction.
-        :rtype: str
-        """
-        return cls._signing_pub_key
+#     @transaction_type.setter
+#     def transaction_type(cls, transaction_type: str):
+#         """Sets the transaction_type of this Transaction.
 
-    @signing_pub_key.setter
-    def signing_pub_key(cls, signing_pub_key: str):
-        """Sets the signing_pub_key of this Transaction.
 
+#         :param transaction_type: The transaction_type of this Transaction.
+#         :type transaction_type: str
+#         """
+#         if transaction_type is None:
+#             raise ValueError("Invalid value for `transaction_type`, must not be `None`")  # noqa: E501
 
-        :param signing_pub_key: The signing_pub_key of this Transaction.
-        :type signing_pub_key: str
-        """
-        if signing_pub_key is None:
-            raise ValueError("Invalid value for `signing_pub_key`, must not be `None`")  # noqa: E501
+#         cls._transaction_type = transaction_type
 
-        cls._signing_pub_key = signing_pub_key
+#     @property
+#     def meta(cls) -> TxMeta:
+#         """Gets the meta of this Transaction.
 
-    @property
-    def transaction_type(cls) -> str:
-        """Gets the transaction_type of this Transaction.
 
+#         :return: The meta of this Transaction.
+#         :rtype: TxMeta
+#         """
+#         return cls._meta
 
-        :return: The transaction_type of this Transaction.
-        :rtype: str
-        """
-        return cls._transaction_type
+#     @meta.setter
+#     def meta(cls, meta: TxMeta):
+#         """Sets the meta of this Transaction.
 
-    @transaction_type.setter
-    def transaction_type(cls, transaction_type: str):
-        """Sets the transaction_type of this Transaction.
 
+#         :param meta: The meta of this Transaction.
+#         :type meta: TxMeta
+#         """
+#         if meta is None:
+#             raise ValueError("Invalid value for `meta`, must not be `None`")  # noqa: E501
 
-        :param transaction_type: The transaction_type of this Transaction.
-        :type transaction_type: str
-        """
-        if transaction_type is None:
-            raise ValueError("Invalid value for `transaction_type`, must not be `None`")  # noqa: E501
+#         cls._meta = meta
 
-        cls._transaction_type = transaction_type
+#     @property
+#     def validated(cls) -> bool:
+#         """Gets the validated of this Transaction.
 
-    @property
-    def meta(cls) -> TxMeta:
-        """Gets the meta of this Transaction.
 
+#         :return: The validated of this Transaction.
+#         :rtype: bool
+#         """
+#         return cls._validated
 
-        :return: The meta of this Transaction.
-        :rtype: TxMeta
-        """
-        return cls._meta
+#     @validated.setter
+#     def validated(cls, validated: bool):
+#         """Sets the validated of this Transaction.
 
-    @meta.setter
-    def meta(cls, meta: TxMeta):
-        """Sets the meta of this Transaction.
 
+#         :param validated: The validated of this Transaction.
+#         :type validated: bool
+#         """
+#         if validated is None:
+#             raise ValueError("Invalid value for `validated`, must not be `None`")  # noqa: E501
 
-        :param meta: The meta of this Transaction.
-        :type meta: TxMeta
-        """
-        if meta is None:
-            raise ValueError("Invalid value for `meta`, must not be `None`")  # noqa: E501
-
-        cls._meta = meta
-
-    @property
-    def validated(cls) -> bool:
-        """Gets the validated of this Transaction.
-
-
-        :return: The validated of this Transaction.
-        :rtype: bool
-        """
-        return cls._validated
-
-    @validated.setter
-    def validated(cls, validated: bool):
-        """Sets the validated of this Transaction.
-
-
-        :param validated: The validated of this Transaction.
-        :type validated: bool
-        """
-        if validated is None:
-            raise ValueError("Invalid value for `validated`, must not be `None`")  # noqa: E501
-
-        cls._validated = validated
+#         cls._validated = validated
 
 
 class BalanceChange(XummResource):
 
+    required = {
+        'counterparty': True,
+        'currency': True,
+        'value': True,
+    }
+
     model_types = {
-        'counterparty': 'str',
-        'currency': 'str',
-        'value': 'str'
+        'counterparty': str,
+        'currency': str,
+        'value': str
     }
 
     attribute_map = {
@@ -470,18 +496,19 @@ class BalanceChange(XummResource):
         :return: The BalanceChange of this BalanceChange.  # noqa: E501
         :rtype: BalanceChange
         """
+        cls.sanity_check(kwargs)
         cls._counterparty = None
         cls._currency = None
         cls._value = None
-        cls._counterparty = kwargs['counterparty']
-        cls._currency = kwargs['currency']
-        cls._value = kwargs['value']
+        cls.counterparty = kwargs['counterparty']
+        cls.currency = kwargs['currency']
+        cls.value = kwargs['value']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -571,11 +598,18 @@ class BalanceChange(XummResource):
 
 class XrplTransaction(XummResource):
 
+    # Review..
+    required = {
+        'txid': True,
+        'node': True,
+        'transaction': True,
+    }
+
     model_types = {
-        'txid': 'str',
-        'balance_changes': 'dict(str, BalanceChange)',
-        'node': 'str',
-        'transaction': 'Transaction'
+        'txid': str,
+        'balance_changes': dict,
+        'node': str,
+        'transaction': dict
     }
 
     attribute_map = {
@@ -594,21 +628,21 @@ class XrplTransaction(XummResource):
         :return: The XrplTransaction of this XrplTransaction.  # noqa: E501
         :rtype: XrplTransaction
         """
-        # print(json.dumps(kwargs, indent=4, sort_keys=True))
+        cls.sanity_check(kwargs)
         cls._txid = None
         cls._balance_changes = None
         cls._node = None
         cls._transaction = None
-        cls._txid = kwargs['txid']
-        cls._balance_changes = {k: [BalanceChange(**b).to_dict() for b in v] for k, v in kwargs['balanceChanges'].items()}
-        cls._node = kwargs['node']
-        cls._transaction = Transaction(**kwargs['transaction'])
+        cls.txid = kwargs['txid']
+        cls.balance_changes = {k: [BalanceChange(**b).to_dict() for b in v] for k, v in kwargs['balanceChanges'].items()}
+        cls.node = kwargs['node']
+        cls.transaction = kwargs['transaction']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             # if attr == 'balanceChanges':
@@ -704,22 +738,22 @@ class XrplTransaction(XummResource):
         cls._node = node
 
     @property
-    def transaction(cls) -> Transaction:
+    def transaction(cls) -> Dict[str, Any]:
         """Gets the transaction of this XrplTransaction.
 
 
         :return: The transaction of this XrplTransaction.
-        :rtype: Transaction
+        :rtype: Dict[str, Any]
         """
         return cls._transaction
 
     @transaction.setter
-    def transaction(cls, transaction: Transaction):
+    def transaction(cls, transaction: Dict[str, Any]):
         """Sets the transaction of this XrplTransaction.
 
 
         :param transaction: The transaction of this XrplTransaction.
-        :type transaction: Transaction
+        :type transaction: Dict[str, Any]
         """
         if transaction is None:
             raise ValueError("Invalid value for `transaction`, must not be `None`")  # noqa: E501

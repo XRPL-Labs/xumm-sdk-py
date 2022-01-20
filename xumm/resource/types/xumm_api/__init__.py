@@ -90,10 +90,12 @@ class XummCustomMeta(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    required = {}
+
     model_types = {
-        'identifier': 'str',
-        'blob': 'dict(str, object)',
-        'instruction': 'str'
+        'identifier': str,
+        'blob': dict,
+        'instruction': str
     }
 
     attribute_map = {
@@ -110,21 +112,22 @@ class XummCustomMeta(XummResource):
         :return: The XummCustomMeta of this XummCustomMeta.  # noqa: E501
         :rtype: XummCustomMeta
         """
+        cls.sanity_check(kwargs)
         cls._identifier = None
         cls._blob = None
         cls._instruction = None
         if 'identifier' in kwargs:
-            cls._identifier = kwargs['identifier']
+            cls.identifier = kwargs['identifier']
         if 'blob' in kwargs:
-            cls._blob = kwargs['blob']
+            cls.blob = kwargs['blob']
         if 'instruction' in kwargs:
-            cls._instruction = kwargs['instruction']
+            cls.instruction = kwargs['instruction']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -188,8 +191,8 @@ class XummCustomMeta(XummResource):
         :param blob: The blob of this XummCustomMeta.
         :type blob: Dict[str, object]
         """
-        if blob is None:
-            raise ValueError("Invalid value for `blob`, must not be `None`")  # noqa: E501
+        # if blob is None:
+        #     raise ValueError("Invalid value for `blob`, must not be `None`")  # noqa: E501
 
         cls._blob = blob
 
@@ -245,22 +248,41 @@ class XummPayloadMeta(XummResource):
                             and the value is json key in definition.
     """
     model_types = {
-        'exists': 'bool',
-        'uuid': 'str',
-        'multisign': 'bool',
-        'submit': 'bool',
-        'destination': 'str',
-        'resolved_destination': 'str',
-        'resolved': 'bool',
-        'signed': 'bool',
-        'cancelled': 'bool',
-        'expired': 'bool',
-        'pushed': 'bool',
-        'app_opened': 'bool',
-        'opened_by_deeplink': 'bool',
-        'return_url_app': 'str',
-        'return_url_web': 'str',
-        'is_xapp': 'bool'
+        'exists': True,
+        'uuid': True,
+        'multisign': True,
+        'submit': True,
+        'destination': True,
+        'resolved_destination': True,
+        'resolved': True,
+        'signed': True,
+        'cancelled': True,
+        'expired': True,
+        'pushed': True,
+        'app_opened': True,
+        'opened_by_deeplink': True,
+        'return_url_app': True,
+        'return_url_web': True,
+        'is_xapp': True
+    }
+
+    model_types = {
+        'exists': bool,
+        'uuid': str,
+        'multisign': bool,
+        'submit': bool,
+        'destination': str,
+        'resolved_destination': str,
+        'resolved': bool,
+        'signed': bool,
+        'cancelled': bool,
+        'expired': bool,
+        'pushed': bool,
+        'app_opened': bool,
+        'opened_by_deeplink': bool,
+        'return_url_app': str,
+        'return_url_web': str,
+        'is_xapp': bool
     }
 
     attribute_map = {
@@ -290,6 +312,7 @@ class XummPayloadMeta(XummResource):
         :return: The XummPayloadMeta of this XummPayloadMeta.  # noqa: E501
         :rtype: XummPayloadMeta
         """
+        cls.sanity_check(kwargs)
         cls._exists = None
         cls._uuid = None
         cls._multisign = None
@@ -306,31 +329,31 @@ class XummPayloadMeta(XummResource):
         cls._return_url_app = None
         cls._return_url_web = None
         cls._is_xapp = None
-        cls._exists = kwargs['exists']
-        cls._uuid = kwargs['uuid']
-        cls._multisign = kwargs['multisign']
-        cls._submit = kwargs['submit']
-        cls._destination = kwargs['destination']
-        cls._resolved_destination = kwargs['resolved_destination']
-        cls._resolved = kwargs['resolved']
-        cls._signed = kwargs['signed']
-        cls._cancelled = kwargs['cancelled']
-        cls._expired = kwargs['expired']
-        cls._pushed = kwargs['pushed']
-        cls._app_opened = kwargs['app_opened']
+        cls.exists = kwargs['exists']
+        cls.uuid = kwargs['uuid']
+        cls.multisign = kwargs['multisign']
+        cls.submit = kwargs['submit']
+        cls.destination = kwargs['destination']
+        cls.resolved_destination = kwargs['resolved_destination']
+        cls.resolved = kwargs['resolved']
+        cls.signed = kwargs['signed']
+        cls.cancelled = kwargs['cancelled']
+        cls.expired = kwargs['expired']
+        cls.pushed = kwargs['pushed']
+        cls.app_opened = kwargs['app_opened']
         if 'opened_by_deeplink' in kwargs:
-            cls._opened_by_deeplink = kwargs['opened_by_deeplink']
+            cls.opened_by_deeplink = kwargs['opened_by_deeplink']
         if 'return_url_app' in kwargs:
-            cls._return_url_app = kwargs['return_url_app']
+            cls.return_url_app = kwargs['return_url_app']
         if 'return_url_web' in kwargs:
-            cls._return_url_web = kwargs['return_url_web']
-        cls._is_xapp = kwargs['is_xapp']
+            cls.return_url_web = kwargs['return_url_web']
+        cls.is_xapp = kwargs['is_xapp']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -648,8 +671,8 @@ class XummPayloadMeta(XummResource):
         :param opened_by_deeplink: The opened_by_deeplink of this XummPayloadMeta.
         :type opened_by_deeplink: bool
         """
-        if opened_by_deeplink is None:
-            raise ValueError("Invalid value for `opened_by_deeplink`, must not be `None`")  # noqa: E501
+        # if opened_by_deeplink is None:
+        #     raise ValueError("Invalid value for `opened_by_deeplink`, must not be `None`")  # noqa: E501
 
         cls._opened_by_deeplink = opened_by_deeplink
 
@@ -671,8 +694,8 @@ class XummPayloadMeta(XummResource):
         :param return_url_app: The return_url_app of this XummPayloadMeta.
         :type return_url_app: str
         """
-        if return_url_app is None:
-            raise ValueError("Invalid value for `return_url_app`, must not be `None`")  # noqa: E501
+        # if return_url_app is None:
+        #     raise ValueError("Invalid value for `return_url_app`, must not be `None`")  # noqa: E501
 
         cls._return_url_app = return_url_app
 
@@ -694,8 +717,8 @@ class XummPayloadMeta(XummResource):
         :param return_url_web: The return_url_web of this XummPayloadMeta.
         :type return_url_web: str
         """
-        if return_url_web is None:
-            raise ValueError("Invalid value for `return_url_web`, must not be `None`")  # noqa: E501
+        # if return_url_web is None:
+        #     raise ValueError("Invalid value for `return_url_web`, must not be `None`")  # noqa: E501
 
         cls._return_url_web = return_url_web
 
@@ -749,8 +772,12 @@ class XummJsonTransaction(XummResource):
                             and the value is json key in definition.
     """
 
+    required = {
+        'txjson': True
+    }
+
     model_types = {
-        'txjson': 'dict(str, object)',
+        'txjson': dict,
     }
 
     attribute_map = {
@@ -765,7 +792,8 @@ class XummJsonTransaction(XummResource):
         :return: The XummPayloadBodyBase of this XummPayloadBodyBase.  # noqa: E501
         :rtype: XummPayloadBodyBase
         """
-        cls.txjson = None
+        cls.sanity_check(kwargs)
+        cls._txjson = None
         cls.txjson = kwargs['txjson']
         
 
@@ -829,7 +857,15 @@ class XummPayloadBodyBase(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    swagger_types = {
+    required = {
+        'user_token': True,
+        'options': True,
+        # 'txjson': 'TxJson',
+        'custom_meta': True,
+        # 'txblob': 'str'
+    }
+
+    model_types = {
         'user_token': 'str',
         'options': 'Options',
         # 'txjson': 'TxJson',
@@ -853,19 +889,20 @@ class XummPayloadBodyBase(XummResource):
         :return: The XummPayloadBodyBase of this XummPayloadBodyBase.  # noqa: E501
         :rtype: XummPayloadBodyBase
         """
+        cls.sanity_check(kwargs)
         cls._user_token = None
         cls._options = None
         # cls._txjson = None
         cls._custom_meta = None
         # cls._txblob = None
         if 'user_token' in kwargs:
-            cls._user_token = kwargs['_user_token']
+            cls.user_token = kwargs['_user_token']
         if 'options' in kwargs:
-            cls._options = kwargs['options']
+            cls.options = kwargs['options']
         # if 'txjson' in kwargs:
         #     cls._txjson = kwargs['txjson']
         if 'custom_meta' in kwargs:
-            cls._custom_meta = kwargs['custom_meta']
+            cls.custom_meta = kwargs['custom_meta']
         # if 'txblob' in kwargs:
         #     cls._txblob = kwargs['txblob']
 
@@ -873,7 +910,7 @@ class XummPayloadBodyBase(XummResource):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -1014,7 +1051,7 @@ class XummPayloadBodyBase(XummResource):
 class XummPostPayloadBodyJson(XummPayloadBodyBase):
     def __init__(cls, txjson: XummJsonTransaction=None):
         cls._txjson = None
-        cls._txjson = txjson
+        cls.txjson = txjson
 
     @property
     def txjson(self) -> XummJsonTransaction:
@@ -1047,7 +1084,7 @@ class XummPostPayloadBodyJson(XummPayloadBodyBase):
 class XummPostPayloadBodyBlob(XummPayloadBodyBase):
     def __init__(cls, txblob: str=None):
         cls._txblob = None
-        cls._txblob = txblob
+        cls.txblob = txblob
 
     @property
     def txblob(self) -> str:
@@ -1101,11 +1138,18 @@ class XummPostPayloadResponse(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    required = {
+        'uuid': True,
+        'next': True,
+        'refs': True,
+        'pushed': True
+    }
+
     model_types = {
-        'uuid': 'str',
-        'next': 'Next',
-        'refs': 'Refs',
-        'pushed': 'bool'
+        'uuid': str,
+        'next': dict,
+        'refs': dict,
+        'pushed': bool
     }
 
     attribute_map = {
@@ -1124,17 +1168,21 @@ class XummPostPayloadResponse(XummResource):
         :return: The XummPostPayloadResponse of this XummPostPayloadResponse.  # noqa: E501
         :rtype: XummPostPayloadResponse
         """
-        # print(json.dumps(kwargs, indent=4, sort_keys=True))
-        cls._uuid = kwargs['uuid']
-        cls._next = Next(**kwargs['next'])
-        cls._refs = Refs(**kwargs['refs'])
-        cls._pushed = kwargs['pushed']
+        cls.sanity_check(kwargs)
+        cls._uuid = None
+        cls._next = None
+        cls._refs = None
+        cls._pushed = None
+        cls.uuid = kwargs['uuid']
+        cls.next = Next(**kwargs['next'])
+        cls.refs = Refs(**kwargs['refs'])
+        cls.pushed = kwargs['pushed']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -1294,12 +1342,20 @@ class XummGetPayloadResponse(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    required = {
+        'meta': True,
+        'application': True,
+        'payload': True,
+        'response': True,
+        'custom_meta': True
+    }
+
     model_types = {
-        'meta': 'Meta',
-        'application': 'Application',
-        'payload': 'Payload',
-        'response': 'Response',
-        'custom_meta': 'XummCustomMeta'
+        'meta': dict,
+        'application': dict,
+        'payload': dict,
+        'response': dict,
+        'custom_meta': dict
     }
 
     attribute_map = {
@@ -1319,23 +1375,23 @@ class XummGetPayloadResponse(XummResource):
         :return: The XummGetPayloadResponse of this XummGetPayloadResponse.  # noqa: E501
         :rtype: XummGetPayloadResponse
         """
-        # print(json.dumps(kwargs, indent=4, sort_keys=True))
+        cls.sanity_check(kwargs)
         cls._meta = None
         cls._application = None
         cls._payload = None
         cls._response = None
         cls._custom_meta = None
-        cls._meta = XummPayloadMeta(**kwargs['meta'])
-        cls._application = Application(**kwargs['application'])
-        cls._payload = Payload(**kwargs['payload'])
-        cls._response = Response(**kwargs['response'])
-        cls._custom_meta = XummCustomMeta(**kwargs['custom_meta'])
+        cls.meta = XummPayloadMeta(**kwargs['meta'])
+        cls.application = Application(**kwargs['application'])
+        cls.payload = Payload(**kwargs['payload'])
+        cls.response = Response(**kwargs['response'])
+        cls.custom_meta = XummCustomMeta(**kwargs['custom_meta'])
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
         result = {}
 
-        for attr, _ in six.iteritems(cls.model_types):
+        for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
             attr = cls.attribute_map[attr]
             if isinstance(value, list):
@@ -1491,10 +1547,16 @@ class XummDeletePayloadResponse(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    required = {
+        'result': True,
+        'meta': True,
+        'custom_meta': True
+    }
+
     model_types = {
-        'result': 'Result',
-        'meta': 'Meta',
-        'custom_meta': 'XummCustomMeta'
+        'result': dict,
+        'meta': dict,
+        'custom_meta': dict
     }
 
     attribute_map = {
@@ -1512,10 +1574,13 @@ class XummDeletePayloadResponse(XummResource):
         :return: The XummDeletePayloadResponse of this XummDeletePayloadResponse.  # noqa: E501
         :rtype: XummDeletePayloadResponse
         """
-        # print(json.dumps(kwargs, indent=4, sort_keys=True))
-        cls._result = Result(**kwargs['result'])
-        cls._meta = XummPayloadMeta(**kwargs['meta'])
-        cls._custom_meta = XummCustomMeta(**kwargs['custom_meta'])
+        cls.sanity_check(kwargs)
+        cls._result = None
+        cls._meta = None
+        cls._custom_meta = None
+        cls.result = Result(**kwargs['result'])
+        cls.meta = XummPayloadMeta(**kwargs['meta'])
+        cls.custom_meta = XummCustomMeta(**kwargs['custom_meta'])
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
