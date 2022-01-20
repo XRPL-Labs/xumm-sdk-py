@@ -188,8 +188,8 @@ class XummCustomMeta(XummResource):
         :param blob: The blob of this XummCustomMeta.
         :type blob: Dict[str, object]
         """
-        if blob is None:
-            raise ValueError("Invalid value for `blob`, must not be `None`")  # noqa: E501
+        # if blob is None:
+        #     raise ValueError("Invalid value for `blob`, must not be `None`")  # noqa: E501
 
         cls._blob = blob
 
@@ -648,8 +648,8 @@ class XummPayloadMeta(XummResource):
         :param opened_by_deeplink: The opened_by_deeplink of this XummPayloadMeta.
         :type opened_by_deeplink: bool
         """
-        if opened_by_deeplink is None:
-            raise ValueError("Invalid value for `opened_by_deeplink`, must not be `None`")  # noqa: E501
+        # if opened_by_deeplink is None:
+        #     raise ValueError("Invalid value for `opened_by_deeplink`, must not be `None`")  # noqa: E501
 
         cls._opened_by_deeplink = opened_by_deeplink
 
@@ -671,8 +671,8 @@ class XummPayloadMeta(XummResource):
         :param return_url_app: The return_url_app of this XummPayloadMeta.
         :type return_url_app: str
         """
-        if return_url_app is None:
-            raise ValueError("Invalid value for `return_url_app`, must not be `None`")  # noqa: E501
+        # if return_url_app is None:
+        #     raise ValueError("Invalid value for `return_url_app`, must not be `None`")  # noqa: E501
 
         cls._return_url_app = return_url_app
 
@@ -694,8 +694,8 @@ class XummPayloadMeta(XummResource):
         :param return_url_web: The return_url_web of this XummPayloadMeta.
         :type return_url_web: str
         """
-        if return_url_web is None:
-            raise ValueError("Invalid value for `return_url_web`, must not be `None`")  # noqa: E501
+        # if return_url_web is None:
+        #     raise ValueError("Invalid value for `return_url_web`, must not be `None`")  # noqa: E501
 
         cls._return_url_web = return_url_web
 
