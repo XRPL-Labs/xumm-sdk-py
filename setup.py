@@ -36,7 +36,6 @@ setup(
     author_email='support@xrpl-labs.com',
     url='https://github.com/CASL-AE/xumm-sdk-py',
     packages=['xumm', 'xumm.resource'],
-    # install_requires=['requests >= 2.27.1', 'websocket-client >= 1.2.3'],
     install_requires=required,
     test_suite='pytest',
     tests_require=['pytest'],
@@ -46,6 +45,9 @@ setup(
         'Topic :: Software Development :: Libraries :: Python Modules',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
     ],
 )
