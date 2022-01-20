@@ -412,9 +412,9 @@ If you actually want to change/test/develop/build/contribute (to) the source of 
 
 ##### TODO: Build
 
-Please note: at least Python version **3.4+** is required!
+Please note: at least Python version **3.6+** is required!
 
-To build the code, run `python3 install setup.py`.
+To build the code, run `python setup.py install`.
 
 ##### Lint & test
 
