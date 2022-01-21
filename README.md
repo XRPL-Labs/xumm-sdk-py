@@ -1,4 +1,4 @@
-# XUMM SDK (PYTHON) [![python version](https://badge.fury.io/py/xumm-sdk-py.svg)](https://www.pip.com/xumm-sdk-py) [![GitHub Actions Python status](https://github.com/CASL-AE/xumm-sdk-py/workflows/Python/badge.svg?branch=master)](https://github.com/CASL-AE/xumm-sdk-py/actions)
+# XUMM SDK (PYTHON) [![python version](https://badge.fury.io/py/xumm-sdk-py.svg)](https://pypi.org/project/xumm-sdk-py/) [![GitHub Actions Python status](https://github.com/CASL-AE/xumm-sdk-py/workflows/Python/badge.svg?branch=master)](https://github.com/CASL-AE/xumm-sdk-py/actions)
 
 Interact with the XUMM SDK from Python environments.
 
@@ -41,7 +41,7 @@ After constructing the SDK, you can call the methods:
 - `sdk.payload.*` to get/update/create payloads for users to sign
 - `sdk.storage.*` for your XUMM app storage (to store meta info for headless applications)
 
-Please note all snippets below assume you constructed the XUMM SDK into the `Sdk` constant, as the [How to use the XUMM SDK](#how-to-use-the-xumm-sdk) section outlines.
+Please note all snippets below assume you constructed the XUMM SDK into the `sdk` constant, as the [How to use the XUMM SDK](#how-to-use-the-xumm-sdk) section outlines.
 
 #### Helper methods
 
@@ -112,7 +112,7 @@ kyc_status = sdk.get_kyc_status('00000000-0000-0000-0000-000000000000')
 kyc_status = sdk.get_kyc_status('rwu1dgaUq8DCj3ZLFXzRbc1Aco5xLykMMQ')
 ```
 
-Returns [`<keyof PossibleKycStatuses>`](https://github.com/CASL-AE/xumm-sdk-py/blob/master/xumm/resource/types/meta/kyc_status_response.py#L1).
+Returns [`<str of PossibleKycStatuses>`](https://github.com/CASL-AE/xumm-sdk-py/blob/master/xumm/resource/types/meta/kyc_status_response.py#L99).
 
 ###### Notes on KYC information
 
@@ -124,14 +124,14 @@ Returns [`<keyof PossibleKycStatuses>`](https://github.com/CASL-AE/xumm-sdk-py/b
 The `get_transaction` method allows you to get the transaction outcome (mainnet)
 live from the XRP ledger, as fetched for you by the XUMM backend.
 
-**Note**: it's best to retrieve these results **yourself** instead of relying on the XUMM platform to get live XRPL transaction information! You can use the **[xrpl-py](https://www.pip.com/package/xrpl-py)** package to do this:  
-[![python version](https://badge.fury.io/py/xrpl-py.svg)](https://www.pip.com/xrpl-py)
+**Note**: it's best to retrieve these results **yourself** instead of relying on the XUMM platform to get live XRPL transaction information! You can use the **[xrpl-py](https://pypi.org/project/xrpl-py)** package to do this:  
+[![python version](https://badge.fury.io/py/xrpl-py.svg)](https://pypi.org/project/xrpl-py)
 
 ```python
 tx_info = sdk.get_transaction(tx_hash)
 ```
 
-Returns: `<XrplTransaction>`](https://github.com/CASL-AE/xumm-sdk-py/blob/master/xumm/resource/types/meta/xrpl_transaction.py)
+Returns: [`<XrplTransaction>`](https://github.com/CASL-AE/xumm-sdk-py/blob/master/xumm/resource/types/meta/xrpl_transaction.py).
 
 #### App Storage
 
@@ -180,7 +180,7 @@ A payload can contain an XRPL transaction template. Some properties may be omitt
 
 As you can see the payload looks like a regular XRPL transaction, wrapped in an `txjson` object, omitting the mandatory `Account`, `Fee` and `Sequence` properties. They will be added containing the correct values when the payload is signed by an app user.
 
-Optionally (besides `txjson`) a payload can contain these properties ([PY definition](https://github.com/CASL-AE/xumm-sdk-py/blob/master/xumm/resource/types/xumm-api/__init__.py#L79)):
+Optionally (besides `txjson`) a payload can contain these properties ([PY definition](https://github.com/CASL-AE/xumm-sdk-py/blob/master/xumm/resource/types/xumm_api/__init__.py#L79)):
 
 - `options` to define payload options like a return URL, expiration, etc.
 - `custom_meta` to add metadata, user insruction, your own unique ID, ...
@@ -270,7 +270,7 @@ To cancel a payload, provide a payload UUID (string), a `<XummPayload>` (by perf
 
 **Please note**: *if a user already opened the payload in XUMM APP, the payload cannot be cancelled: the user may still be resolving the payload in the XUMM App, and should have a chance to complete that process*.
 
-A response (generic API types [here](https://github.com/CASL-AE/xumm-sdk-py/blob/master/xumm/resource/types/xumm-api/__init__.py)) looks like:
+A response (generic API types [here](https://github.com/CASL-AE/xumm-sdk-py/blob/master/xumm/resource/types/xumm_api/__init__.py)) looks like:
 ```python
 {
   'result': {
