@@ -1,4 +1,7 @@
 
+#!/usr/bin/env python
+# coding: utf-8
+
 from basedir import basedir
 import os
 import shutil
