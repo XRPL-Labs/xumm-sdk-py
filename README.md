@@ -7,33 +7,16 @@ Interact with the XUMM SDK from Python environments.
 <div class="alert alert-danger shadow-sm" style="color: #ca0000; border: 1px solid #ca0000; padding: 4px 6px; border-radius: 5px; background-color: rgba(200, 110, 50, .2)">To implement the XUMM SKD (or XUMM API directly) in your own web project, make sure your frontend calls your own backend, where the follow up
 communication with the XUMM SDK (or XUMM API) will take place. Your XUMM credentials should never be publicly available.
 <br />
-<!-- <b>🎉 An exception is using the XUMM SDK in xApp frontend code: you can use the <q><code>XummSdkJwt</code></q> class for xApps.</b> Read more
-<a href="https://xumm.readme.io/reference/xapps-jwt-endpoints"><u>here</u></a>.
-</div> -->
 
 ## How to use the XUMM SDK
 
-Get the SDK straight from npm: `pip3 install xumm-sdk-py`.
+Get the SDK straight from pypi: `pip3 install xumm-sdk-py`.
 
-Initialize the SDK in Javascript (backend use):
+Initialize the SDK in Python (backend use):
 ```python
 import xumm
 ```
 
-<!-- Initialize the SDK in Javascript (xApp frontend use):
-```javascript
-const {XummSdkJwt} = require('xumm-sdk')
-``` -->
-
-<!-- ... or in Typescript: -->
-
-<!-- ```typescript
-import {XummSdk} from 'xumm-sdk'
-// Or with types:
-//   import {XummSdk, XummTypes} from 'xumm-sdk'
-// Or for xApp frontend code:
-//   import {XummSdkJwt} from 'xumm-sdk'
-``` -->
 
 Now continue by constructing the XummSdk object:
 
@@ -46,30 +29,12 @@ sdk = xumm.XummSdk()
   # sdk = xumm.XummSdk('someAppKey', 'someAppSecret')
 ```
 
-<!-- #### If you are using this SDK in your [xApp](https://xumm.readme.io/docs/what-are-xapps) frontend code ([more about this here](https://xumm.readme.io/reference/xapps-jwt-endpoints)):
-
-Use the `XummSdkJwt` class instead of the `XummSdk` class. You don't need your own
-backend in this case. The `XummSdkJwt` is a drop in replacement for the `XummSdk` class, except passing xApp OTT credentials to the constructor is mandatory (more later).
-
-Please note not all methods are available on the xApp JWT endpoints. For the available endpoints, see the [xApp JWT Endpoint documentation](https://xumm.readme.io/reference/xapps-jwt-endpoints). -->
-
 ### Credentials
 
 #### In case of backend use
 The SDK will look in your environment or dotenv file (`.env`) for the `XUMM_APIKEY` and `XUMM_APISECRET` values. A `.env.sample` file is provided in this repository. A [sample dotenv file looks like this](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/.env.sample). Alternatively you can provide your XUMM API Key & Secret by passing them to the XummSdk constructor. 
 
 If both your environment and the SDK constructor contain credentials, the values provided to the constructor will be used.
-
-<!-- #### In case of xApp frontend use
-If you are using the `XummSdkJwt` class in your xApp frontend, passing params to the constructor is mandatory. The first argument stays the same: your XUMM API Key. The second argument **MUST NOT BE** your XUMM API Secret, but the OTT (One Time Token) available in the `xAppToken` URL Query parameter passed by XUMM to your xApp URL.
-
-Create your app and get your XUMM API credentials at the XUMM Developer Console:
-
-- https://apps.xumm.dev
-
-More information about the XUMM API, payloads, the API workflow, sending Push notifications, etc. please check the XUMM API Docs: 
-
-- https://xumm.readme.io/docs -->
 
 ### Methods & params (+ samples)
 
