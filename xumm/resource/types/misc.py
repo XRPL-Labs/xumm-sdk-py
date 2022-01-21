@@ -72,8 +72,8 @@ class ReturnUrl(XummResource):
                 result[key] = value
 
         return {
-            k: v for k, v in result.items() \
-            if v is not None or k in \
+            k: v for k, v in result.items()
+            if v is not None or k in
             cls.required and k in cls.nullable
         }
 
@@ -188,8 +188,8 @@ class Options(XummResource):
                 result[key] = value
 
         return {
-            k: v for k, v in result.items() \
-            if v is not None or k in \
+            k: v for k, v in result.items()
+            if v is not None or k in
             cls.required and k in cls.nullable
         }
 
@@ -383,8 +383,8 @@ class Response(XummResource):
                 result[key] = value
 
         return {
-            k: v for k, v in result.items() \
-            if v is not None or k in \
+            k: v for k, v in result.items()
+            if v is not None or k in
             cls.required and k in cls.nullable
         }
 
@@ -663,8 +663,8 @@ class RequestJson(XummResource):
                 result[key] = value
 
         return {
-            k: v for k, v in result.items() \
-            if v is not None or k in \
+            k: v for k, v in result.items()
+            if v is not None or k in
             cls.required and k in cls.nullable
         }
 
@@ -819,8 +819,8 @@ class Payload(XummResource):
                 result[key] = value
 
         return {
-            k: v for k, v in result.items() \
-            if v is not None or k in \
+            k: v for k, v in result.items()
+            if v is not None or k in
             cls.required and k in cls.nullable
         }
 
@@ -1122,8 +1122,8 @@ class Application(XummResource):
                 result[key] = value
 
         return {
-            k: v for k, v in result.items() \
-            if v is not None or k in \
+            k: v for k, v in result.items()
+            if v is not None or k in
             cls.required and k in cls.nullable
         }
 
@@ -1322,8 +1322,8 @@ class Result(XummResource):
                 result[key] = value
 
         return {
-            k: v for k, v in result.items() \
-            if v is not None or k in \
+            k: v for k, v in result.items()
+            if v is not None or k in
             cls.required and k in cls.nullable
         }
 
@@ -1458,8 +1458,8 @@ class Refs(XummResource):
                 result[key] = value
 
         return {
-            k: v for k, v in result.items() \
-            if v is not None or k in \
+            k: v for k, v in result.items()
+            if v is not None or k in
             cls.required and k in cls.nullable
         }
 
@@ -1619,8 +1619,8 @@ class Next(XummResource):
                 result[key] = value
 
         return {
-            k: v for k, v in result.items() \
-            if v is not None or k in \
+            k: v for k, v in result.items()
+            if v is not None or k in
             cls.required and k in cls.nullable
         }
 

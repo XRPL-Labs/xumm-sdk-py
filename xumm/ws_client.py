@@ -7,7 +7,7 @@ import json
 import sys
 from multiprocessing import Queue
 from threading import Thread, Event, Timer
-from typing import Dict, Any, Union
+from typing import Dict, Any
 
 from websocket import (
     enableTrace,

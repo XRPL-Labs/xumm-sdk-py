@@ -365,7 +365,7 @@ class XummPayloadMeta(XummResource):
         if 'return_url_app' in kwargs:
             cls.return_url_app = kwargs['return_url_app']
         if 'return_url_web' in kwargs:
-                cls.return_url_web = kwargs['return_url_web']
+            cls.return_url_web = kwargs['return_url_web']
         cls.is_xapp = kwargs['is_xapp']
 
     def to_dict(cls):
@@ -395,8 +395,8 @@ class XummPayloadMeta(XummResource):
                 result[key] = value
 
         return {
-            k: v for k, v in result.items() \
-            if v is not None or k in \
+            k: v for k, v in result.items()
+            if v is not None or k in
             cls.required and k in cls.nullable
         }
 
@@ -979,8 +979,8 @@ class XummPayloadBodyBase(XummResource):
                 result[key] = value
 
         return {
-            k: v for k, v in result.items() \
-            if v is not None or k in \
+            k: v for k, v in result.items()
+            if v is not None or k in
             cls.required and k in cls.nullable
         }
 
@@ -1227,8 +1227,8 @@ class XummPostPayloadResponse(XummResource):
                 result[key] = value
 
         return {
-            k: v for k, v in result.items() \
-            if v is not None or k in \
+            k: v for k, v in result.items()
+            if v is not None or k in
             cls.required and k in cls.nullable
         }
 
@@ -1440,8 +1440,8 @@ class XummGetPayloadResponse(XummResource):
                 result[key] = value
 
         return {
-            k: v for k, v in result.items() \
-            if v is not None or k in \
+            k: v for k, v in result.items()
+            if v is not None or k in
             cls.required and k in cls.nullable
         }
 
@@ -1630,8 +1630,8 @@ class XummDeletePayloadResponse(XummResource):
                 result[key] = value
 
         return {
-            k: v for k, v in result.items() \
-            if v is not None or k in \
+            k: v for k, v in result.items()
+            if v is not None or k in
             cls.required and k in cls.nullable
         }
 

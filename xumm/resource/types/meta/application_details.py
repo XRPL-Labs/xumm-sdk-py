@@ -65,8 +65,8 @@ class Call(XummResource):
                 result[key] = value
 
         return {
-            k: v for k, v in result.items() \
-            if v is not None or k in \
+            k: v for k, v in result.items()
+            if v is not None or k in
             cls.required and k in cls.nullable
         }
 
@@ -167,7 +167,11 @@ class Application(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items()
+            if v is not None or k in
+            cls.required and k in cls.nullable
+        }
 
     @property
     def name(cls) -> str:
@@ -355,7 +359,11 @@ class Quota(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items()
+            if v is not None or k in
+            cls.required and k in cls.nullable
+        }
 
     @property
     def ratelimit(cls) -> str:
@@ -449,7 +457,11 @@ class ApplicationDetails(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items()
+            if v is not None or k in
+            cls.required and k in cls.nullable
+        }
 
     @property
     def quota(cls) -> Quota:

@@ -66,9 +66,9 @@ class PrintableResource(object):
 
             # Error if attribute is required and value is
             # None: 2x of ^^^ Delete in final
-            if attr in cls.nullable and value is None and cls.nullable[attr] is True:
+            if attr in cls.nullable and value is None and cls.nullable[attr] is True:  # noqa: E501
                 continue
-            
+
             if attr in cls.required and value is None:
                 raise ValueError(
                     "Invalid value for `{}`, "
@@ -116,7 +116,6 @@ class XummResource(PrintableResource):
         return client.build_url() + 'platform' + '/'
 
     def __init__(cls, *args, **kwargs) -> 'XummResource':
-        # print('INIT INITING: {} : KWARGS: {}'.format(cls.__class__.__name__, kwargs))
         cls.refresh_from(**kwargs)
 
     def refresh_from(cls, **kwargs):

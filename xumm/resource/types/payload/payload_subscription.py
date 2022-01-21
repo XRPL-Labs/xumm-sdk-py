@@ -92,8 +92,8 @@ class PayloadSubscription(XummResource):
                 result[key] = value
 
         return {
-            k: v for k, v in result.items() \
-            if v is not None or k in \
+            k: v for k, v in result.items()
+            if v is not None or k in
             cls.required and k in cls.nullable
         }
 
