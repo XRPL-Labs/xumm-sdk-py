@@ -38,7 +38,9 @@ async def start_server(ws, path):
 
 
 async def main():
+    print('STARTING SOCKET')
     async with websockets.serve(start_server, "localhost", 8765):
+        print('SERVING SOCKET')
         await asyncio.Future()  # run forever
 
 

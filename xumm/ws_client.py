@@ -23,7 +23,7 @@ class WSClient(Thread):
     def __init__(cls, server=None, timeout=None, log_level=None, *args, **kwargs):  # noqa: E501
         """
         Args:
-            server: rippled node url.
+            server: xumm node url.
             timeout: connection timeout seconds
             log_level: loggin level
             on_open: callable object which is called at opening websocket.

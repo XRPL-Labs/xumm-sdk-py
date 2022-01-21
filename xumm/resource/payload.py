@@ -30,24 +30,60 @@ logger = logging.getLogger('app')
 class CallbackPromise:
 
     resolved = None
+    error = None
     data = None
 
     def in_res(cls, args):
         cls.data = args
         return args
 
+    def in_rej(cls, error):
+        cls.error = error
+        return error
+
     def __init__(cls):
         cls.resolve_fn = cls.in_res
+        cls.reject_fn = cls.in_res
         cls.data = None
 
     def _resolve(cls, arg: Any):
         cls.resolve_fn(arg)
 
+    def _reject(cls, error):
+        cls.reject_fn(error)
+
     async def _resolved(cls):
-        while not cls.data:
+        while not cls.data and not cls.error:
             continue
 
+        if cls.error:
+            return None
+        
         return cls.data
+
+# class CallbackPromise:
+
+#     resolved = None
+#     args = None
+#     kwargs = None
+
+#     def in_res(cls, *args, **kwargs):
+#         cls.args = args
+#         cls.kwargs = kwargs
+#         return cls
+
+#     def __init__(cls, *args, **kwargs):
+#         cls.resolve_fn = cls.in_res
+#         cls.data = None
+
+#     def _resolve(cls, *args, **kwargs):
+#         cls.resolve_fn(*args, **kwargs)
+
+#     async def _resolved(cls):
+#         while not cls.args or not cls.kwargs:
+#             continue
+
+#         return cls.args, cls.kwargs
 
 
 class PayloadResource(XummResource):
@@ -191,19 +227,20 @@ class PayloadResource(XummResource):
                         callback_promise._resolve(callback_result)
 
                 except Exception as e:
-                    logger.info('Payload {}: Callback exception: {}'.format(payload_details.meta.uuid, e))  # noqa: E501
+                    print('Payload {}: Callback exception: {}'.format(payload_details.meta.uuid, e))  # noqa: E501
 
         def on_error(error):
-            logger.info('Payload {}: Received message, unable to parse as JSON'.format(payload_details.meta.uuid))  # noqa: E501
+            print('Payload {}: Subscription error: {}'.format(payload_details.meta.uuid, error))  # noqa: E501
             cls._conn.disconnect()
-            # raise error
+            callback_promise._reject(error)
+            # raise ValueError(error)
 
         # def on_close(ws, close_status_code, close_msg):
         def on_close():
-            logger.info('Payload {}: Subscription ended (WebSocket closed)'.format(payload_details.meta.uuid))  # noqa: E501
+            print('Payload {}: Subscription ended (WebSocket closed)'.format(payload_details.meta.uuid))  # noqa: E501
 
         def on_open(connection):
-            logger.info('Payload {}: Subscription active (WebSocket opened)'.format(payload_details.meta.uuid))  # noqa: E501
+            print('Payload {}: Subscription active (WebSocket opened)'.format(payload_details.meta.uuid))  # noqa: E501
 
         if payload_details:
             cls._callback = callback

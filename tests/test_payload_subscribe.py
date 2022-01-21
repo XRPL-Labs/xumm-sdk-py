@@ -2,6 +2,7 @@
 # coding: utf-8
 
 import time
+import json
 from testing_config import BaseTestConfig
 from tests.fixtures import (
     xumm_api as test_fixtures,
@@ -14,11 +15,11 @@ from typing import Callable
 import xumm
 import asyncio
 
-# from threading import Thread
+from threading import Thread
 
 
-import pytest
-@pytest.mark.skip(reason="Using Prod Cert")
+# import pytest
+# @pytest.mark.skip(reason="Using Prod Cert")
 class TestPayloadSubscribe(BaseTestConfig):
 
     @classmethod
@@ -64,7 +65,6 @@ class TestPayloadSubscribe(BaseTestConfig):
         # cls.assertEqual(subscription_socket.websocket.status(), 101)
         cls.assertEqual(await subscription_socket.resolved(), test_fixtures.subscription_updates()['rejected'])
         # expect(wsEol).toEqual(expect.arrayContaining([subscriptionSocket.websocket.readyState]))
-
         cls.sdk.payload.unsubscribe()
 
     @patch('xumm.client.requests.get')
@@ -108,9 +108,8 @@ class TestPayloadSubscribe(BaseTestConfig):
         subscription_socket.resolve({'dummyObject': True})
         # cls.assertEqual(received_messages, 3)
         cls.assertEqual(await subscription_socket.resolved(), {'dummyObject': True})
-        
-        # TODO: Unknown
         # expect(wsEol).toEqual(expect.arrayContaining([subscriptionSocket.websocket.readyState]))
+        cls.sdk.payload.unsubscribe()
 
     @patch('xumm.client.requests.get')
     @patch('xumm.client.requests.post')
@@ -147,6 +146,7 @@ class TestPayloadSubscribe(BaseTestConfig):
         # cls.assertEqual(subscription_socket.websocket.sock.getstatus(), 101)
         cls.assertEqual(await subscription_socket.resolved(), test_fixtures.subscription_updates()['rejected'])
         # expect(wsEol).toEqual(expect.arrayContaining([subscriptionSocket.websocket.readyState]))
+        cls.sdk.payload.unsubscribe()
 
     @patch('xumm.client.requests.get')
     @patch('xumm.client.requests.post')
@@ -183,23 +183,38 @@ class TestPayloadSubscribe(BaseTestConfig):
         # cls.assertEqual(subscription_socket.websocket.sock.getstatus(), 101)
         cls.assertEqual(await subscription_socket.resolved(), test_fixtures.subscription_updates()['rejected'])
         # expect(wsEol).toEqual(expect.arrayContaining([subscriptionSocket.websocket.readyState]))
+        cls.sdk.payload.unsubscribe()
 
-    def test_payload_subscribe(cls):
-        loop = asyncio.get_event_loop()
+    async def _test_payload_subscribe(cls, loop):
+
+        def start_server():
+            asyncio.run(ws_main())
         
-        # asyncio.run_coroutine_threadsafe(ws_main(), loop)
-        # thread = Thread(target=await ws_main, daemon=True)
-        # thread.start()
+        thread = Thread(target=start_server, daemon=True)
+        thread.start()
 
-        loop.run_until_complete(cls._test_payload_subscribe_inner())
+        await asyncio.sleep(3)
 
-        loop.run_until_complete(cls._test_payload_subscribe_return())
+        await cls._test_payload_subscribe_inner()
 
-        loop.run_until_complete(cls._test_payload_create_subscribe_inner())
-        
-        loop.run_until_complete(cls._test_payload_create_subscribe_return())
+        await cls._test_payload_subscribe_return()
 
-        loop.close()
-        # thread.kill()
-        # thread.join()
+        await cls._test_payload_create_subscribe_inner()
+
+        await cls._test_payload_create_subscribe_return()
+
+        await asyncio.sleep(2)
+
+        loop.call_soon_threadsafe(loop.stop)
+        # thread.join()  # This doesnt work?
+        raise ValueError(200)  # Do this beacuse the thread never comes back...
+
+    def test_test_payload(cls):
+        try:
+            loop = asyncio.get_event_loop()
+            loop.run_until_complete(cls._test_payload_subscribe(loop))
+            loop.close()
+        except Exception as e:
+            cls.assertEqual(str(e), '200')
+
 
