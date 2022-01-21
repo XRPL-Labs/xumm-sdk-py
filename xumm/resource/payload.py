@@ -2,10 +2,12 @@
 # coding: utf-8
 
 import logging
+from shelve import Shelf
 from typing import List, Dict, Any, Union, Callable  # noqa: F401
 from xumm import (
     client,
-    error
+    error,
+    env
 )
 from xumm.resource import XummResource
 
@@ -29,25 +31,36 @@ logger = logging.getLogger('app')
 
 class CallbackPromise:
 
+    resolved = None
+    data = None
+
+    def in_res(cls, args):
+        cls.data = args
+        return args
+
     def __init__(cls):
-        cls.data: object = None
+        cls.resolve_fn = cls.in_res
+        cls.data = None
+
 
     def _resolve(
         cls,
-        resolveData: Dict[str, object]
-    ) -> Dict[str, object]:
-        cls.data = resolveData
+        arg: Any
+    ):
+        cls.resolve_fn(arg)
+    
+    async def _resolved(cls):
+        while not cls.data:
+            continue
+        
         return cls.data
 
-    async def _resolved(cls) -> Dict[str, object]:
-        return cls.data
 
 
 class PayloadResource(XummResource):
 
     _conn: WSClient = None
     _callback: Callable = None
-    _mock: bool = False
 
     @classmethod
     def post_url(cls) -> str:
@@ -160,11 +173,12 @@ class PayloadResource(XummResource):
     async def subscribe(
         cls,
         payload: Union[str, XummPayload, CreatedPayload],
-        callback
+        callback: Callable = None
     ) -> PayloadSubscription:
         """Subscribe to a channel
         :returns: PayloadSubscription
         """
+        from xumm import env
 
         callback_promise = CallbackPromise()
 
@@ -173,10 +187,6 @@ class PayloadResource(XummResource):
         def on_message(json_data):
             if json_data and cls._callback and 'devapp_fetched' not in json_data:  # noqa: E501
                 try:
-                    # kwargs = {
-                    #     'payload': payload_details.to_dict(),
-                    #     'websocket': cls._conn
-                    # }
                     callback_result = cls._callback({
                         'uuid': payload_details.meta.uuid,
                         'data': json_data,
@@ -205,8 +215,8 @@ class PayloadResource(XummResource):
         if payload_details:
             cls._callback = callback
             cls._conn = WSClient(
-                log_level=logging.ERROR if cls.mock else logging.ERROR,
-                server='ws://localhost:8765' if getattr(cls, '_mock') is True else 'wss://xumm.app/sign/{}'.format(payload_details.meta.uuid),  # noqa: E501
+                log_level=logging.ERROR if env == 'sandbox' else logging.ERROR,
+                server='ws://localhost:8765' if env == 'sandbox' else 'wss://xumm.app/sign/{}'.format(payload_details.meta.uuid),  # noqa: E501
                 on_response=on_message,
                 on_error=on_error,
                 on_close=on_close,
@@ -249,26 +259,3 @@ class PayloadResource(XummResource):
         :returns: None
         """
         cls._conn.disconnect()
-
-    @property
-    def mock(cls) -> bool:
-        """Gets the resolve of this PayloadResource.
-
-
-        :return: The resolve of this PayloadResource.
-        :rtype: Callable
-        """
-        return cls._mock
-
-    @mock.setter
-    def mock(cls, mock: bool):
-        """Sets the mock of this PayloadResource.
-
-
-        :param mock: The mock of this PayloadResource.
-        :type meta: Callable
-        """
-        if mock is None:
-            raise ValueError("Invalid value for `mock`, must not be `None`")  # noqa: E501
-
-        cls._mock = mock

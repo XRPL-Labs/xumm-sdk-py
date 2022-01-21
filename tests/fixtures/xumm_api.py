@@ -69,6 +69,17 @@ def subscription_updates():
                 'web': None
             },
             'custom_meta': {}
+        },
+        'signed': {
+            'payload_uuidv4': 'aaaaaaaa-dddd-ffff-cccc-8207bd724e45',
+            'reference_call_uuidv4': 'bbbbbbbb-eeee-aaaa-1111-8d192bd91f07',
+            'signed': True,
+            'user_token': True,
+            'return_url': {
+                'app': None,
+                'web': 'https://xumm.dev/beta/test?payloadId=00000000-0000-4839-af2f-f794874a80b0&customIdent=&txid=&hex='
+            },
+            'custom_meta': {}
         }
     }
 
