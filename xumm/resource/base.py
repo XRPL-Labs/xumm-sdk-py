@@ -58,7 +58,7 @@ class XummSdk(XummResource):
         return PongResponse(**res)
 
     def get_kyc_status(
-        cls, 
+        cls,
         id: str = None
     ) -> Union[KycInfoResponse, KycStatusResponse]:  # noqa: E501
         """Returns the dict as a model

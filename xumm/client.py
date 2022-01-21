@@ -63,7 +63,7 @@ def get(
 
 
 def post(
-    url: str, 
+    url: str,
     data: Dict[str, object]
 ) -> Any:
     try:
@@ -114,8 +114,8 @@ def handle_request_error(e: ConnectionError):
 
 
 def handle_error_code(
-    json: Dict[str, object], 
-    status_code: int, 
+    json: Dict[str, object],
+    status_code: int,
     headers: Dict[str, object]
 ):  # noqa: E501
     if status_code == 400:
@@ -136,8 +136,8 @@ def handle_error_code(
 
 
 def handle_parse_error(
-    e: ValueError, 
-    status_code: int, 
+    e: ValueError,
+    status_code: int,
     headers: Dict[str, object]
 ):  # noqa: E501
     err = '{}: {}'.format(type(e).__name__, e)

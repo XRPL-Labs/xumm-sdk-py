@@ -1490,7 +1490,7 @@ class Refs(XummResource):
         allowed_values = ["m", "q", "h"]  # noqa: E501
         if qr_uri_quality_opts != allowed_values:
             raise ValueError(
-                "Invalid values for `qr_uri_quality_opts` ({0}), must be exacty {1}"
+                "Invalid values for `qr_uri_quality_opts` ({0}), must be exacty {1}"  # noqa: E501
                 .format(qr_uri_quality_opts, allowed_values)
             )
 

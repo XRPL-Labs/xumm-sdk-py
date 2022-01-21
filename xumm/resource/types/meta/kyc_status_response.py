@@ -100,7 +100,7 @@ class KycStatusResponse(XummResource):
         ]  # noqa: E501
         if kyc_status not in allowed_values:
             raise ValueError(
-                "Invalid value for `kyc_status` ({0}), must be one of {1}"
+                "Invalid value for `kyc_status` ({0}), must be one of {1}"  # noqa: E501
                 .format(kyc_status, allowed_values)
             )
 
@@ -126,16 +126,16 @@ class KycStatusResponse(XummResource):
         """
         if possible_statuses is None:
             raise ValueError("Invalid value for `possible_statuses`, must not be `None`")  # noqa: E501
-        
+
         allowed_values = {
             "NONE": "No KYC attempt has been made",
-            "IN_PROGRESS": "KYC flow has been started, but did not finish (yet)",
-            "REJECTED": "KYC flow has been started and rejected (NO SUCCESSFUL KYC)",
+            "IN_PROGRESS": "KYC flow has been started, but did not finish (yet)",  # noqa: E501
+            "REJECTED": "KYC flow has been started and rejected (NO SUCCESSFUL KYC)",  # noqa: E501
             "SUCCESSFUL": "KYC flow has been started and was SUCCESSFUL :)"
-        }  # noqa: E501
+        }
         if possible_statuses != allowed_values:
             raise ValueError(
-                "Invalid value for `possible_statuses` ({0}), must be exactly {1}"
+                "Invalid value for `possible_statuses` ({0}), must be exactly {1}"  # noqa: E501
                 .format(possible_statuses, allowed_values)
             )
 

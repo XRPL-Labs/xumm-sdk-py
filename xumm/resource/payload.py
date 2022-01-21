@@ -33,7 +33,7 @@ class CallbackPromise:
         cls.data: object = None
 
     def _resolve(
-        cls, 
+        cls,
         resolveData: Dict[str, object]
     ) -> Dict[str, object]:
         cls.data = resolveData

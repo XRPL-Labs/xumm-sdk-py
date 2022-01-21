@@ -39,8 +39,8 @@ class AuthenticationError(RPCError):
 
 class WSError(Exception):
     def __init__(
-        self, 
-        message: str = None, 
+        self,
+        message: str = None,
         data: Dict[str, object] = None
     ):
         super(WSError, self).__init__(message)
