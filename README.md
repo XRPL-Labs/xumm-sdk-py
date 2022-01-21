@@ -23,13 +23,13 @@ Now continue by constructing the XummSdk object:
 ```python
 sdk = xumm.XummSdk()
 # Or with manually provided credentials (instead of using dotenv):
-  sdk = xumm.XummSdk('someAppKey', 'someAppSecret')
+sdk = xumm.XummSdk('someAppKey', 'someAppSecret')
 ```
 
 ### Credentials
 
 #### In case of backend use
-The SDK will look in your environment or dotenv file (`.env`) for the `XUMM_APIKEY` and `XUMM_APISECRET` values. A `.env.sample` file is provided in this repository. A [sample dotenv file looks like this](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/.env.sample). Alternatively you can provide your XUMM API Key & Secret by passing them to the XummSdk constructor. 
+The SDK will look in your environment or dotenv file (`.env`) for the `XUMM_APIKEY` and `XUMM_APISECRET` values. A `.env.sample` file is provided in this repository. A [sample dotenv file looks like this](https://github.com/CASL-AE/xumm-sdk-py/blob/master/.env.sample). Alternatively you can provide your XUMM API Key & Secret by passing them to the XummSdk constructor. 
 
 If both your environment and the SDK constructor contain credentials, the values provided to the constructor will be used.
 
@@ -53,7 +53,7 @@ The `ping` method allows you to verify API access (valid credentials) and return
 pong = sdk.ping()
 ```
 
-Returns [`<ApplicationDetails>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/src/types/Meta/ApplicationDetails.ts):
+Returns [`<ApplicationDetails>`](https://github.com/CASL-AE/xumm-sdk-py/blob/master/xumm/resource/types/meta/application_details.py):
 ```python
 {
   'quota': {},
@@ -76,15 +76,15 @@ populate the "Add Asset" button at the XUMM home screan.
 curated_assets = sdk.get_curated_assets()
 ```
 
-Returns [`<CuratedAssetsResponse>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/src/types/Meta/CuratedAssetsResponse.ts):
+Returns [`<CuratedAssetsResponse>`](https://github.com/CASL-AE/xumm-sdk-py/blob/master/xumm/resource/types/meta/curated_assets_response.py):
 ```python
 {
   'curatedAssets': {
     'issuers': [ 'Bitstamp', 'GateHub' ],
     'currencies': [ 'USD', 'BTC', 'EUR', 'ETH' ],
     'details': {
-      'Bitstamp': object,
-      'GateHub': object
+      'Bitstamp': {},
+      'GateHub': {}
     }
   }
 }
@@ -112,7 +112,7 @@ kyc_status = sdk.get_kyc_status('00000000-0000-0000-0000-000000000000')
 kyc_status = sdk.get_kyc_status('rwu1dgaUq8DCj3ZLFXzRbc1Aco5xLykMMQ')
 ```
 
-Returns [`<keyof PossibleKycStatuses>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/src/types/Meta/KycStatusResponse.ts#L1).
+Returns [`<keyof PossibleKycStatuses>`](https://github.com/CASL-AE/xumm-sdk-py/blob/master/xumm/resource/types/meta/kyc_status_response.py#L1).
 
 ###### Notes on KYC information
 
@@ -124,14 +124,14 @@ Returns [`<keyof PossibleKycStatuses>`](https://github.com/XRPL-Labs/XUMM-SDK/bl
 The `get_transaction` method allows you to get the transaction outcome (mainnet)
 live from the XRP ledger, as fetched for you by the XUMM backend.
 
-**Note**: it's best to retrieve these results **yourself** instead of relying on the XUMM platform to get live XRPL transaction information! You can use the **[xrpl-txdata](https://www.npmjs.com/package/xrpl-txdata)** package to do this:  
-[![npm version](https://badge.fury.io/js/xrpl-txdata.svg)](https://www.npmjs.com/xrpl-txdata)
+**Note**: it's best to retrieve these results **yourself** instead of relying on the XUMM platform to get live XRPL transaction information! You can use the **[xrpl-py](https://www.pip.com/package/xrpl-py)** package to do this:  
+[![python version](https://badge.fury.io/py/xrpl-py.svg)](https://www.pip.com/xrpl-py)
 
 ```python
 tx_info = sdk.get_transaction(tx_hash)
 ```
 
-Returns: `<XrplTransaction>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/src/types/Meta/XrplTransaction.ts)
+Returns: `<XrplTransaction>`](https://github.com/CASL-AE/xumm-sdk-py/blob/master/xumm/resource/types/meta/xrpl_transaction.py)
 
 #### App Storage
 
@@ -180,7 +180,7 @@ A payload can contain an XRPL transaction template. Some properties may be omitt
 
 As you can see the payload looks like a regular XRPL transaction, wrapped in an `txjson` object, omitting the mandatory `Account`, `Fee` and `Sequence` properties. They will be added containing the correct values when the payload is signed by an app user.
 
-Optionally (besides `txjson`) a payload can contain these properties ([PY definition](https://github.com/XRPL-Labs/XUMM-SDK/blob/d2aae98eb8f496f4d77079c777aa41df754d4ebc/src/types/xumm-api/index.ts#L79)):
+Optionally (besides `txjson`) a payload can contain these properties ([PY definition](https://github.com/CASL-AE/xumm-sdk-py/blob/master/xumm/resource/types/xumm-api/__init__.py#L79)):
 
 - `options` to define payload options like a return URL, expiration, etc.
 - `custom_meta` to add metadata, user insruction, your own unique ID, ...
@@ -196,7 +196,7 @@ Instead of providing a `txjson` transaction, a transaction formatted as HEX blob
 sdk.payload.get (
   payload: str | CreatedPayload,
   return_errors: bool = False
-): -> Callable[XummPayload]
+): -> XummPayload
 ```
 
 To get payload details, status and if resolved & signed: results (transaction, transaction hash, etc.) you can `get()` a payload.
@@ -229,7 +229,7 @@ sdk.payload.get('aaaaaaaa-bbbb-cccc-dddd-1234567890ab', True)
 sdk.payload.create (
   payload: create_payload,
   return_errors: bool = False
-): -> Callable[Union(CreatedPayload, None)]
+): -> Union(CreatedPayload, None)
 ```
 
 To create a payload, a `txjson` XRPL transaction can be provided. Alternatively, a transaction formatted as HEX blob (string) can be provided in a `txblob` property. **See the [intro](#intro) for more information about payloads.** Take a look at the [Developer Docs for more information about payloads](https://xumm.readme.io/docs/your-first-payload).
@@ -263,14 +263,14 @@ Alternatively user routing / instruction flows can be custom built using the QR 
 sdk.payload.cancel (
   payload: Union(str, XummPayload, CreatedPayload),
   return_errors: bool = False
-): -> Callable[Union(DeletedPayload, None)]
+): -> Union(DeletedPayload, None)
 ```
 
 To cancel a payload, provide a payload UUID (string), a `<XummPayload>` (by performing a `sdk.payload.get()` first) or a `<CreatedPayload>` (by using the response of a `sdk.payload.create()` call). By cancelling an existing payload, the payload will be marked as expired and can no longer be opened by users. 
 
 **Please note**: *if a user already opened the payload in XUMM APP, the payload cannot be cancelled: the user may still be resolving the payload in the XUMM App, and should have a chance to complete that process*.
 
-A response (generic API types [here](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/src/types/xumm-api/index.ts)) looks like:
+A response (generic API types [here](https://github.com/CASL-AE/xumm-sdk-py/blob/master/xumm/resource/types/xumm-api/__init__.py)) looks like:
 ```python
 {
   'result': {
@@ -307,16 +307,16 @@ The subscription will be closed by either:
 sdk.payload.subscribe (
   payload: Union(str, XummPayload, CreatedPayload),
   callback: onPayloadEvent
-): -> Callable[PayloadSubscription]
+): -> PayloadSubscription
 ```
 
 If a callback function is not provided, the subscription will stay active until the `<PayloadSubscription>.resolve()` method is called manually, eg. based on handling `<PayloadSubscription>.websocket.onmessage` events.
 
-When a callback function is provided, for every paylaod specific event the callback function will be called with [`<SubscriptionCallbackParams>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/651bd409ee2aab47fb9151513b8cf981cc1a4f30/src/types/Payload/SubscriptionCallbackParams.ts). The `<SubscriptionCallbackParams>.data` property contains parsed JSON containing event information. Either by calling `<SubscriptionCallbackParams>.resolve()` or by returning a non-void value in the *callback function* the subscription will be ended, and the `<PayloadSubscription>.resolved` promise will resolve with the value returned or passed to the `<SubscriptionCallbackParams>.resolve()` method.
+When a callback function is provided, for every paylaod specific event the callback function will be called with [`<SubscriptionCallbackParams>`](https://github.com/CASL-AE/xumm-sdk-py/blob/master/xumm/resource/types/payload/subscription_callback_params.py). The `<SubscriptionCallbackParams>.data` property contains parsed JSON containing event information. Either by calling `<SubscriptionCallbackParams>.resolve()` or by returning a non-void value in the *callback function* the subscription will be ended, and the `<PayloadSubscription>.resolved` promise will resolve with the value returned or passed to the `<SubscriptionCallbackParams>.resolve()` method.
 
 Resolving (by returning non-void in the callback or calling `resolve()` manually) closes the WebSocket client the XUMM SDK sets up 'under the hood'.
 
-The [`<PayloadSubscription>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/src/types/Payload/PayloadSubscription.ts) object looks like this:
+The [`<PayloadSubscription>`](https://github.com/CASL-AE/xumm-sdk-py/blob/master/xumm/resource/types/payload/payload_subscription.py) object looks like this:
 
 ```python
 {
@@ -340,10 +340,10 @@ Examples:
 sdk.payload.create_and_subscribe (
     payload: CreatePayload,
     callback: onPayloadEvent
-  ): -> Callable[PayloadAndSubscription]
+  ): -> PayloadAndSubscription
 ```
 
-The [`<PayloadAndSubscription>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/src/types/Payload/PayloadAndSubscription.ts) object is basically a [`<PayloadSubscription>`](https://github.com/XRPL-Labs/XUMM-SDK/blob/master/src/types/Payload/PayloadSubscription.ts) object with the created payload results in the `created` property:
+The [`<PayloadAndSubscription>`](https://github.com/CASL-AE/xumm-sdk-py/blob/master/xumm/resource/types/payload/payload_and_subscription.py) object is basically a [`<PayloadSubscription>`](https://github.com/CASL-AE/xumm-sdk-py/blob/master/xumm/resource/types/payload/payload_subscription.py) object with the created payload results in the `created` property:
 
 All information that applies on [`sdk.payload.create()`](#sdkpayloadcreate) and [`sdk.payload.create_and_subscribe()`](#sdkpayloadsubscribe) applies. Differences are:
 
