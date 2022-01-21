@@ -2,12 +2,10 @@
 # coding: utf-8
 
 import logging
-from shelve import Shelf
 from typing import List, Dict, Any, Union, Callable  # noqa: F401
 from xumm import (
     client,
-    error,
-    env
+    error
 )
 from xumm.resource import XummResource
 
@@ -42,19 +40,14 @@ class CallbackPromise:
         cls.resolve_fn = cls.in_res
         cls.data = None
 
-
-    def _resolve(
-        cls,
-        arg: Any
-    ):
+    def _resolve(cls, arg: Any):
         cls.resolve_fn(arg)
-    
+
     async def _resolved(cls):
         while not cls.data:
             continue
-        
-        return cls.data
 
+        return cls.data
 
 
 class PayloadResource(XummResource):
