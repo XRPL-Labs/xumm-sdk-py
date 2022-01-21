@@ -185,7 +185,7 @@ class TestPayloadSubscribe(BaseTestConfig):
         # expect(wsEol).toEqual(expect.arrayContaining([subscriptionSocket.websocket.readyState]))
         cls.sdk.payload.unsubscribe()
 
-    async def _test_payload_subscribe(cls, loop):
+    async def _test_payload_subscribe(cls):
 
         def start_server():
             asyncio.run(ws_main())
@@ -205,16 +205,11 @@ class TestPayloadSubscribe(BaseTestConfig):
 
         await asyncio.sleep(2)
 
-        loop.call_soon_threadsafe(loop.stop)
-        # thread.join()  # This doesnt work?
-        raise ValueError(200)  # Do this beacuse the thread never comes back...
+        return True
 
     def test_test_payload(cls):
-        try:
-            loop = asyncio.get_event_loop()
-            loop.run_until_complete(cls._test_payload_subscribe(loop))
-            loop.close()
-        except Exception as e:
-            cls.assertEqual(str(e), '200')
+        loop = asyncio.get_event_loop()
+        loop.run_until_complete(cls._test_payload_subscribe())
+        loop.close()
 
 
