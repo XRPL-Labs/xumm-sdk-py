@@ -58,7 +58,7 @@ class CallbackPromise:
 
         if cls.error:
             return None
-        
+
         return cls.data
 
 # class CallbackPromise:
