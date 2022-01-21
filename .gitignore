@@ -16,3 +16,4 @@ venv
 # Production #
 /build
 /xumm_sdk_python.egg-info
+.env
