@@ -95,7 +95,7 @@ class TestCommon(BaseTestConfig):
         user_token = 'rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY'
         mock_get.return_value = Mock(status_code=200)
         mock_get.return_value.json.return_value = cls.json_fixtures['kycStatus']['get']
-        cls.assertEqual(sdk.get_kyc_status(user_token).to_dict(), cls.json_fixtures['kycStatus']['get'])
+        cls.assertEqual(sdk.get_kyc_status(user_token), 'NONE')
 
     @patch('xumm.client.requests.post')
     def test_create_kyc_status(cls, mock_post):
@@ -110,7 +110,7 @@ class TestCommon(BaseTestConfig):
         mock_post.return_value = Mock(status_code=200)
         mock_post.return_value.json.return_value = cls.json_fixtures['kycStatus']['post']
 
-        cls.assertEqual(sdk.get_kyc_status(user_token).kyc_status, 'IN_PROGRESS')
+        cls.assertEqual(sdk.get_kyc_status(user_token), 'IN_PROGRESS')
 
     @patch('xumm.client.requests.get')
     def test_fetch_tx(cls, mock_get):

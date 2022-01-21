@@ -84,14 +84,13 @@ class XummSdk(XummResource):
         """
         if re.match('^r', id.strip()):
             res = client.get(KycStatusResource.get_url(id))
-            return KycInfoResponse(**res)
-            # return call?.kycApproved ? 'SUCCESSFUL' : 'NONE'
+            return 'SUCCESSFUL' if KycInfoResponse(**res).kyc_approved else 'NONE'  # noqa: E501
         else:
-            res = client.post(KycStatusResource.post_url(), {
-                'user_token': id
-            })
-            return KycStatusResponse(**res)
-            # return call?.kycStatus || 'NONE'
+            res = client.post(
+                KycStatusResource.post_url(), 
+                { 'user_token': id }
+            )
+            return KycStatusResponse(**res).kyc_status or 'NONE'
 
     def get_curated_assets(cls) -> CuratedAssetsResponse:
         """Returns the dict as a model
