@@ -2,7 +2,7 @@
 # coding: utf-8
 
 import logging
-from typing import Union, Callable
+from typing import List, Dict, Any, Union, Callable  # noqa: F401
 from xumm import (
     client,
     error
@@ -32,11 +32,14 @@ class CallbackPromise:
     def __init__(cls):
         cls.data: object = None
 
-    def _resolve(cls, resolveData):
+    def _resolve(
+        cls, 
+        resolveData: Dict[str, object]
+    ) -> Dict[str, object]:
         cls.data = resolveData
         return cls.data
 
-    async def _resolved(cls):
+    async def _resolved(cls) -> Dict[str, object]:
         return cls.data
 
 
@@ -47,21 +50,21 @@ class PayloadResource(XummResource):
     _mock: bool = False
 
     @classmethod
-    def post_url(cls):
+    def post_url(cls) -> str:
         """post_url."""
         return super(PayloadResource, cls).platform_url() + 'payload' + '/'
 
     @classmethod
-    def get_url(cls, id):
+    def get_url(cls, id: str = None) -> str:
         """get_url."""
         return super(PayloadResource, cls).platform_url() + 'payload' + '/' + id  # noqa: E501
 
     @classmethod
-    def delete_url(cls, id):
+    def delete_url(cls, id: str = None) -> str:
         """delete_url."""
         return super(PayloadResource, cls).platform_url() + 'payload' + '/' + id  # noqa: E501
 
-    def refresh_from(cls, **kwargs):
+    def refresh_from(cls, **kwargs) -> 'PayloadResource':
         return cls
 
     @classmethod

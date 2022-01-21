@@ -27,7 +27,7 @@ from xumm.resource.storage import StorageResource
 
 class XummSdk(XummResource):
 
-    def refresh_from(cls, **kwargs):
+    def refresh_from(cls, **kwargs) -> 'XummSdk':
         from xumm import api_key, api_secret
 
         if api_key is None:
@@ -45,6 +45,7 @@ class XummSdk(XummResource):
 
         cls.payload = PayloadResource()
         cls.storage = StorageResource()
+        return cls
 
     def ping(cls) -> PongResponse:
         """Returns the dict as a model
@@ -56,7 +57,10 @@ class XummSdk(XummResource):
         res = client.get(PingResource.get_url())
         return PongResponse(**res)
 
-    def get_kyc_status(cls, id: str = None) -> Union[KycInfoResponse, KycStatusResponse]:  # noqa: E501
+    def get_kyc_status(
+        cls, 
+        id: str = None
+    ) -> Union[KycInfoResponse, KycStatusResponse]:  # noqa: E501
         """Returns the dict as a model
 
         :return: The kyc_status of this kyc_status.  # noqa: E501

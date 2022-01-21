@@ -17,7 +17,7 @@ class RPCError(Exception):
         cls.status_code = status_code
         cls.headers = headers
 
-    def __unicode__(cls):
+    def __unicode__(cls) -> str:
         return cls.error
 
 
@@ -38,13 +38,17 @@ class AuthenticationError(RPCError):
 
 
 class WSError(Exception):
-    def __init__(self, message, data):
+    def __init__(
+        self, 
+        message: str = None, 
+        data: Dict[str, object] = None
+    ):
         super(WSError, self).__init__(message)
 
         self.message = message
         self.data = data
 
-    def __str__(self):
+    def __str__(self) -> str:
         result = '[(' + self.message
         if self.data:
             result += ', ' + str(self.data)

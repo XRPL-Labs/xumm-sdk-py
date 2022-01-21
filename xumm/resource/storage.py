@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+from typing import List, Dict, Any  # noqa: F401
+
 from xumm import client
 from xumm.resource import XummResource
 
@@ -14,24 +16,24 @@ from .types import (
 class StorageResource(XummResource):
 
     @classmethod
-    def post_url(cls):
+    def post_url(cls) -> str:
         """post_url."""
         return super(StorageResource, cls).platform_url() + 'storage' + '/'
 
     @classmethod
-    def get_url(cls):
+    def get_url(cls) -> str:
         """get_url."""
         return super(StorageResource, cls).platform_url() + 'storage' + '/'
 
     @classmethod
-    def delete_url(cls):
+    def delete_url(cls) -> str:
         """delete_url."""
         return super(StorageResource, cls).platform_url() + 'storage' + '/'
 
-    def refresh_from(cls, **kwargs):
+    def refresh_from(cls, **kwargs) -> 'StorageResource':
         return cls
 
-    def set(cls, data) -> StorageSetResponse:
+    def set(cls, data: Dict[str, object]) -> StorageSetResponse:
         """Returns the dict as a model
 
         :return: The StorageSetResponse of this StorageSetResponse.  # noqa: E501

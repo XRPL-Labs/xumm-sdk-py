@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 import requests
 import textwrap
-from typing import List, Dict  # noqa: F401
+from typing import List, Dict, Any  # noqa: F401
 from requests.exceptions import ConnectionError
 
 from xumm import (
@@ -28,8 +28,7 @@ def get_env() -> str:
     return env
 
 
-# def get_headers() -> Dict[str, object]:
-def get_headers():
+def get_headers() -> Dict[str, object]:
     from xumm import api_key, api_secret
 
     if api_key is None:
@@ -53,7 +52,9 @@ def get_headers():
     }
 
 
-def get(url: str):
+def get(
+    url: str
+) -> Any:
     try:
         res = requests.get(url, headers=get_headers())
     except Exception as e:
@@ -61,7 +62,10 @@ def get(url: str):
     return handle_response(res)
 
 
-def post(url: str, data: Dict[str, object]):
+def post(
+    url: str, 
+    data: Dict[str, object]
+) -> Any:
     try:
         res = requests.post(url, headers=get_headers(), json=data)
     except Exception as e:
@@ -69,7 +73,9 @@ def post(url: str, data: Dict[str, object]):
     return handle_response(res)
 
 
-def delete(url: str):
+def delete(
+    url: str
+) -> Any:
     try:
         res = requests.delete(url, headers=get_headers())
     except Exception as e:
@@ -77,7 +83,7 @@ def delete(url: str):
     return handle_response(res)
 
 
-def handle_response(res):
+def handle_response(res) -> Dict[str, object]:
     try:
         json = res.json()
     except ValueError as e:
@@ -107,7 +113,11 @@ def handle_request_error(e: ConnectionError):
     raise error.APIConnectionError(msg)
 
 
-def handle_error_code(json: Dict[str, object], status_code: int, headers: Dict[str, object]):  # noqa: E501
+def handle_error_code(
+    json: Dict[str, object], 
+    status_code: int, 
+    headers: Dict[str, object]
+):  # noqa: E501
     if status_code == 400:
         err = json.get('error', 'Bad request')
         raise error.InvalidRequestError(err, status_code, headers)
@@ -125,7 +135,11 @@ def handle_error_code(json: Dict[str, object], status_code: int, headers: Dict[s
         raise error.APIError(err, status_code, headers)
 
 
-def handle_parse_error(e: ValueError, status_code: int, headers: Dict[str, object]):  # noqa: E501
+def handle_parse_error(
+    e: ValueError, 
+    status_code: int, 
+    headers: Dict[str, object]
+):  # noqa: E501
     err = '{}: {}'.format(type(e).__name__, e)
     msg = 'Error parsing Xumm JSON response. \n\n{}'.format(err)
     raise error.APIError(msg, status_code, headers)

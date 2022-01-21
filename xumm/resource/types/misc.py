@@ -263,6 +263,17 @@ class Response(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    nullable = {
+        'hex': True,
+        'txid': True,
+        'resolved_at': True,
+        'dispatched_to': True,
+        'dispatched_result': True,
+        'dispatched_nodetype': True,
+        'multisign_account': True,
+        'account': True,
+    }
+
     required = {
         'hex': True,
         'txid': True,
@@ -271,7 +282,8 @@ class Response(XummResource):
         'dispatched_result': True,
         'dispatched_nodetype': True,
         'multisign_account': True,
-        'account': True
+        'account': True,
+        # 'approved_with': True,
     }
 
     model_types = {
@@ -282,7 +294,8 @@ class Response(XummResource):
         'dispatched_result': str,
         'dispatched_nodetype': str,
         'multisign_account': str,
-        'account': str
+        'account': str,
+        'approved_with': str,
     }
 
     attribute_map = {
@@ -293,7 +306,8 @@ class Response(XummResource):
         'dispatched_result': 'dispatched_result',
         'dispatched_nodetype': 'dispatched_nodetype',
         'multisign_account': 'multisign_account',
-        'account': 'account'
+        'account': 'account',
+        'approved_with': 'approved_with',
     }
 
     def refresh_from(cls, **kwargs):
@@ -313,6 +327,7 @@ class Response(XummResource):
         cls._dispatched_nodetype = None
         cls._multisign_account = None
         cls._account = None
+        cls._approved_with = None
         if 'hex' in kwargs:
             cls.hex = kwargs['hex']
         if 'txid' in kwargs:
@@ -329,6 +344,8 @@ class Response(XummResource):
             cls.multisign_account = kwargs['multisign_account']
         if 'account' in kwargs:
             cls.account = kwargs['account']
+        if 'approved_with' in kwargs:
+            cls.approved_with = kwargs['approved_with']
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
@@ -541,6 +558,33 @@ class Response(XummResource):
         #     raise ValueError("Invalid value for `account`, must not be `None`")  # noqa: E501
 
         cls._account = account
+
+    @property
+    def approved_with(self) -> str:
+        """Gets the approved_with of this Response.
+
+
+        :return: The approved_with of this Response.
+        :rtype: str
+        """
+        return self._approved_with
+
+    @approved_with.setter
+    def approved_with(self, approved_with: str):
+        """Sets the approved_with of this Response.
+
+
+        :param approved_with: The approved_with of this Response.
+        :type approved_with: str
+        """
+        allowed_values = ["PIN", "BIOMETRIC", "PASSPHRASE", "OTHER"]  # noqa: E501
+        if approved_with not in allowed_values:
+            raise ValueError(
+                "Invalid value for `approved_with` ({0}), must be one of {1}"
+                .format(approved_with, allowed_values)
+            )
+
+        self._approved_with = approved_with
 
 
 class RequestJson(XummResource):
@@ -1288,8 +1332,18 @@ class Result(XummResource):
         :param reason: The reason of this Result.
         :type reason: str
         """
-        if reason is None:
-            raise ValueError("Invalid value for `reason`, must not be `None`")  # noqa: E501
+        allowed_values = [
+            "OK",
+            "ALREADY_CANCELLED",
+            "ALREADY_RESOLVED",
+            "ALREADY_OPENED",
+            "ALREADY_EXPIRED"
+        ]  # noqa: E501
+        if reason not in allowed_values:
+            raise ValueError(
+                "Invalid value for `reason` ({0}), must be one of {1}"
+                .format(reason, allowed_values)
+            )
 
         cls._reason = reason
 
@@ -1312,7 +1366,7 @@ class Refs(XummResource):
     model_types = {
         'qr_png': str,
         'qr_matrix': str,
-        'qr_uri_quality_opts': str,
+        'qr_uri_quality_opts': list,
         'websocket_status': str
     }
 
@@ -1416,25 +1470,29 @@ class Refs(XummResource):
         cls._qr_matrix = qr_matrix
 
     @property
-    def qr_uri_quality_opts(cls) -> str:
+    def qr_uri_quality_opts(cls) -> list:
         """Gets the qr_uri_quality_opts of this Refs.
 
 
         :return: The qr_uri_quality_opts of this Refs.
-        :rtype: str
+        :rtype: list
         """
         return cls._qr_uri_quality_opts
 
     @qr_uri_quality_opts.setter
-    def qr_uri_quality_opts(cls, qr_uri_quality_opts: str):
+    def qr_uri_quality_opts(cls, qr_uri_quality_opts: list):
         """Sets the qr_uri_quality_opts of this Refs.
 
 
         :param qr_uri_quality_opts: The qr_uri_quality_opts of this Refs.
-        :type qr_uri_quality_opts: str
+        :type qr_uri_quality_opts: list
         """
-        if qr_uri_quality_opts is None:
-            raise ValueError("Invalid value for `qr_uri_quality_opts`, must not be `None`")  # noqa: E501
+        allowed_values = ["m", "q", "h"]  # noqa: E501
+        if qr_uri_quality_opts != allowed_values:
+            raise ValueError(
+                "Invalid values for `qr_uri_quality_opts` ({0}), must be exacty {1}"
+                .format(qr_uri_quality_opts, allowed_values)
+            )
 
         cls._qr_uri_quality_opts = qr_uri_quality_opts
 

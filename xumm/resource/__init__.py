@@ -2,10 +2,12 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
-from xumm import client
 
+from typing import Union, List, Dict, Callable, Any  # noqa: F401
 import pprint
 import six
+
+from xumm import client
 
 
 class PrintableResource(object):
@@ -64,29 +66,29 @@ class PrintableResource(object):
     #     """
     #     return self.from_dict()
 
-    def to_dict(self):
+    def to_dict(self) -> Dict[str, object]:
         """Returns the model properties as a dict
 
         :rtype: dict
         """
         return self.to_dict()
 
-    def to_str(self):
+    def to_str(self) -> str:
         """Returns the string representation of the model
 
         :rtype: str
         """
         return pprint.pformat(self.to_dict())
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """For `print` and `pprint`"""
         return self.to_str()
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         """Returns true if both objects are equal"""
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other):
+    def __ne__(self, other) -> bool:
         """Returns true if both objects are not equal"""
         return not self == other
 
@@ -94,10 +96,10 @@ class PrintableResource(object):
 class XummResource(PrintableResource):
 
     @classmethod
-    def platform_url(cls):
+    def platform_url(cls) -> str:
         return client.build_url() + 'platform' + '/'
 
-    def __init__(cls, **kwargs):
+    def __init__(cls, **kwargs) -> 'XummResource':
         cls.refresh_from(**kwargs)
 
     def refresh_from(cls, **kwargs):
