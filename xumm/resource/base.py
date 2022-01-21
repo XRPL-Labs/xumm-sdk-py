@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-import os
 import re
 from typing import Union, List, Dict, Callable, Any  # noqa: F401
 import xumm
@@ -50,8 +49,8 @@ class XummSdk(XummResource):
                 'from the Xumm web interface.'
             )
 
-        pattern = r'[a-f0-9]{8}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{12}'
-        if not re.match(pattern, xumm.api_key) or not re.match(pattern, xumm.api_secret):
+        pattern = r'[a-f0-9]{8}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{12}'  # noqa: E501
+        if not re.match(pattern, xumm.api_key) or not re.match(pattern, xumm.api_secret):  # noqa: E501
             raise error.AuthenticationError(
                 'Invalid API secret provided. (HINT: XXXXXXXX-XXXX-'
                 'XXXX-XXXX-XXXXXXXXXXXX).'
@@ -87,8 +86,8 @@ class XummSdk(XummResource):
             return 'SUCCESSFUL' if KycInfoResponse(**res).kyc_approved else 'NONE'  # noqa: E501
         else:
             res = client.post(
-                KycStatusResource.post_url(), 
-                { 'user_token': id }
+                KycStatusResource.post_url(),
+                {'user_token': id}
             )
             return KycStatusResponse(**res).kyc_status or 'NONE'
 
