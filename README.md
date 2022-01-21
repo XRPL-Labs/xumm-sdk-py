@@ -321,18 +321,18 @@ The [`<PayloadSubscription>`](https://github.com/CASL-AE/xumm-sdk-py/blob/master
 ```python
 {
   'payload': XummPayload,
-  'resolved': Callable<unknown> | None
-  'resolve': (resolveData?: None) => void
-  'websocket': WebSocket
+  'resolved': CallbackPromise or None,
+  'resolve': Callable[Any],
+  'websocket': WSClient
 }
 ```
 
 Examples:
 
-- [Async process after returning data in the callback function](https://gist.github.com/WietseWind/e13ab068f06b5e9f2f4a0aeac96f6e2e)
-- [Await based on returning data in the callback function](https://gist.github.com/WietseWind/698ff9a5838e600a8ae36ddcc45d0793)
-- [Await based on resolving a callback event](https://gist.github.com/WietseWind/1afaf3a23b8ea18ded526bbbf1b577dd)
-- [Await based on resolving without using a callback function](https://gist.github.com/WietseWind/76890afd39a01e9876c8a629b3e58174)
+- [Async process after returning data in the callback function](https://github.com/CASL-AE/xumm-sdk-py/blob/master/samples/ws/async_callback.py)
+- [Await based on returning data in the callback function](https://github.com/CASL-AE/xumm-sdk-py/blob/master/samples/ws/await_callback.py)
+- [Await based on resolving a callback event](https://github.com/CASL-AE/xumm-sdk-py/blob/master/samples/ws/async_event.py)
+- [Await based on resolving without using a callback function](https://github.com/CASL-AE/xumm-sdk-py/blob/master/samples/ws/await_no_callback.py)
 
 ##### sdk.payload.create_subscribe
 
@@ -386,4 +386,4 @@ Lint the code using `python3 -m flake8 --output-file=./logs/linter.txt --exclude
 
 Build, run, show debug output & watch `dist/samples/dev.py`, compiled from `samples/dev.py` using `python3`. The `samples/dev.py` file is **not included by default**.
 
-[Here's a sample `samples/dev.py` file](https://gist.github.com/WietseWind/e2e9729619872cb736fe29b486e9c623).
+[Here's a sample `samples/dev.py` file](https://github.com/CASL-AE/xumm-sdk-py/blob/master/samples/dev.py).
