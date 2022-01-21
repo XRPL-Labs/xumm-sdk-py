@@ -2,6 +2,7 @@
 # coding: utf-8
 
 from __future__ import unicode_literals
+from inspect import _void
 
 from typing import Union, List, Dict, Callable, Any  # noqa: F401
 import pprint
@@ -36,9 +37,12 @@ class PrintableResource(object):
             # Use the attribute map for RECEIVING json data (Camelcase)
             attr = cls.attribute_map[_attr]
 
-            # Error if attribute not in json and attribute in required
+            # Error if attribute not in json 
+            # and attribute in required
+            # * 'not in' isnt correct as False may get tripped here...
             if attr not in kwargs and attr in cls.required:
-                raise ValueError("Invalid value for `{}`, must not be `None`".format(attr))  # noqa: E501
+                raise ValueError("Invalid value for `{}`, "
+                "must not be `None`".format(attr))  # noqa: E501
 
             # Skip option attributes if non exists in json
             if attr not in kwargs and attr not in cls.required:
@@ -47,18 +51,23 @@ class PrintableResource(object):
             # set value for attribute
             value = kwargs[attr]
 
-            # Skip nullable attributes if empty json, list or None
-            if attr in cls.nullable and value == {} or value == [] or value is None or value == '':  # noqa: E501
+            # Skip nullable attributes 
+            # if empty json, list or None
+            if attr in cls.nullable and value == {} or \
+            value == [] or value is None or value == '':
                 continue
 
-            # Error if value is instance of attribute type
+            # Error if value is not instance of attribute type
             if not isinstance(value, is_type):
-                raise ValueError("Invalid value for `{}`, must be a `{}`".format(attr, is_type))  # noqa: E501
+                raise ValueError("Invalid value for `{}`, "
+                "must be a `{}`".format(attr, is_type))
 
-            # Error if attribute is required and value is None: 2x of ^^^ Prod Delete in final  # noqa: E501
+            # Error if attribute is required and value is 
+            # None: 2x of ^^^ Delete in final
             if attr in cls.required and value is None:
-                raise ValueError("Invalid value for `{}`, must not be `None`".format(attr))  # noqa: E501
-
+                raise ValueError("Invalid value for `{}`, "
+                "must not be `None`".format(attr))
+            
     # def from_dict(self):
     #     """Returns the model properties as a dict
 
@@ -99,7 +108,7 @@ class XummResource(PrintableResource):
     def platform_url(cls) -> str:
         return client.build_url() + 'platform' + '/'
 
-    def __init__(cls, **kwargs) -> 'XummResource':
+    def __init__(cls, *args, **kwargs) -> 'XummResource':
         cls.refresh_from(**kwargs)
 
     def refresh_from(cls, **kwargs):

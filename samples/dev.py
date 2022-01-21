@@ -11,9 +11,7 @@ logger = logging.getLogger('app')
 
 async def main():
     try:
-        xumm.api_key = 'someAppKey'
-        xumm.api_secret = 'someAppSecret'
-        sdk = xumm.XummSdk()
+        sdk = xumm.XummSdk('someAppKey', 'someAppSecret')
         pong = sdk.ping()
         logger.info(pong)
 

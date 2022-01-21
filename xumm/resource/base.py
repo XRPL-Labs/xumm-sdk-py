@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+import os
 import re
 from typing import Union, List, Dict, Callable, Any  # noqa: F401
+import xumm
 from xumm import (
     client,
     error
@@ -27,25 +29,39 @@ from xumm.resource.storage import StorageResource
 
 class XummSdk(XummResource):
 
-    def refresh_from(cls, **kwargs) -> 'XummSdk':
-        from xumm import api_key, api_secret
+    def __init__(cls, *args) -> 'XummSdk':
 
-        if api_key is None:
+        if len(args) == 2 and isinstance(args[0], str):
+            xumm.api_key = args[0]
+
+        if len(args) == 2 and isinstance(args[1], str):
+            xumm.api_secret = args[1]
+
+        if xumm.api_key is None:
             raise error.AuthenticationError(
                 'No API key provided. (HINT: set your API key using '
                 '"xumm.api_key = <API-KEY>"). You can generate API keys '
                 'from the Xumm web interface.'
             )
-        if api_secret is None:
+        if xumm.api_secret is None:
             raise error.AuthenticationError(
                 'No API secret provided. (HINT: set your API key using '
                 '"xumm.api_secret = <API-SECRET>"). You can generate API keys '
                 'from the Xumm web interface.'
             )
 
+        pattern = r'[a-f0-9]{8}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{4}\-[a-f0-9]{12}'
+        if not re.match(pattern, xumm.api_key) or not re.match(pattern, xumm.api_secret):
+            raise error.AuthenticationError(
+                'Invalid API secret provided. (HINT: XXXXXXXX-XXXX-'
+                'XXXX-XXXX-XXXXXXXXXXXX).'
+            )
+
         cls.payload = PayloadResource()
         cls.storage = StorageResource()
-        return cls
+
+    def refresh_from(cls, **kwargs):
+        return super().refresh_from(**kwargs)
 
     def ping(cls) -> PongResponse:
         """Returns the dict as a model

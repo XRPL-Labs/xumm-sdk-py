@@ -1,18 +1,21 @@
-import os
-import json
+#!/usr/bin/env python
+# coding: utf-8
+
 from testing_config import BaseTestConfig
 from tests.fixtures import xumm_api as test_fixtures
 from unittest.mock import Mock, patch
 
 import xumm
 
+
 class TestPayloadGet(BaseTestConfig):
 
     @classmethod
     def setUp(cls):
-        xumm.api_key = cls.json_fixtures['api']['key']
-        xumm.api_secret = cls.json_fixtures['api']['secret']
-        cls.sdk = xumm.XummSdk()
+        cls.sdk = xumm.XummSdk(
+            cls.json_fixtures['api']['key'],
+            cls.json_fixtures['api']['secret']
+        )
 
     @patch('xumm.client.requests.get')
     def test_payload_get(cls, mock_post):

@@ -1,5 +1,6 @@
-import os
-import json
+#!/usr/bin/env python
+# coding: utf-8
+
 import time
 from testing_config import BaseTestConfig
 from tests.fixtures import (
@@ -13,7 +14,7 @@ from typing import Callable
 import xumm
 import asyncio
 
-from threading import Thread
+# from threading import Thread
 
 
 import pytest
@@ -24,9 +25,10 @@ class TestPayloadSubscribe(BaseTestConfig):
     def setUp(cls):
         print('SET UP TEST')
         xumm.env = 'sandbox'
-        xumm.api_key = cls.json_fixtures['api']['key']
-        xumm.api_secret = cls.json_fixtures['api']['secret']
-        cls.sdk = xumm.XummSdk()
+        cls.sdk = xumm.XummSdk(
+            cls.json_fixtures['api']['key'],
+            cls.json_fixtures['api']['secret']
+        )
 
     def tearDown(cls):
         print('TEAR DOWN TEST')

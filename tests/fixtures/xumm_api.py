@@ -1,54 +1,31 @@
 
-from typing import List, Dict  # noqa: F401
-# def pong_object():
-#     return {
-#         'disabled': expect.any(Number),
-#         'name': expect.any(String),
-#         'uuidv4': expect.any(String),
-#         'webhookurl': expect.any(String)
-#     }
-#   application: {
-#     disabled: expect.any(Number),
-#     name: expect.any(String),
-#     uuidv4: expect.any(String),
-#     webhookurl: expect.any(String)
-#   },
-#   call: {
-#     uuidv4: expect.any(String)
-#   }
-# }
+#!/usr/bin/env python
+# coding: utf-8
 
-# IDK if I need this. msg.data is confusing
-def msg_data_wrapper(data: Dict[str, object]):
+from typing import List, Dict, Any  # noqa: F401
+
+def to_match_object(model_object: Any) -> bool:
+    try:
+        return model_object.model_check()
+    except Exception as e:
+        print(e)
+        return False
+
+
+def pong_object(object: Dict[str, object]) -> Dict[str, object]:
     return {
-        'data': data
+        'application': {
+            'disabled': isinstance(object['application']['disabled'], int),
+            'name': isinstance(object['application']['name'], str),
+            'uuidv4': isinstance(object['application']['uuidv4'], str),
+            'webhookurl': isinstance(object['application']['webhookurl'], str)
+        },
+        'call': {
+            'uuidv4': isinstance(object['call']['uuidv4'], str)
+        }
     }
 
-def wrapped_subscription_updates():
-    return {
-        'welcome': msg_data_wrapper({
-            'message': 'Welcome aaaaaaaa-dddd-ffff-cccc-8207bd724e45'
-        }),
-        'expire': msg_data_wrapper({
-            'expires_in_seconds': 30000
-        }),
-        'opened': msg_data_wrapper({
-            'opened': True
-        }),
-        'rejected': msg_data_wrapper({
-            'payload_uuidv4': 'aaaaaaaa-dddd-ffff-cccc-8207bd724e45',
-            'reference_call_uuidv4': 'bbbbbbbb-eeee-aaaa-1111-8d192bd91f07',
-            'signed': False,
-            'user_token': True,
-            'return_url': {
-                'app': None, 
-                'web': None
-            },
-            'custom_meta': {}
-        })
-    }
-
-def subscription_updates():
+def subscription_updates() -> Dict[str, object]:
     return {
         'welcome': {
             'message': 'Welcome aaaaaaaa-dddd-ffff-cccc-8207bd724e45'
@@ -67,17 +44,6 @@ def subscription_updates():
             'return_url': {
                 'app': None, 
                 'web': None
-            },
-            'custom_meta': {}
-        },
-        'signed': {
-            'payload_uuidv4': 'aaaaaaaa-dddd-ffff-cccc-8207bd724e45',
-            'reference_call_uuidv4': 'bbbbbbbb-eeee-aaaa-1111-8d192bd91f07',
-            'signed': True,
-            'user_token': True,
-            'return_url': {
-                'app': None,
-                'web': 'https://xumm.dev/beta/test?payloadId=00000000-0000-4839-af2f-f794874a80b0&customIdent=&txid=&hex='
             },
             'custom_meta': {}
         }
@@ -122,7 +88,7 @@ def subscription_updates():
 #   }
 # }
 
-def valid_payload():
+def valid_payload() -> Dict[str, object]:
     return {
         'txjson': {
             'TransactionType': 'Payment',
@@ -138,7 +104,7 @@ def valid_payload():
         }
     }
 
-def invalid_payload():
+def invalid_payload() -> Dict[str, object]:
     return {
         'user_token': 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
         'txblob': '1200002400000003614000000002FAF0806840000000000000C8732' +

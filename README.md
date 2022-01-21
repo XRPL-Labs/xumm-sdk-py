@@ -23,10 +23,7 @@ Now continue by constructing the XummSdk object:
 ```python
 sdk = xumm.XummSdk()
 # Or with manually provided credentials (instead of using dotenv):
-  xumm.api_key = 'someAppKey'
-  xumm.api_secret = 'someAppSecret'
-  sdk = xumm.XummSdk()
-  # sdk = xumm.XummSdk('someAppKey', 'someAppSecret')
+  sdk = xumm.XummSdk('someAppKey', 'someAppSecret')
 ```
 
 ### Credentials

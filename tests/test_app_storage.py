@@ -1,10 +1,11 @@
-import os
-import json
+#!/usr/bin/env python
+# coding: utf-8
+
 from testing_config import BaseTestConfig
-from tests.fixtures import xumm_api as test_fixtures
 from unittest.mock import Mock, patch
 
 import xumm
+
 
 class TestAppStorage(BaseTestConfig):
 
