@@ -71,7 +71,11 @@ class ReturnUrl(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items() \
+            if v is not None or k in \
+            cls.required and k in cls.nullable
+        }
 
     @property
     def app(self) -> str:
@@ -183,7 +187,11 @@ class Options(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items() \
+            if v is not None or k in \
+            cls.required and k in cls.nullable
+        }
 
     @property
     def submit(self) -> bool:
@@ -346,6 +354,7 @@ class Response(XummResource):
             cls.account = kwargs['account']
         if 'approved_with' in kwargs:
             cls.approved_with = kwargs['approved_with']
+        return cls
 
     def to_dict(cls):
         """Returns the model properties as a dict"""
@@ -373,7 +382,11 @@ class Response(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items() \
+            if v is not None or k in \
+            cls.required and k in cls.nullable
+        }
 
     @property
     def hex(cls) -> str:
@@ -578,7 +591,7 @@ class Response(XummResource):
         :type approved_with: str
         """
         allowed_values = ["PIN", "BIOMETRIC", "PASSPHRASE", "OTHER"]  # noqa: E501
-        if approved_with not in allowed_values:
+        if approved_with and approved_with not in allowed_values:
             raise ValueError(
                 "Invalid value for `approved_with` ({0}), must be one of {1}"
                 .format(approved_with, allowed_values)
@@ -649,7 +662,11 @@ class RequestJson(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items() \
+            if v is not None or k in \
+            cls.required and k in cls.nullable
+        }
 
     @property
     def transaction_type(cls) -> str:
@@ -706,6 +723,11 @@ class Payload(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    nullable = {
+        'tx_destination_tag': True,
+        'origintype': True,
+        'signmethod': True,
+    }
     required = {
         'tx_type': True,
         'tx_destination': True,
@@ -796,8 +818,11 @@ class Payload(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
-        # return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items() \
+            if v is not None or k in \
+            cls.required and k in cls.nullable
+        }
 
     @property
     def tx_type(cls) -> str:
@@ -1013,6 +1038,10 @@ class Application(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    nullable = {
+        'issued_user_token': True
+    }
+
     required = {
         'name': True,
         'description': True,
@@ -1092,8 +1121,11 @@ class Application(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
-        # return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items() \
+            if v is not None or k in \
+            cls.required and k in cls.nullable
+        }
 
     @property
     def name(cls) -> str:
@@ -1289,7 +1321,11 @@ class Result(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items() \
+            if v is not None or k in \
+            cls.required and k in cls.nullable
+        }
 
     @property
     def cancelled(cls) -> bool:
@@ -1421,7 +1457,11 @@ class Refs(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items() \
+            if v is not None or k in \
+            cls.required and k in cls.nullable
+        }
 
     @property
     def qr_png(cls) -> str:
@@ -1578,7 +1618,11 @@ class Next(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items() \
+            if v is not None or k in \
+            cls.required and k in cls.nullable
+        }
 
     @property
     def always(cls) -> str:

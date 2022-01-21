@@ -71,7 +71,11 @@ class PongResponse(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items() \
+            if v is not None or k in \
+            cls.required and k in cls.nullable
+        }
 
     @property
     def pong(cls) -> bool:

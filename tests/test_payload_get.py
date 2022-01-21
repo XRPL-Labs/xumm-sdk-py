@@ -22,6 +22,7 @@ class TestPayloadGet(BaseTestConfig):
         print('should get a simple payment')
         mock_post.return_value = Mock(status_code=200)
         mock_post.return_value.json.return_value = cls.json_fixtures['payload']['get']
+
         result = cls.sdk.payload.get('00000000-0000-4839-af2f-f794874a80b0')
         cls.assertEqual(result.to_dict(), cls.json_fixtures['payload']['get'])
     

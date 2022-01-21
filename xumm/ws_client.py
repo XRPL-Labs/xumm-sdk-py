@@ -7,7 +7,7 @@ import json
 import sys
 from multiprocessing import Queue
 from threading import Thread, Event, Timer
-from typing import Dict, Any
+from typing import Dict, Any, Union
 
 from websocket import (
     enableTrace,
@@ -20,7 +20,14 @@ class WSClient(Thread):
     Higher level of APIs are provided.
     The interface is like JavaScript WebSocket object.
     """
-    def __init__(cls, server=None, timeout=None, log_level=None, *args, **kwargs):  # noqa: E501
+    def __init__(
+        cls,
+        server: str = None,
+        timeout: int = None,
+        log_level: str = None,
+        *args,
+        **kwargs
+    ):
         """
         Args:
             server: xumm node url.
@@ -311,7 +318,11 @@ class WSClient(Thread):
         cls.log.debug("Clearing paused() Flag!")
         cls.paused.clear()
 
-    def _data_handler(cls, data, ts):
+    def _data_handler(
+        cls,
+        data: Dict[str, object],
+        timestamp: str
+    ):
         """
         Distributes system messages to the appropriate handler.
         System messages include everything that arrives as a dict,
@@ -319,6 +330,7 @@ class WSClient(Thread):
         :param ts:
         :return:
         """
+        cls.log.debug("On Response: {}".format(data))
         cls._callback('on_response', data)
 
     def _callback(cls, callback, *args):

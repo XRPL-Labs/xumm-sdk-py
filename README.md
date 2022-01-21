@@ -229,7 +229,7 @@ sdk.payload.get('aaaaaaaa-bbbb-cccc-dddd-1234567890ab', True)
 sdk.payload.create (
   payload: create_payload,
   return_errors: bool = False
-): -> Union(CreatedPayload, None)
+): -> Union[CreatedPayload, None]
 ```
 
 To create a payload, a `txjson` XRPL transaction can be provided. Alternatively, a transaction formatted as HEX blob (string) can be provided in a `txblob` property. **See the [intro](#intro) for more information about payloads.** Take a look at the [Developer Docs for more information about payloads](https://xumm.readme.io/docs/your-first-payload).
@@ -261,9 +261,9 @@ Alternatively user routing / instruction flows can be custom built using the QR 
 
 ```python
 sdk.payload.cancel (
-  payload: Union(str, XummPayload, CreatedPayload),
+  payload: Union[str, XummPayload, CreatedPayload],
   return_errors: bool = False
-): -> Union(DeletedPayload, None)
+): -> Union[DeletedPayload, None]
 ```
 
 To cancel a payload, provide a payload UUID (string), a `<XummPayload>` (by performing a `sdk.payload.get()` first) or a `<CreatedPayload>` (by using the response of a `sdk.payload.create()` call). By cancelling an existing payload, the payload will be marked as expired and can no longer be opened by users. 
@@ -305,8 +305,8 @@ The subscription will be closed by either:
 
 ```python
 sdk.payload.subscribe (
-  payload: Union(str, XummPayload, CreatedPayload),
-  callback: onPayloadEvent
+  payload: Union[str, XummPayload, CreatedPayload],
+  callback: on_payload_event
 ): -> PayloadSubscription
 ```
 
@@ -339,7 +339,7 @@ Examples:
 ```python
 sdk.payload.create_and_subscribe (
     payload: CreatePayload,
-    callback: onPayloadEvent
+    callback: on_payload_event
   ): -> PayloadAndSubscription
 ```
 

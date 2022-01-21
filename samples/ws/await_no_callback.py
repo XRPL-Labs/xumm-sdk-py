@@ -6,6 +6,8 @@ import xumm
 
 # https://gist.github.com/WietseWind/76890afd39a01e9876c8a629b3e58174
 
+# THIS FAILS...
+# I couldn't get the set or override (on_message) to work. I would use await_callback TBH.
 
 async def main():
     payload_by_uuid = '289e9ae-7d5d-4d5f-b89c-18633112ce09'

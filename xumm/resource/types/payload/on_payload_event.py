@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# import type {SubscriptionCallbackParams} from './SubscriptionCallbackParams'
+from typing import Union, Callable, Any
+from .subscription_callback_params import SubscriptionCallbackParams
 
-# export type onPayloadEvent = (subscriptionCallback: SubscriptionCallbackParams) => unknown | Promise<unknown> | void  # noqa: E501
+def on_payload_event(
+    subscriptionCallback: SubscriptionCallbackParams
+) -> Union[None, Callable[[Any], Any]]:
+    return subscriptionCallback

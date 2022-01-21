@@ -81,7 +81,17 @@ class XummCustomMeta(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    required = {}
+    nullable = {
+        'identifier': True,
+        'blob': True,
+        'instruction': True
+    }
+
+    required = {
+        'identifier': True,
+        'blob': True,
+        'instruction': True
+    }
 
     model_types = {
         'identifier': str,
@@ -103,7 +113,7 @@ class XummCustomMeta(XummResource):
         :return: The XummCustomMeta of this XummCustomMeta.  # noqa: E501
         :rtype: XummCustomMeta
         """
-        cls.sanity_check(kwargs)
+        # cls.sanity_check(kwargs)
         cls._identifier = None
         cls._blob = None
         cls._instruction = None
@@ -239,6 +249,11 @@ class XummPayloadMeta(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    nullable = {
+        'opened_by_deeplink': True,
+        'return_url_app': True,
+        'return_url_web': True,
+    }
     required = {
         'exists': True,
         'uuid': True,
@@ -341,13 +356,16 @@ class XummPayloadMeta(XummResource):
         cls.expired = kwargs['expired']
         cls.pushed = kwargs['pushed']
         cls.app_opened = kwargs['app_opened']
-        cls.opened_by_deeplink = kwargs['opened_by_deeplink']
+        if 'opened_by_deeplink' in kwargs:
+            cls.opened_by_deeplink = kwargs['opened_by_deeplink']
         if 'immutable' in kwargs:
             cls.immutable = kwargs['immutable']
         if 'forceAccount' in kwargs:
             cls.force_account = kwargs['forceAccount']
-        cls.return_url_app = kwargs['return_url_app']
-        cls.return_url_web = kwargs['return_url_web']
+        if 'return_url_app' in kwargs:
+            cls.return_url_app = kwargs['return_url_app']
+        if 'return_url_web' in kwargs:
+                cls.return_url_web = kwargs['return_url_web']
         cls.is_xapp = kwargs['is_xapp']
 
     def to_dict(cls):
@@ -376,7 +394,11 @@ class XummPayloadMeta(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items() \
+            if v is not None or k in \
+            cls.required and k in cls.nullable
+        }
 
     @property
     def exists(cls) -> bool:
@@ -672,8 +694,8 @@ class XummPayloadMeta(XummResource):
         :param opened_by_deeplink: The opened_by_deeplink of this XummPayloadMeta.  # noqa: E501
         :type opened_by_deeplink: bool
         """
-        if opened_by_deeplink is None:
-            raise ValueError("Invalid value for `opened_by_deeplink`, must not be `None`")  # noqa: E501
+        # if opened_by_deeplink is None:
+        #     raise ValueError("Invalid value for `opened_by_deeplink`, must not be `None`")  # noqa: E501
 
         cls._opened_by_deeplink = opened_by_deeplink
 
@@ -737,8 +759,8 @@ class XummPayloadMeta(XummResource):
         :param return_url_app: The return_url_app of this XummPayloadMeta.
         :type return_url_app: str
         """
-        if return_url_app is None:
-            raise ValueError("Invalid value for `return_url_app`, must not be `None`")  # noqa: E501
+        # if return_url_app is None:
+        #     raise ValueError("Invalid value for `return_url_app`, must not be `None`")  # noqa: E501
 
         cls._return_url_app = return_url_app
 
@@ -760,8 +782,8 @@ class XummPayloadMeta(XummResource):
         :param return_url_web: The return_url_web of this XummPayloadMeta.
         :type return_url_web: str
         """
-        if return_url_web is None:
-            raise ValueError("Invalid value for `return_url_web`, must not be `None`")  # noqa: E501
+        # if return_url_web is None:
+        #     raise ValueError("Invalid value for `return_url_web`, must not be `None`")  # noqa: E501
 
         cls._return_url_web = return_url_web
 
@@ -956,8 +978,11 @@ class XummPayloadBodyBase(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        # return result
-        return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items() \
+            if v is not None or k in \
+            cls.required and k in cls.nullable
+        }
 
     @property
     def user_token(self) -> str:
@@ -1201,7 +1226,11 @@ class XummPostPayloadResponse(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items() \
+            if v is not None or k in \
+            cls.required and k in cls.nullable
+        }
 
     @property
     def uuid(cls) -> str:
@@ -1410,7 +1439,11 @@ class XummGetPayloadResponse(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items() \
+            if v is not None or k in \
+            cls.required and k in cls.nullable
+        }
 
     @property
     def meta(cls) -> XummPayloadMeta:
@@ -1596,7 +1629,11 @@ class XummDeletePayloadResponse(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items() \
+            if v is not None or k in \
+            cls.required and k in cls.nullable
+        }
 
     @property
     def result(cls) -> Result:

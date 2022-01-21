@@ -13,7 +13,9 @@ class BaseTestConfig(TestCase):
 
     @classmethod
     def setUpClass(cls):
+        print('Set Up Class Testing')
         cls.json_fixtures = read_json('./tests/fixtures/xumm_api.json')
 
-    def tearDown(cls):
-        print('Tear Down Testing')
+    @classmethod
+    def tearDownClass(cls):
+        print('Tear Down Class Testing')

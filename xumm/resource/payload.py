@@ -19,7 +19,8 @@ from .types import (
     XummPayload,
     CreatedPayload,
     PayloadSubscription,
-    PayloadAndSubscription
+    PayloadAndSubscription,
+    on_payload_event
 )
 
 from xumm.ws_client import WSClient
@@ -202,7 +203,7 @@ class PayloadResource(XummResource):
     async def subscribe(
         cls,
         payload: Union[str, XummPayload, CreatedPayload],
-        callback: Callable = None
+        callback: on_payload_event
     ) -> PayloadSubscription:
         """Subscribe to a channel
         :returns: PayloadSubscription
@@ -210,7 +211,6 @@ class PayloadResource(XummResource):
         from xumm import env
 
         callback_promise = CallbackPromise()
-
         payload_details = cls.resolve_payload(payload)
 
         def on_message(json_data):
@@ -227,20 +227,20 @@ class PayloadResource(XummResource):
                         callback_promise._resolve(callback_result)
 
                 except Exception as e:
-                    print('Payload {}: Callback exception: {}'.format(payload_details.meta.uuid, e))  # noqa: E501
+                    logger.debug('Payload {}: Callback exception: {}'.format(payload_details.meta.uuid, e))  # noqa: E501
 
         def on_error(error):
-            print('Payload {}: Subscription error: {}'.format(payload_details.meta.uuid, error))  # noqa: E501
+            logger.debug('Payload {}: Subscription error: {}'.format(payload_details.meta.uuid, error))  # noqa: E501
             cls._conn.disconnect()
             callback_promise._reject(error)
             # raise ValueError(error)
 
         # def on_close(ws, close_status_code, close_msg):
         def on_close():
-            print('Payload {}: Subscription ended (WebSocket closed)'.format(payload_details.meta.uuid))  # noqa: E501
+            logger.debug('Payload {}: Subscription ended (WebSocket closed)'.format(payload_details.meta.uuid))  # noqa: E501
 
         def on_open(connection):
-            print('Payload {}: Subscription active (WebSocket opened)'.format(payload_details.meta.uuid))  # noqa: E501
+            logger.debug('Payload {}: Subscription active (WebSocket opened)'.format(payload_details.meta.uuid))  # noqa: E501
 
         if payload_details:
             cls._callback = callback
@@ -268,7 +268,7 @@ class PayloadResource(XummResource):
     async def create_and_subscribe(
         cls,
         payload: CreatedPayload,
-        callback
+        callback: on_payload_event
     ) -> PayloadAndSubscription:
         """Create payload and subscribe to a channel
         :returns: PayloadAndSubscription

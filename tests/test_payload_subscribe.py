@@ -7,7 +7,7 @@ from testing_config import BaseTestConfig
 from tests.fixtures import (
     xumm_api as test_fixtures,
 )
-from tests.fixtures.xumm_ws import main as ws_main
+# from tests.fixtures.xumm_ws import main as ws_main
 from unittest.mock import Mock, patch
 from xumm.ws_client import WSClient
 from typing import Callable
@@ -18,9 +18,11 @@ import asyncio
 from threading import Thread
 
 
-# import pytest
-# @pytest.mark.skip(reason="Using Prod Cert")
+import pytest
+@pytest.mark.skip(reason="Using Prod Cert")
 class TestPayloadSubscribe(BaseTestConfig):
+
+    thread = None
 
     @classmethod
     def setUp(cls):
@@ -187,11 +189,11 @@ class TestPayloadSubscribe(BaseTestConfig):
 
     async def _test_payload_subscribe(cls):
 
-        def start_server():
-            asyncio.run(ws_main())
+        # def start_server():
+        #     asyncio.run(ws_main())
         
-        thread = Thread(target=start_server, daemon=True)
-        thread.start()
+        # cls.thread = Thread(target=start_server, daemon=True)
+        # cls.thread.start()
 
         await asyncio.sleep(3)
 
@@ -211,5 +213,7 @@ class TestPayloadSubscribe(BaseTestConfig):
         loop = asyncio.get_event_loop()
         loop.run_until_complete(cls._test_payload_subscribe())
         loop.close()
+        # if cls.thread:
+        #     cls.thread.join()
 
 

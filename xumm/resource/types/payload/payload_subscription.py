@@ -53,7 +53,7 @@ class PayloadSubscription(XummResource):
         :return: The PayloadSubscription of this PayloadSubscription.  # noqa: E501
         :rtype: PayloadSubscription
         """
-        cls.sanity_check(kwargs)
+        # cls.sanity_check(kwargs)
         cls._payload = None
         cls._resolved = None
         cls._resolve = None
@@ -91,8 +91,11 @@ class PayloadSubscription(XummResource):
             for key, value in cls.items():
                 result[key] = value
 
-        return result
-        # return {k: v for k, v in result.items() if v is not None}
+        return {
+            k: v for k, v in result.items() \
+            if v is not None or k in \
+            cls.required and k in cls.nullable
+        }
 
     @property
     def payload(cls) -> XummPayload:
