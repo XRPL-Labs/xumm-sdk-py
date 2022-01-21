@@ -15,11 +15,9 @@ import asyncio
 
 from threading import Thread
 
-from xumm.resource.payload import CallbackPromise
-
 
 import pytest
-# @pytest.mark.skip(reason="Using Prod Cert")
+@pytest.mark.skip(reason="Using Prod Cert")
 class TestPayloadSubscribe(BaseTestConfig):
 
     @classmethod
