@@ -19,8 +19,8 @@ import asyncio
 from threading import Thread, main_thread
 
 
-# import pytest
-# @pytest.mark.skip(reason="Using Prod Cert")
+import pytest
+@pytest.mark.skip(reason="Using Prod Cert")
 class TestPayloadSubscribe(BaseTestConfig):
 
     @classmethod
