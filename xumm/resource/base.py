@@ -2,7 +2,7 @@
 # coding: utf-8
 
 import re
-from typing import Union, List, Dict, Callable, Any  # noqa: F401
+from typing import Union
 import xumm
 from xumm import (
     client,
@@ -16,12 +16,14 @@ from .types import (
     PongResponse,
     CuratedAssetsResponse,
     XrplTransaction,
+    RatesResponse,
 )
 
 from xumm.resource.ping import PingResource
 from xumm.resource.kyc_status import KycStatusResource
 from xumm.resource.curated_assets import CuratedAssetsResource
 from xumm.resource.xrpl_tx import XrplTxResource
+from xumm.resource.rates import RatesResource
 from xumm.resource.payload import PayloadResource
 from xumm.resource.storage import StorageResource
 
@@ -110,3 +112,14 @@ class XummSdk(XummResource):
 
         res = client.get(XrplTxResource.get_url(id))
         return XrplTransaction(**res)
+
+    def get_rates(cls, id: str = None) -> RatesResponse:
+        """Returns the dict as a model
+
+        :return: The RatesResponse of this RatesResponse.  # noqa: E501
+        :rtype: RatesResponse
+        """
+
+        res = client.get(RatesResource.get_url(id))
+        print(res)
+        return RatesResponse(**res)
