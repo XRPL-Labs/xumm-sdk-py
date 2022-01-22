@@ -5,7 +5,7 @@
 The full process for cutting a release is as follows:
 
 1. Checkout a new branch:
-   `git checkout -b v0.9.9-beta.1` # v1.0-release
+   `git checkout -b v0.9.9-beta.1` # v1.0.0-release
 
 2. Change the version in the setup.py file:
   `VERSION = "v0.9.9-beta.1"`

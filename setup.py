@@ -7,7 +7,7 @@ from setuptools import setup
 from codecs import open
 
 NAME = "xumm-sdk-python"
-VERSION = "1.0.0"
+VERSION = "v0.9.9-beta.1"
 # To install the library, run the following
 #
 # python setup.py install
