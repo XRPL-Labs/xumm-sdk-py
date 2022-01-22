@@ -7,7 +7,7 @@ from setuptools import setup
 from codecs import open
 
 NAME = "xumm-sdk-python"
-VERSION = "v0.9.9-beta.1"
+VERSION = "v0.9.9-beta.2"
 # To install the library, run the following
 #
 # python setup.py install
@@ -35,7 +35,15 @@ setup(
     author='xrpl-labs',
     author_email='support@xrpl-labs.com',
     url='https://github.com/CASL-AE/xumm-sdk-py',
-    packages=['xumm', 'xumm.resource'],
+    packages=[
+        'xumm',
+        'xumm.resource',
+        'xumm.resource.types',
+        'xumm.resource.types.xumm_api',
+        'xumm.resource.types.meta',
+        'xumm.resource.types.payload',
+        'xumm.resource.types.storage'
+    ],
     # install_requires=[
     #     'requests >= 2.27.1',
     #     'websocket-client >= 1.2.3',
