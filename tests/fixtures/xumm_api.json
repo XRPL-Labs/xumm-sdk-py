@@ -298,5 +298,17 @@
       "pushed": true,
       "uuid": "19dd8a5b-e167-49a1-8f21-50f0254c55ef"
     }
+  },
+  "rates": {
+    "USD": 1, 
+    "XRP": 0.644446, 
+    "__meta": {
+      "currency": {
+        "en": "US Dollar", 
+        "code": "USD", 
+        "symbol": "$", 
+        "isoDecimals": 2
+      }
+    }
   }
 }

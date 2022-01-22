@@ -85,6 +85,18 @@ class TestCommon(BaseTestConfig):
         cls.assertEqual(sdk.get_curated_assets().to_dict(), cls.json_fixtures['curatedAssets'])
 
     @patch('xumm.client.requests.get')
+    def test_fetch_rates(cls, mock_get):
+        print('should fetch rates')
+        sdk = xumm.XummSdk(
+            cls.json_fixtures['api']['key'],
+            cls.json_fixtures['api']['secret']
+        )
+
+        mock_get.return_value = Mock(status_code=200)
+        mock_get.return_value.json.return_value = cls.json_fixtures['rates']
+        cls.assertEqual(sdk.get_rates('usd').to_dict(), cls.json_fixtures['rates'])
+
+    @patch('xumm.client.requests.get')
     def test_fetch_kyc_status(cls, mock_get):
         print('should fetch user KYC status')
         sdk = xumm.XummSdk(
