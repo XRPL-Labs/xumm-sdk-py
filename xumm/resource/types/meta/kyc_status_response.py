@@ -43,7 +43,7 @@ class KycStatusResponse(XummResource):
         cls.kyc_status = kwargs['kycStatus']
         cls.possible_statuses = kwargs['possibleStatuses']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 

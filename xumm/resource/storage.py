@@ -17,17 +17,32 @@ class StorageResource(XummResource):
 
     @classmethod
     def post_url(cls) -> str:
-        """post_url."""
+        """
+        Gets the POST url of this StorageResource
+
+        :return: The POST url of this StorageResource.
+        :rtype: str
+        """
         return super(StorageResource, cls).platform_url() + 'storage' + '/'
 
     @classmethod
     def get_url(cls) -> str:
-        """get_url."""
+        """
+        Gets the GET url of this StorageResource
+
+        :return: The GET url of this StorageResource.
+        :rtype: str
+        """
         return super(StorageResource, cls).platform_url() + 'storage' + '/'
 
     @classmethod
     def delete_url(cls) -> str:
-        """delete_url."""
+        """
+        Gets the DELETE url of this StorageResource
+
+        :return: The DELETE url of this StorageResource.
+        :rtype: str
+        """
         return super(StorageResource, cls).platform_url() + 'storage' + '/'
 
     def refresh_from(cls, **kwargs) -> 'StorageResource':

@@ -14,7 +14,7 @@ from .meta.kyc_status_response import (  # noqa: F401
 from .meta.kyc_info_response import KycInfoResponse  # noqa: F401
 from .meta.pong import PongResponse  # noqa: F401
 from .meta.xrpl_transaction import XrplTransaction  # noqa: F401
-# from .meta.rates_response import RatesResponse # TODO: add rates
+from .meta.rates_response import RatesResponse # noqa: F401 
 
 from .payload.on_payload_event import on_payload_event  # noqa: F401
 from .payload.payload_and_subscription import PayloadAndSubscription  # noqa: F401 E501

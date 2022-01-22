@@ -62,7 +62,7 @@ class SubscriptionCallbackParams(XummResource):
         cls.payload = XummPayload(**kwargs['payload'])
         cls.resolve = kwargs['resolve']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 

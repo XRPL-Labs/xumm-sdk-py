@@ -4,6 +4,8 @@
 from xumm.resource import XummResource
 import six
 
+from typing import Dict
+
 
 class StorageResponse(XummResource):
     """
@@ -42,7 +44,7 @@ class StorageResponse(XummResource):
         cls.name = kwargs['name']
         cls.uuidv4 = kwargs['uuidv4']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 

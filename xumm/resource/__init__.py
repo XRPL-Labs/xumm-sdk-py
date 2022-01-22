@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals
 
-from typing import Union, List, Dict, Callable, Any  # noqa: F401
+from typing import Dict
 import pprint
 import six
 
@@ -28,7 +28,7 @@ class PrintableResource(object):
     # value is json key in definition.
     attribute_map = {}
 
-    def sanity_check(cls, kwargs):
+    def sanity_check(cls, kwargs) -> None:
         """Runs a sanity check on the model"""
 
         for _attr, is_type in six.iteritems(cls.model_types):

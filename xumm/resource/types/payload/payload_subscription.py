@@ -63,7 +63,7 @@ class PayloadSubscription(XummResource):
         cls.resolve = kwargs['resolve']
         cls.websocket = kwargs['websocket']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 

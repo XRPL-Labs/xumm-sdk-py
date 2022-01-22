@@ -8,7 +8,12 @@ class CuratedAssetsResource(XummResource):
 
     @classmethod
     def get_url(cls) -> str:
-        """get_url."""
+        """
+        Gets the GET url of this KycStatusResource
+
+        :return: The GET url of this KycStatusResource.
+        :rtype: str
+        """
         return super(CuratedAssetsResource, cls).platform_url() + 'curated_assets' + '/'  # noqa: E501
 
     def refresh_from(cls, **kwargs) -> 'CuratedAssetsResource':

@@ -50,7 +50,7 @@ class StorageSetResponse(XummResource):
         cls.stored = kwargs['stored']
         cls.data = kwargs['data']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 

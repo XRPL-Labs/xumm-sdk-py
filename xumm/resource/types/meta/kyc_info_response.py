@@ -43,7 +43,7 @@ class KycInfoResponse(XummResource):
         cls.account = kwargs['account']
         cls.kyc_approved = kwargs['kycApproved']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 

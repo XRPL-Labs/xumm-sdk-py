@@ -45,7 +45,7 @@ class PongResponse(XummResource):
         cls.pong = kwargs['pong']
         cls.auth = ApplicationDetails(**kwargs['auth'])
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 

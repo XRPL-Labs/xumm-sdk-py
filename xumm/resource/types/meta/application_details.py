@@ -38,7 +38,7 @@ class Call(XummResource):
         cls._uuidv4 = None
         cls.uuidv4 = kwargs['uuidv4']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -141,7 +141,7 @@ class Application(XummResource):
         cls.webhookurl = kwargs['webhookurl']
         cls.disabled = kwargs['disabled']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -333,7 +333,7 @@ class Quota(XummResource):
         if 'ratelimit' in kwargs:
             cls.ratelimit = kwargs['ratelimit']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -431,7 +431,7 @@ class ApplicationDetails(XummResource):
         cls.application = Application(**kwargs['application'])
         cls.call = Call(**kwargs['call'])
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 

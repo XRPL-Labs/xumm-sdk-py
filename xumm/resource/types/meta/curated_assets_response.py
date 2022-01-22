@@ -68,7 +68,7 @@ class Currency(XummResource):
         cls.avatar = kwargs['avatar']
         cls.shortlist = kwargs['shortlist']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -317,7 +317,7 @@ class Asset(XummResource):
             k: Currency(**v) for k, v in kwargs['currencies'].items()
         }
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -530,7 +530,7 @@ class CuratedAssetsResponse(XummResource):
         cls.currencies = kwargs['currencies']
         cls.details = {k: Asset(**v) for k, v in kwargs['details'].items()}
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 

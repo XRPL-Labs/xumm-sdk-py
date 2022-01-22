@@ -8,7 +8,14 @@ class PingResource(XummResource):
 
     @classmethod
     def get_url(cls) -> str:
-        """get_url."""
+        """
+        Gets the GET url of this PingResource
+
+        :param id: A string id.
+        :type: str
+        :return: The GET url of this PingResource.
+        :rtype: str
+        """
         return super(PingResource, cls).platform_url() + 'ping' + '/'
 
     def refresh_from(cls, **kwargs) -> 'PingResource':

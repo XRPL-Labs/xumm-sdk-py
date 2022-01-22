@@ -52,7 +52,6 @@ class WSError(Exception):
         result = '[(' + self.message
         if self.data:
             result += ', ' + str(self.data)
-
         result += ')]'
         return result
 

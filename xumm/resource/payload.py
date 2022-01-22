@@ -94,17 +94,38 @@ class PayloadResource(XummResource):
 
     @classmethod
     def post_url(cls) -> str:
-        """post_url."""
+        """
+        Gets the POST url of this PayloadResource
+
+        :param id: A string id.
+        :type: str
+        :return: The POST url of this PayloadResource.
+        :rtype: str
+        """
         return super(PayloadResource, cls).platform_url() + 'payload' + '/'
 
     @classmethod
     def get_url(cls, id: str = None) -> str:
-        """get_url."""
+        """
+        Gets the GET url of this PayloadResource
+
+        :param id: A string id.
+        :type: str
+        :return: The GET url of this PayloadResource.
+        :rtype: str
+        """
         return super(PayloadResource, cls).platform_url() + 'payload' + '/' + id  # noqa: E501
 
     @classmethod
     def delete_url(cls, id: str = None) -> str:
-        """delete_url."""
+        """
+        Gets the DELETE url of this PayloadResource
+
+        :param id: A string id.
+        :type: str
+        :return: The DELETE url of this PayloadResource.
+        :rtype: str
+        """
         return super(PayloadResource, cls).platform_url() + 'payload' + '/' + id  # noqa: E501
 
     def refresh_from(cls, **kwargs) -> 'PayloadResource':
@@ -115,6 +136,14 @@ class PayloadResource(XummResource):
         cls,
         payload: Union[str, XummPayload, CreatedPayload]
     ) -> XummPayload:
+        """
+        Returns the XummPayload
+
+        :param payload: A payload string or json object.
+        :type: Union[str, XummPayload, CreatedPayload]
+        :return: The XummPayload json dictionary
+        :rtype: XummPayload
+        """
         if isinstance(payload, str):
             return cls.get(payload)
         if isinstance(payload, CreatedPayload):
@@ -137,14 +166,16 @@ class PayloadResource(XummResource):
         """Returns the dict as a model
 
         :param payload: The payload of this payload_create.
-        :type payload: XummPostPayloadBodyJson | XummPostPayloadBodyBlob | XummJsonTransaction
+        :type payload:
+            XummPostPayloadBodyJson |
+            XummPostPayloadBodyBlob |
+            XummJsonTransaction
         :param return_errors: The return_errors of this payload_create.
         :type return_errors: bool
 
         :return: The XummPostPayloadResponse of this XummPostPayloadResponse.  # noqa: E501
         :rtype: XummPostPayloadResponse
         """
-
         if not return_errors:
             try:
                 res = client.post(cls.post_url(), payload)
@@ -166,7 +197,6 @@ class PayloadResource(XummResource):
         :return: The XummDeletePayloadResponse of this XummDeletePayloadResponse.  # noqa: E501
         :rtype: XummDeletePayloadResponse
         """
-
         if not return_errors:
             try:
                 res = client.delete(cls.delete_url(id))
@@ -188,7 +218,6 @@ class PayloadResource(XummResource):
         :return: The XummGetPayloadResponse of this XummGetPayloadResponse.  # noqa: E501
         :rtype: XummGetPayloadResponse
         """
-
         if not return_errors:
             try:
                 res = client.get(cls.get_url(id))
@@ -227,20 +256,32 @@ class PayloadResource(XummResource):
                         callback_promise._resolve(callback_result)
 
                 except Exception as e:
-                    logger.debug('Payload {}: Callback exception: {}'.format(payload_details.meta.uuid, e))  # noqa: E501
+                    logger.debug(
+                        'Payload {}: Callback exception: {}'
+                        .format(payload_details.meta.uuid, e)
+                    )
 
         def on_error(error):
-            logger.debug('Payload {}: Subscription error: {}'.format(payload_details.meta.uuid, error))  # noqa: E501
+            logger.debug(
+                'Payload {}: Subscription error: {}'
+                .format(payload_details.meta.uuid, error)
+            )
             cls._conn.disconnect()
             callback_promise._reject(error)
             # raise ValueError(error)
 
         # def on_close(ws, close_status_code, close_msg):
         def on_close():
-            logger.debug('Payload {}: Subscription ended (WebSocket closed)'.format(payload_details.meta.uuid))  # noqa: E501
+            logger.debug(
+                'Payload {}: Subscription ended (WebSocket closed)'
+                .format(payload_details.meta.uuid)
+            )
 
         def on_open(connection):
-            logger.debug('Payload {}: Subscription active (WebSocket opened)'.format(payload_details.meta.uuid))  # noqa: E501
+            logger.debug(
+                'Payload {}: Subscription active (WebSocket opened)'
+                .format(payload_details.meta.uuid)
+            )
 
         if payload_details:
             cls._callback = callback
@@ -273,7 +314,6 @@ class PayloadResource(XummResource):
         """Create payload and subscribe to a channel
         :returns: PayloadAndSubscription
         """
-
         created_payload = await cls.create(payload)
         if created_payload:
             subscription = await cls.subscribe(created_payload, callback)

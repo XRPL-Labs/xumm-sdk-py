@@ -48,7 +48,7 @@ class BalanceChange(XummResource):
         cls.currency = kwargs['currency']
         cls.value = kwargs['value']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -191,7 +191,7 @@ class XrplTransaction(XummResource):
         cls.node = kwargs['node']
         cls.transaction = kwargs['transaction']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 

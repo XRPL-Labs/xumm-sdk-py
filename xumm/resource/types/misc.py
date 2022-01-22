@@ -45,7 +45,7 @@ class ReturnUrl(XummResource):
         if 'web' in kwargs:
             cls.web = kwargs['web']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -161,7 +161,7 @@ class Options(XummResource):
         cls.expire = kwargs['expire']
         cls.return_url = kwargs['return_url']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -356,7 +356,7 @@ class Response(XummResource):
             cls.approved_with = kwargs['approved_with']
         return cls
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -636,7 +636,7 @@ class RequestJson(XummResource):
         cls.transaction_type = kwargs['transaction_type']
         cls.sign_in = kwargs['sign_in']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -792,7 +792,7 @@ class Payload(XummResource):
         cls.expires_at = kwargs['expires_at']
         cls.expires_in_seconds = kwargs['expires_in_seconds']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -1095,7 +1095,7 @@ class Application(XummResource):
         if 'issued_user_token' in kwargs:
             cls._issued_user_token = kwargs['issued_user_token']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -1295,7 +1295,7 @@ class Result(XummResource):
         cls.cancelled = kwargs['cancelled']
         cls.reason = kwargs['reason']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -1431,7 +1431,7 @@ class Refs(XummResource):
         cls.qr_uri_quality_opts = kwargs['qr_uri_quality_opts']
         cls.websocket_status = kwargs['websocket_status']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -1592,7 +1592,7 @@ class Next(XummResource):
         cls._always = None
         cls.always = kwargs['always']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 

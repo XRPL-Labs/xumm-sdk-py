@@ -96,7 +96,7 @@ class WSClient(Thread):
         Thread.__init__(cls)
         cls.daemon = False
 
-    def connect(cls, nowait: bool = True):
+    def connect(cls, nowait: bool = True) -> None:
         """
         Simulate cls.start(), run the main thread
         :return:
@@ -106,7 +106,7 @@ class WSClient(Thread):
         if not nowait:
             return cls.connected.wait()
 
-    def disconnect(cls):
+    def disconnect(cls) -> None:
         """
         Disconnects from the websocket connection and joins the Thread.
         :return:
@@ -130,7 +130,7 @@ class WSClient(Thread):
         if cls.socket.sock:
             return cls.socket.sock.getstatus()
 
-    def reconnect(cls):
+    def reconnect(cls) -> None:
         """
         Issues a reconnection by setting the reconnect_required event.
         :return:
@@ -142,7 +142,7 @@ class WSClient(Thread):
         if cls.socket:
             cls.socket.close()
 
-    def _connect(cls):
+    def _connect(cls) -> None:
         """
         Creates a websocket connection.
         :return:
@@ -170,7 +170,7 @@ class WSClient(Thread):
                 cls.socket.keep_running = True
                 cls.socket.run_forever()
 
-    def run(cls):
+    def run(cls) -> None:
         """
         Main method of Thread.
         :return:
@@ -178,7 +178,7 @@ class WSClient(Thread):
         cls.log.debug("Starting up..")
         cls._connect()
 
-    def _on_message(cls, ws, message):
+    def _on_message(cls, ws, message) -> None:
         """
         Handles and passes received data to the appropriate handlers.
         :return:
@@ -206,14 +206,14 @@ class WSClient(Thread):
         # We've received data, reset timers
         cls._start_timers()
 
-    def _on_close(cls, *args):
+    def _on_close(cls, *args) -> None:
         cls.log.info("Connection closed")
         cls.connected.clear()
         cls._stop_timers()
 
         cls._callback('on_close')
 
-    def _on_open(cls, ws):
+    def _on_open(cls, ws) -> None:
         cls.log.info("Connection opened")
         cls.connected.set()
         cls.send_ping()
@@ -223,7 +223,7 @@ class WSClient(Thread):
 
         cls._callback('on_open', cls)
 
-    def _on_error(cls, ws, error):
+    def _on_error(cls, ws, error) -> None:
         cls.log.info("Connection Error - %s", error)
 
         # ignore errors if we are disconnecting
@@ -235,7 +235,7 @@ class WSClient(Thread):
 
         cls._callback('on_error', error)
 
-    def _stop_timers(cls):
+    def _stop_timers(cls) -> None:
         """
         Stops ping, pong and connection timers.
         :return:
@@ -250,7 +250,7 @@ class WSClient(Thread):
             cls.pong_timer.cancel()
         cls.log.debug("Timers stopped.")
 
-    def _start_timers(cls):
+    def _start_timers(cls) -> None:
         """
         Resets and starts timers for API data and connection.
         :return:
@@ -268,7 +268,7 @@ class WSClient(Thread):
         )
         cls.connection_timer.start()
 
-    def send_ping(cls):
+    def send_ping(cls) -> None:
         """
         Sends a ping message to the API and starts pong timers.
         :return:
@@ -278,7 +278,7 @@ class WSClient(Thread):
         cls.pong_timer = Timer(cls.pong_timeout, cls._check_pong)
         cls.pong_timer.start()
 
-    def _check_pong(cls):
+    def _check_pong(cls) -> None:
         """
         Checks if a Pong message was received.
        :return:
@@ -292,7 +292,7 @@ class WSClient(Thread):
             cls.log.debug("Pong not received in time. Issuing reconnect..")  # noqa: E501
             cls.reconnect()
 
-    def _connection_timed_out(cls):
+    def _connection_timed_out(cls) -> None:
         """
         Issues a reconnection if the connection timed out.
        :return:
@@ -300,7 +300,7 @@ class WSClient(Thread):
         cls.log.debug("Timeout, Issuing reconnect..")
         cls.reconnect()
 
-    def _pause(cls):
+    def _pause(cls) -> None:
         """
         Pauses the connection.
         :return:
@@ -308,7 +308,7 @@ class WSClient(Thread):
         cls.log.debug("Setting paused() Flag!")
         cls.paused.set()
 
-    def _unpause(cls):
+    def _unpause(cls) -> None:
         """
         Unpauses the connection.
         Send a message up to client that he should re-subscribe to all
@@ -322,7 +322,7 @@ class WSClient(Thread):
         cls,
         data: Dict[str, object],
         timestamp: str
-    ):
+    ) -> None:
         """
         Distributes system messages to the appropriate handler.
         System messages include everything that arrives as a dict,
@@ -333,7 +333,7 @@ class WSClient(Thread):
         cls.log.debug("On Response: {}".format(data))
         cls._callback('on_response', data)
 
-    def _callback(cls, callback, *args):
+    def _callback(cls, callback, *args) -> None:
         """Emit a callback in a thread
         :param callback:
         :param *args:

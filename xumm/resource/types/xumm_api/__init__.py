@@ -124,7 +124,7 @@ class XummCustomMeta(XummResource):
         if 'instruction' in kwargs:
             cls.instruction = kwargs['instruction']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -368,7 +368,7 @@ class XummPayloadMeta(XummResource):
             cls.return_url_web = kwargs['return_url_web']
         cls.is_xapp = kwargs['is_xapp']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -952,7 +952,7 @@ class XummPayloadBodyBase(XummResource):
         # if 'txblob' in kwargs:
         #     cls._txblob = kwargs['txblob']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -1200,7 +1200,7 @@ class XummPostPayloadResponse(XummResource):
         cls.refs = Refs(**kwargs['refs'])
         cls.pushed = kwargs['pushed']
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -1413,7 +1413,7 @@ class XummGetPayloadResponse(XummResource):
         cls.response = Response(**kwargs['response'])
         cls.custom_meta = XummCustomMeta(**kwargs['custom_meta'])
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
@@ -1603,7 +1603,7 @@ class XummDeletePayloadResponse(XummResource):
         cls.meta = XummPayloadMeta(**kwargs['meta'])
         cls.custom_meta = XummCustomMeta(**kwargs['custom_meta'])
 
-    def to_dict(cls):
+    def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
 
