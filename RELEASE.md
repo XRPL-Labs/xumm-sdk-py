@@ -73,7 +73,7 @@ Check Distribution
 
 Push on Staging
 
-`twine upload --config-file="./.pypirc" -r testpypi dist/*`
+`twine upload --skip-existing --config-file="./.pypirc" -r testpypi dist/*`
 
 Push to Production
 

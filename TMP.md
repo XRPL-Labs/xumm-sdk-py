@@ -1,4 +1,4 @@
-# XUMM SDK (PYTHON) [![python version](https://badge.fury.io/py/xumm-sdk-py.svg)](https://test.pypi.org/project/xumm-sdk-py-dangell7/) [![GitHub Actions Python status](https://github.com/CASL-AE/xumm-sdk-py/workflows/Python/badge.svg?branch=main)](https://github.com/CASL-AE/xumm-sdk-py/actions)
+# XUMM SDK (PYTHON) [![python version](https://badge.fury.io/py/xumm-sdk-py.svg)](https://pypi.org/project/xumm-sdk-py/) [![GitHub Actions Python status](https://github.com/CASL-AE/xumm-sdk-py/workflows/Python/badge.svg?branch=main)](https://github.com/CASL-AE/xumm-sdk-py/actions)
 
 Interact with the XUMM SDK from Python environments.
 
@@ -28,7 +28,7 @@ sdk = xumm.XummSdk('someAppKey', 'someAppSecret')
 ### Credentials
 
 #### In case of backend use
-The SDK will look in your environment or dotenv file (`.env`) for the `XUMM_APIKEY` and `XUMM_APISECRET` values. A `.env.sample` file is provided in this repository. A [sample dotenv file looks like this](https://github.com/CASL-AE/xumm-sdk-py/blob/main/.env.sample). Alternatively you can provide your XUMM API Key & Secret by passing them to the XummSdk constructor. 
+The SDK will look in your environment or dotenv file (`.env`) for the `XUMM_APIKEY` and `XUMM_APISECRET` values. A `.env.sample` file is provided in this repository. A [sample dotenv file looks like this](https://github.com/CASL-AE/xumm-sdk-py/blob/master/.env.sample). Alternatively you can provide your XUMM API Key & Secret by passing them to the XummSdk constructor. 
 
 If both your environment and the SDK constructor contain credentials, the values provided to the constructor will be used.
 
@@ -59,6 +59,7 @@ pong.application.name  # 'My XUMM APP'
 pong.application.uuidv4  # '00000000-1111-2222-3333-aaaaaaaaaaaa'
 pong.application.webhookurl  # ''
 pong.application.disabled  # 0
+pong.call
 pong.call.uuidv4  # 'bbbbbbbb-cccc-dddd-eeee-111111111111'
 ```
 
@@ -164,7 +165,7 @@ Payloads are the primary reason for the XUMM API (thus this SDK) to exist. The [
 A payload can contain an XRPL transaction template. Some properties may be omitted, as they will be added by the XUMM app when a user signs a transaction. A simple payload may look like this:
 
 ```python
-payload = {
+{
   'txjson': {
     'TransactionType' : 'Payment',
     'Destination' : 'rwiETSee2wMz3SBnAG8hkMsCgvGy9LWbZ1',
@@ -175,13 +176,13 @@ payload = {
 
 As you can see the payload looks like a regular XRPL transaction, wrapped in an `txjson` object, omitting the mandatory `Account`, `Fee` and `Sequence` properties. They will be added containing the correct values when the payload is signed by an app user.
 
-Optionally (besides `txjson`) a payload can contain these properties ([PY definition](https://github.com/CASL-AE/xumm-sdk-py/blob/main/xumm/resource/types/xumm_api/__init__.py#L836)):
+Optionally (besides `txjson`) a payload can contain these properties ([PY definition](https://github.com/CASL-AE/xumm-sdk-py/blob/main/xumm/resource/types/xumm_api/__init__.py#L898)):
 
 - `options` to define payload options like a return URL, expiration, etc.
 - `custom_meta` to add metadata, user insruction, your own unique ID, ...
 - `user_token` to push the payload to a user (after [obtaining a user specific token](https://xumm.readme.io/docs/pushing-sign-requests))
 
-A more complex payload [could look like this](https://gist.github.com/WietseWind/ecdfd58bece14e5d15e41138fa4b0f4a). A [reference for payload options & custom meta](https://xumm.readme.io/reference/post-payload) can be found in the [API Docs](https://xumm.readme.io/reference/post-payload).
+A more complex payload [could look like this](https://github.com/CASL-AE/xumm-sdk-py/blob/main/samples/payload.py). A [reference for payload options & custom meta](https://xumm.readme.io/reference/post-payload) can be found in the [API Docs](https://xumm.readme.io/reference/post-payload).
 
 Instead of providing a `txjson` transaction, a transaction formatted as HEX blob (string) can be provided in a `txblob` property.
 
@@ -221,7 +222,7 @@ sdk.payload.get('aaaaaaaa-bbbb-cccc-dddd-1234567890ab', True)
 ##### sdk.payload.create
 
 ```python
-sdk.payload.create (
+sdk.payload.create(
 payload: create_payload,
 return_errors: bool = False
 ): -> Union[CreatedPayload, None]
@@ -229,7 +230,7 @@ return_errors: bool = False
 
 To create a payload, a `txjson` XRPL transaction can be provided. Alternatively, a transaction formatted as HEX blob (string) can be provided in a `txblob` property. **See the [intro](#intro) for more information about payloads.** Take a look at the [Developer Docs for more information about payloads](https://xumm.readme.io/docs/your-first-payload).
 
-The response (see: [Developer Docs](https://xumm.readme.io/docs/payload-response-resources)) of a `sdk.payload.create()` operation, a `<CreatedPayload>` json object, looks like this:
+The response (see: [Developer Docs](https://xumm.readme.io/docs/payload-response-resources)) of a `sdk.payload.create()` operation, a `<CreatedPayload>` object, looks like this:
 
 ```json
 {
@@ -248,7 +249,7 @@ The response (see: [Developer Docs](https://xumm.readme.io/docs/payload-response
 }
 ```
 
-The `next.always` URL is the URL to send the end user to, to scan a QR code or automatically open the XUMM app (if on mobile). If a `user_token` has been provided as part of the payload data provided to `sdk.payload.create()`, you can see if the payload has been pushed to the end user. A button "didn't receive a push notification" could then take the user to the `next.no_push_msg_received` URL.
+The `next.always` URL is the URL to send the end user to, to scan a QR code or automatically open the XUMM app (if on mobile). If a `user_token` has been provided as part of the payload data provided to `sdk.payload.create()`, you can see if the payload has been pushed to the end user. A button "didn't receive a push notification" could then take the user to the `next.no_push_msg_received` URL. The 
 
 Alternatively user routing / instruction flows can be custom built using the QR information provided in the `refs` object, and a subscription for live status updates (opened, signed, etc.) using a WebSocket client can be setup by conneting to the `refs.websocket_status` URL. **Please note: this SDK already offers subscriptions. There's no need to setup your own WebSocket client, see [Payload subscriptions: live updates](#payload-subscriptions-live-updates).** There's more information about the [payload workflow](https://xumm.readme.io/docs/payload-workflow) and a [payload lifecycle](https://xumm.readme.io/docs/doc-payload-life-cycle) in the Developer Docs.
 
@@ -267,10 +268,14 @@ To cancel a payload, provide a payload UUID (string), a `<XummPayload>` (by perf
 
 A response (generic API types [here](https://github.com/CASL-AE/xumm-sdk-py/blob/main/xumm/resource/types/xumm_api/__init__.py)) looks like:
 ```python
-response.result.cancelled  # bool
-response.result.reason  # XummCancelReason
-response.meta  # XummPayloadMeta
-response.custom_meta  # XummCustomMeta
+{
+  'result': {
+  'cancelled': bool
+  'reason': XummCancelReason
+}
+  'meta': XummPayloadMeta
+  'custom_meta': XummCustomMeta
+}
 ```
 
 #### Payload subscriptions: live updates
@@ -307,21 +312,23 @@ When a callback function is provided, for every paylaod specific event the callb
 
 Resolving (by returning non-void in the callback or calling `resolve()` manually) closes the WebSocket client the XUMM SDK sets up 'under the hood'.
 
-The [`<PayloadSubscription>`](https://github.com/CASL-AE/xumm-sdk-py/blob/main/xumm/resource/types/payload/payload_subscription.py) object looks like this:
+The [`<PayloadSubscription>`](https://github.com/CASL-AE/xumm-sdk-py/blob/main/xumm/resource/types/payload/payload_subscription.py#L18) object looks like this:
 
 ```python
-response.payload  # XummPayload
-response.resolved  # Union[CallbackPromise, None]
-response.resolve  # CallbackPromise
-response.websocket  # WSClient
+{
+  'payload': XummPayload,
+  'resolved': CallbackPromise or None,
+  'resolve': Callable[Any],
+  'websocket': WSClient
+}
 ```
 
 Examples:
 
-- [Async process after returning data in the callback function](https://github.com/CASL-AE/xumm-sdk-py/blob/main/samples/ws/async_callback.py)
-- [Await based on returning data in the callback function](https://github.com/CASL-AE/xumm-sdk-py/blob/main/samples/ws/await_callback.py)
-- [Await based on resolving a callback event](https://github.com/CASL-AE/xumm-sdk-py/blob/main/samples/ws/await_event.py)
-- [Await based on resolving without using a callback function](https://github.com/CASL-AE/xumm-sdk-py/blob/main/samples/ws/await_no_callback.py)
+- [Async process after returning data in the callback function](https://github.com/CASL-AE/xumm-sdk-py/blob/master/samples/ws/async_callback.py)
+- [Await based on returning data in the callback function](https://github.com/CASL-AE/xumm-sdk-py/blob/master/samples/ws/await_callback.py)
+- [Await based on resolving a callback event](https://github.com/CASL-AE/xumm-sdk-py/blob/master/samples/ws/await_event.py)
+- [Await based on resolving without using a callback function](https://github.com/CASL-AE/xumm-sdk-py/blob/master/samples/ws/await_no_callback.py)
 
 ##### sdk.payload.create_subscribe
 
@@ -332,7 +339,7 @@ sdk.payload.create_and_subscribe(
 ): -> PayloadAndSubscription
 ```
 
-The [`<PayloadAndSubscription>`](https://github.com/CASL-AE/xumm-sdk-py/blob/main/xumm/resource/types/payload/payload_and_subscription.py) object is basically a [`<PayloadSubscription>`](https://github.com/CASL-AE/xumm-sdk-py/blob/main/xumm/resource/types/payload/payload_subscription.py) object with the created payload results in the `created` property:
+The [`<PayloadAndSubscription>`](https://github.com/CASL-AE/xumm-sdk-py/blob/main/xumm/resource/types/payload/payload_and_subscription.py#L18) object is basically a [`<PayloadSubscription>`](https://github.com/CASL-AE/xumm-sdk-py/blob/main/xumm/resource/types/payload/payload_subscription.py#L18) object with the created payload results in the `created` property:
 
 All information that applies on [`sdk.payload.create()`](#sdkpayloadcreate) and [`sdk.payload.create_and_subscribe()`](#sdkpayloadsubscribe) applies. Differences are:
 
@@ -361,7 +368,7 @@ Please note: you most likely just want to **use** the XUMM SDK, to do so, fetch 
 
 If you actually want to change/test/develop/build/contribute (to) the source of the XUMM SDK:
 
-##### Local Build
+##### TODO: Build
 
 Please note: at least Python version **3.6+** is required!
 
@@ -369,10 +376,10 @@ To build the code, run `python setup.py install`.
 
 ##### Lint & test
 
-Lint the code using `python3 -m flake8 --output-file=./logs/linter.txt --exclude="./samples/, ./build/, ./dist/, ./tests/"`, run tests (pytest) using `python3 test.py tests/`
+Lint the code using `python3 -m flake8 --output-file=./logs/linter.txt --exclude="./samples/, ./build/, ./dist/, ./tests/"`, run tests (jest) using `python3 test.py tests/`
 
-##### Run development code
+##### TODO: Run development code
 
 Build, run, show debug output & watch `dist/samples/dev.py`, compiled from `samples/dev.py` using `python3`. The `samples/dev.py` file is **not included by default**.
 
-[Here's a sample `samples/dev.py` file](https://github.com/CASL-AE/xumm-sdk-py/blob/main/samples/dev.py).
+[Here's a sample `samples/dev.py` file](https://github.com/CASL-AE/xumm-sdk-py/blob/master/samples/dev.py).

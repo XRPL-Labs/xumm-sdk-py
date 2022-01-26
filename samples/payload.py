@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+import binascii
+
 payload = {
   'custom_meta': {
     'instruction': 'Hey! Please sign for:\n\nThis\nand\nthat 🍻',
@@ -33,8 +35,8 @@ payload = {
     'Memos': [
       {
         'Memo': {
-          'MemoData': Buffer.from('Sample XUMM payload', 'utf-8').toString('hex').toUpperCase(),
-          'MemoFormat': Buffer.from('some/memo', 'utf-8').toString('hex').toUpperCase()
+          'MemoData': binascii.hexlify('Sample XUMM payload'.encode('utf8')).decode('utf-8').upper(),
+          'MemoFormat': binascii.hexlify('some/memo'.encode('utf8')).decode('utf-8').upper(),
         }
       }
     ]
