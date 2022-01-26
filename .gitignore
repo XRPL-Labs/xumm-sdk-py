@@ -1,0 +1,23 @@
+__pycache__
+.eggs
+guesty.egg-info
+*.pyc
+venv
+.cache
+
+# PyTest #
+######################
+.pytest_cache
+# .github
+
+# Lint #
+/logs
+
+# Production #
+/build
+/dist
+/xumm_sdk_py_dangell7.egg-info
+/xumm_sdk_py.egg-info
+.env
+.pypirc
+README.html
