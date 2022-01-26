@@ -25,16 +25,16 @@ The full process for cutting a release is as follows:
 
    ``
 
-4. Once the PR is merged, checkout the `master` branch:
-   `git checkout master`
+4. Once the PR is merged, checkout the `main` branch:
+   `git checkout main`
 
-5. Delete `master` branch (Optional):
+5. Delete `main` branch (Optional):
    `git branch -d 0.9.9-beta.4`
 
 5. Make a new Git tag that matches the new version (make sure it is associated with the right commit SHA): FIXUP
    `git tag -a 0.9.9-beta.4 -m "cut 0.9.9-beta.4"`
 
-7. Push up the tag from `master`:
+7. Push up the tag from `main`:
    `git push origin 0.9.9-beta.4`
 
 
