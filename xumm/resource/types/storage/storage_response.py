@@ -2,9 +2,6 @@
 # coding: utf-8
 
 from xumm.resource import XummResource
-import six
-
-from typing import Dict
 
 
 class StorageResponse(XummResource):

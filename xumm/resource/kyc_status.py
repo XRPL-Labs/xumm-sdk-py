@@ -27,4 +27,3 @@ class KycStatusResource(XummResource):
         :rtype: str
         """
         return super(KycStatusResource, cls).platform_url() + 'kyc-status/'
-

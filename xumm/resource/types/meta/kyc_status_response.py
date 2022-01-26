@@ -2,8 +2,7 @@
 # coding: utf-8
 
 from xumm.resource import XummResource
-import six
-from typing import Union, List, Dict, Callable, Any  # noqa: F401
+from typing import Dict
 
 
 class KycStatusResponse(XummResource):

@@ -6,9 +6,8 @@
 # Definitions by: Wietse Wind <https://github.com/WietseWind>
 # Definitions: https://github.com/XRPL-Labs/XUMM-SDK
 
-import six
 from xumm.resource import XummResource
-from typing import Union, List, Dict, Callable, Any  # noqa: F401
+from typing import Union, Dict
 
 from ..misc import (
     Options,

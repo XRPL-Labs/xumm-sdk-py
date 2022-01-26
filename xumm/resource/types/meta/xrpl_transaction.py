@@ -2,8 +2,7 @@
 # coding: utf-8
 
 from xumm.resource import XummResource
-import six
-from typing import Union, List, Dict, Callable, Any  # noqa: F401
+from typing import Dict, Any
 
 
 class BalanceChange(XummResource):
@@ -47,39 +46,6 @@ class BalanceChange(XummResource):
         cls.counterparty = kwargs['counterparty']
         cls.currency = kwargs['currency']
         cls.value = kwargs['value']
-
-    def to_dict(cls) -> Dict[str, object]:
-        """Returns the model properties as a dict"""
-        result = {}
-
-        for attr, _ in six.iteritems(cls.attribute_map):
-            value = getattr(cls, attr)
-            attr = cls.attribute_map[attr]
-            if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
-            elif hasattr(value, "to_dict"):
-                result[attr] = value.to_dict()
-            elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
-            else:
-                result[attr] = value
-        if issubclass(BalanceChange, dict):
-            for key, value in cls.items():
-                key = cls.attribute_map[key]
-                result[key] = value
-
-        return {
-            k: v for k, v in result.items()
-            if v is not None or k in
-            cls.required and k in cls.nullable
-        }
 
     @property
     def counterparty(cls) -> str:

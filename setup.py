@@ -1,13 +1,11 @@
 # coding: utf-8
 
 import os
-import sys
-
 from setuptools import setup
 from codecs import open
 
 NAME = "xumm-sdk-py-dangell7"
-VERSION = "v0.9.9-beta.3"
+VERSION = "v0.9.9-beta.4"
 # To install the library, run the following
 #
 # python setup.py install

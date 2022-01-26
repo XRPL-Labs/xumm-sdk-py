@@ -2,8 +2,7 @@
 # coding: utf-8
 
 import logging
-from operator import sub
-from typing import List, Dict, Any, Union, Callable  # noqa: F401
+from typing import Any, Union, Callable
 from xumm import (
     client,
     error

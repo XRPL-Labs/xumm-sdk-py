@@ -2,9 +2,9 @@ name: Python
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   node:
@@ -25,8 +25,8 @@ jobs:
     - name: Install dependencies
       run: |
         python3 -m pip install --upgrade pip
-        pip install -r test-requirements.txt
-    - run: python3 -m flake8 --exclude="./samples/, ./build/, ./tests/"
+        pip install -r requirements.txt
+    - run: python3 -m flake8 --exclude="./samples/, ./dist/, ./build/, ./tests/"
     - run: python3 test.py tests/
       env:
         XUMM_APIKEY: aaaaaaaa-cccc-eeee-1111-333333333333
