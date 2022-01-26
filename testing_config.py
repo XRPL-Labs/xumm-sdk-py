@@ -24,7 +24,7 @@ class BaseTestConfig(TestCase):
     @classmethod
     def tearDownClass(cls):
         print('Tear Down Class Testing')
-        
+
 
 class AsyncioTestCase(BaseTestConfig):
     """

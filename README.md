@@ -385,7 +385,7 @@ To build the code, run `python setup.py install`.
 
 ##### Lint & test
 
-Lint the code using `python3 -m flake8 --output-file=./logs/linter.txt --exclude="./samples/, ./build/, ./tests/"`, run tests (jest) using `python3 test.py tests/`
+Lint the code using `python3 -m flake8 --output-file=./logs/linter.txt --exclude="./samples/, ./build/, ./dist/, ./tests/"`, run tests (jest) using `python3 test.py tests/`
 
 ##### TODO: Run development code
 

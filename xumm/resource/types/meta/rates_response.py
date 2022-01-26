@@ -2,8 +2,6 @@
 # coding: utf-8
 
 from xumm.resource import XummResource
-import six
-from typing import Union, List, Dict, Callable, Any  # noqa: F401
 
 
 class RateCurrency(XummResource):
@@ -179,38 +177,6 @@ class CurrencyRef(XummResource):
         cls._currency = None
         cls.currency = RateCurrency(**kwargs['currency'])
 
-    def to_dict(cls) -> Dict[str, object]:
-        """Returns the model properties as a dict"""
-        result = {}
-
-        for attr, _ in six.iteritems(cls.attribute_map):
-            value = getattr(cls, attr)
-            attr = cls.attribute_map[attr]
-            if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
-            elif hasattr(value, "to_dict"):
-                result[attr] = value.to_dict()
-            elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
-            else:
-                result[attr] = value
-        if issubclass(CurrencyRef, dict):
-            for key, value in cls.items():
-                result[key] = value
-
-        return {
-            k: v for k, v in result.items()
-            if v is not None or k in
-            cls.required and k in cls.nullable
-        }
-
     @property
     def currency(cls) -> RateCurrency:
         """Gets the currency of this CurrencyRef.
@@ -276,38 +242,6 @@ class RatesResponse(XummResource):
         cls.USD = kwargs['USD']
         cls.XRP = kwargs['XRP']
         cls.meta = CurrencyRef(**kwargs['__meta'])
-
-    def to_dict(cls) -> Dict[str, object]:
-        """Returns the model properties as a dict"""
-        result = {}
-
-        for attr, _ in six.iteritems(cls.attribute_map):
-            value = getattr(cls, attr)
-            attr = cls.attribute_map[attr]
-            if isinstance(value, list):
-                result[attr] = list(map(
-                    lambda x: x.to_dict() if hasattr(x, "to_dict") else x,
-                    value
-                ))
-            elif hasattr(value, "to_dict"):
-                result[attr] = value.to_dict()
-            elif isinstance(value, dict):
-                result[attr] = dict(map(
-                    lambda item: (item[0], item[1].to_dict())
-                    if hasattr(item[1], "to_dict") else item,
-                    value.items()
-                ))
-            else:
-                result[attr] = value
-        if issubclass(RatesResponse, dict):
-            for key, value in cls.items():
-                result[key] = value
-
-        return {
-            k: v for k, v in result.items()
-            if v is not None or k in
-            cls.required and k in cls.nullable
-        }
 
     @property
     def USD(cls) -> int:

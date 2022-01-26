@@ -17,4 +17,3 @@ class XrplTxResource(XummResource):
         :rtype: str
         """
         return super(XrplTxResource, cls).platform_url() + 'xrpl_tx' + '/' + id  # noqa: E501
-

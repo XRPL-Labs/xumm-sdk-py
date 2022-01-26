@@ -11,10 +11,10 @@ The full process for cutting a release is as follows:
 
    `pip3 install bumpversion`
 
-   `bumpversion --current-version 0.9.9-beta.3 minor setup.py xumm/__init__.py`
+   `bumpversion --current-version 0.9.9-beta.4 minor setup.py xumm/__init__.py`
 
 2. Change the version in the setup.py file:
-  `VERSION = "v0.9.9-beta.3"`
+  `VERSION = "v0.9.9-beta.4"`
 
 3. Add, and commit the changes, push up the branch, and open a PR:
    `git add .`
