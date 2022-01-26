@@ -18,7 +18,7 @@ The full process for cutting a release is as follows:
 
 3. Add, and commit the changes, push up the branch, and open a PR:
    `git add .`
-   `git commit -m 'RELEASE 0.9.9-beta.3'`
+   `git commit -m 'RELEASE 0.9.9-beta.4'`
    `git push --set-upstream origin HEAD`
 
 4. Open PR request
