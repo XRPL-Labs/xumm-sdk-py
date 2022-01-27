@@ -247,9 +247,9 @@ class Quota(XummResource):
                             and the value is json key in definition.
     """
     nullable = {}
-    
+
     required = {}
-    
+
     model_types = {
         'ratelimit': str
     }

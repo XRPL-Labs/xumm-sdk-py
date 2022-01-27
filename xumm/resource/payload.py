@@ -178,8 +178,8 @@ class PayloadResource(XummResource):
         :rtype: XummPostPayloadResponse
         """
         direct_tx = 'TransactionType' in payload and 'txjson' not in payload
-        clone_payload = { 'txjson': payload } if direct_tx else payload
-      
+        clone_payload = {'txjson': payload} if direct_tx else payload
+
         if not return_errors:
             try:
                 res = client.post(cls.post_url(), clone_payload)
@@ -251,7 +251,7 @@ class PayloadResource(XummResource):
         # })
 
         if payload_details:
-            
+
             def on_open(connection):
                 logger.debug(
                     'Payload {}: Subscription active (WebSocket opened)'
@@ -290,7 +290,7 @@ class PayloadResource(XummResource):
                     'Payload {}: Subscription ended (WebSocket closed)'
                     .format(payload_details.meta.uuid)
                 )
-            
+
             cls._callback = callback
             cls._conn = WSClient(
                 log_level=logging.DEBUG if env == 'sandbox' else logging.ERROR,

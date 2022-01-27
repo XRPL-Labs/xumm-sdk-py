@@ -65,8 +65,8 @@ class BaseResource(object):
                 raise ValueError(
                     "Invalid value: {} for `{}`, "
                     "must be a `{}` found: {}".format(
-                        value, 
-                        attr, 
+                        value,
+                        attr,
                         is_type,
                         type(value)
                     )
@@ -143,13 +143,13 @@ class BaseResource(object):
 
     def __eq__(self, other) -> bool:
         """Returns true if both objects are equal"""
-        
+
         if type(other) != type(self):
             return False
-        
+
         if isinstance(self, list):
             return self == other
-        
+
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other) -> bool:
