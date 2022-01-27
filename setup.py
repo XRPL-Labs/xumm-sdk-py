@@ -5,7 +5,7 @@ from setuptools import setup
 from codecs import open
 
 NAME = "xumm-sdk-py-dangell7"
-VERSION = "v0.9.9-beta.4"
+VERSION = "0.9.9-beta.5"
 # To install the library, run the following
 #
 # python setup.py install
@@ -25,17 +25,16 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     license='MIT',
-    author='xrpl-labs',
+    author='XRPL-Labs',
     author_email='support@xrpl-labs.com',
-    url='https://github.com/CASL-AE/xumm-sdk-py',
-    packages=[
-        'xumm',
-        'xumm.resource',
-        'xumm.resource.types',
-        'xumm.resource.types.xumm_api',
-        'xumm.resource.types.meta',
-        'xumm.resource.types.payload',
-        'xumm.resource.types.storage'
+    url='https://github.com/XRPL-Labs/xumm-sdk-py',
+    packages=['xumm'],
+    include_package_data=True,
+    install_requires=[
+        "requests >= 2.27.1",
+        "websocket-client >= 1.2.3",
+        "six >= 1.16.0",
+        "python-dotenv >= 0.19.2"
     ],
     test_suite='pytest',
     tests_require=['pytest'],

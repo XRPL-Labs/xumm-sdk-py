@@ -2,9 +2,5 @@
 requires=[
     "setuptools>=42",
     "wheel",
-    "requests >= 2.27.1",
-    "websocket-client >= 1.2.3",
-    "six >= 1.16.0",
-    "python-dotenv >= 0.19.2"
 ]
 build-backend = "setuptools.build_meta"

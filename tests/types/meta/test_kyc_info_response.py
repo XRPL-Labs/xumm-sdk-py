@@ -25,4 +25,4 @@ class TestKycInfoResponse(BaseTestConfig):
             KycInfoResponse(**dict)
             cls.fail("KycInfoResponse: raised Exception unexpectedly!")
         except Exception as e:
-            cls.assertEqual(str(e), "Invalid value for `account`, must be a `<class 'str'>`")
+            cls.assertEqual(str(e), "Invalid value: 1 for `account`, must be a `<class 'str'>` found: <class 'int'>")

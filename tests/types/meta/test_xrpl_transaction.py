@@ -55,6 +55,6 @@ class TestXrplTransactionResponse(BaseTestConfig):
         }
         try:
             XrplTransaction(**dict)
-            cls.fail("PongResponse: raised Exception unexpectedly!")
+            cls.fail("XrplTransaction: raised Exception unexpectedly!")
         except Exception as e:
-            cls.assertEqual(str(e), "Invalid value for `txid`, must be a `<class 'str'>`")
+            cls.assertEqual(str(e), "Invalid value: 1 for `txid`, must be a `<class 'str'>` found: <class 'int'>")

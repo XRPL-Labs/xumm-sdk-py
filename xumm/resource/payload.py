@@ -58,6 +58,7 @@ class CallbackPromise:
             continue
 
         if cls.error:
+            # return {'data': str(cls.error)}
             return None
 
         return cls.data
@@ -176,14 +177,17 @@ class PayloadResource(XummResource):
         :return: The XummPostPayloadResponse of this XummPostPayloadResponse.  # noqa: E501
         :rtype: XummPostPayloadResponse
         """
+        direct_tx = 'TransactionType' in payload and 'txjson' not in payload
+        clone_payload = { 'txjson': payload } if direct_tx else payload
+      
         if not return_errors:
             try:
-                res = client.post(cls.post_url(), payload)
+                res = client.post(cls.post_url(), clone_payload)
                 return XummPostPayloadResponse(**res)
             except:  # noqa: E722
                 return None
 
-        res = client.post(cls.post_url(), payload)
+        res = client.post(cls.post_url(), clone_payload)
         return XummPostPayloadResponse(**res)
 
     @classmethod
@@ -242,51 +246,54 @@ class PayloadResource(XummResource):
         callback_promise = CallbackPromise()
         payload_details = cls.resolve_payload(payload)
 
-        def on_message(json_data):
-            if json_data and cls._callback and 'devapp_fetched' not in json_data:  # noqa: E501
-                try:
-                    callback_result = cls._callback({
-                        'uuid': payload_details.meta.uuid,
-                        'data': json_data,
-                        'resolve': callback_promise._resolve,
-                        'payload': payload_details
-                    })
-
-                    if callback_result:
-                        callback_promise._resolve(callback_result)
-
-                except Exception as e:
-                    logger.debug(
-                        'Payload {}: Callback exception: {}'
-                        .format(payload_details.meta.uuid, e)
-                    )
-
-        def on_error(error):
-            logger.debug(
-                'Payload {}: Subscription error: {}'
-                .format(payload_details.meta.uuid, error)
-            )
-            cls._conn.disconnect()
-            callback_promise._reject(error)
-            # raise ValueError(error)
-
-        # def on_close(ws, close_status_code, close_msg):
-        def on_close():
-            logger.debug(
-                'Payload {}: Subscription ended (WebSocket closed)'
-                .format(payload_details.meta.uuid)
-            )
-
-        def on_open(connection):
-            logger.debug(
-                'Payload {}: Subscription active (WebSocket opened)'
-                .format(payload_details.meta.uuid)
-            )
+        # callback_promise.promise.then(() => {
+        #     cls._conn.disconnect()
+        # })
 
         if payload_details:
+            
+            def on_open(connection):
+                logger.debug(
+                    'Payload {}: Subscription active (WebSocket opened)'
+                    .format(payload_details.meta.uuid)
+                )
+
+            def on_message(json_data):
+                if json_data and cls._callback and 'devapp_fetched' not in json_data:  # noqa: E501
+                    try:
+                        callback_result = cls._callback({
+                            'uuid': payload_details.meta.uuid,
+                            'data': json_data,
+                            'resolve': callback_promise._resolve,
+                            'payload': payload_details
+                        })
+
+                        if callback_result:
+                            callback_promise._resolve(callback_result)
+
+                    except Exception as e:
+                        logger.debug(
+                            'Payload {}: Callback error: {}'
+                            .format(payload_details.meta.uuid, e)
+                        )
+
+            def on_error(error):
+                logger.debug(
+                    'Payload {}: Subscription error: {}'
+                    .format(payload_details.meta.uuid, error)
+                )
+                cls._conn.disconnect()
+                callback_promise._reject(error)
+
+            def on_close():
+                logger.debug(
+                    'Payload {}: Subscription ended (WebSocket closed)'
+                    .format(payload_details.meta.uuid)
+                )
+            
             cls._callback = callback
             cls._conn = WSClient(
-                log_level=logging.ERROR if env == 'sandbox' else logging.ERROR,
+                log_level=logging.DEBUG if env == 'sandbox' else logging.ERROR,
                 server='ws://localhost:8765' if env == 'sandbox' else 'wss://xumm.app/sign/{}'.format(payload_details.meta.uuid),  # noqa: E501
                 on_response=on_message,
                 on_error=on_error,
@@ -314,12 +321,15 @@ class PayloadResource(XummResource):
         """Create payload and subscribe to a channel
         :returns: PayloadAndSubscription
         """
-        created_payload = await cls.create(payload)
+        created_payload = cls.create(payload)
         if created_payload:
             subscription = await cls.subscribe(created_payload, callback)
             resp = {
-                'created': created_payload,
-                **subscription
+                'created': created_payload.to_dict(),
+                'payload': subscription.payload.to_dict(),
+                'resolve': subscription.resolve,
+                'resolved': subscription.resolved,
+                'websocket': subscription.websocket
             }
             return PayloadAndSubscription(**resp)
         raise ValueError('Error creating payload or subscribing to created payload')  # noqa: E501

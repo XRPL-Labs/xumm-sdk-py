@@ -8,7 +8,6 @@ def to_match_object(model_object: Any) -> bool:
     try:
         return model_object.model_check()
     except Exception as e:
-        print(e)
         return False
 
 

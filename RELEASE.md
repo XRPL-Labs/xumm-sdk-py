@@ -5,20 +5,20 @@
 The full process for cutting a release is as follows:
 
 0. Checkout a new branch:
-   `git checkout -b 0.9.9-beta.4` # 1.0.0-release
+   `git checkout -b 0.9.9-beta.5` # 1.0.0-release
 
 1. Python / Pip Bumpversion
 
    `pip3 install bumpversion`
 
-   `bumpversion --current-version 0.9.9-beta.4 minor setup.py xumm/__init__.py`
+   `bumpversion --current-version 0.9.9-beta.5 minor setup.py xumm/__init__.py`
 
 2. Change the version in the setup.py file:
-  `VERSION = "v0.9.9-beta.4"`
+  `VERSION = "0.9.9-beta.5"`
 
 3. Add, and commit the changes, push up the branch, and open a PR:
    `git add .`
-   `git commit -m 'RELEASE 0.9.9-beta.4'`
+   `git commit -m 'RELEASE 0.9.9-beta.5'`
    `git push --set-upstream origin HEAD`
 
 4. Open PR request
@@ -29,13 +29,13 @@ The full process for cutting a release is as follows:
    `git checkout main`
 
 5. Delete `main` branch (Optional):
-   `git branch -d 0.9.9-beta.4`
+   `git branch -d 0.9.9-beta.5`
 
 5. Make a new Git tag that matches the new version (make sure it is associated with the right commit SHA): FIXUP
-   `git tag -a 0.9.9-beta.4 -m "cut 0.9.9-beta.4"`
+   `git tag -a 0.9.9-beta.5 -m "cut 0.9.9-beta.5"`
 
 7. Push up the tag from `main`:
-   `git push origin 0.9.9-beta.4`
+   `git push origin 0.9.9-beta.5`
 
 
 ## Packaging & Releasing
@@ -50,8 +50,8 @@ Build Repo
 
 ```
 dist/
-  xumm-sdk-py-dangell-0.9.9-beta.4-py3-none-any.whl
-  xumm-sdk-py-dangell-0.9.9-beta.4.tar.gz
+  xumm-sdk-py-dangell-0.9.9-beta.5-py3-none-any.whl
+  xumm-sdk-py-dangell-0.9.9-beta.5.tar.gz
 ```
 
 Install Twine

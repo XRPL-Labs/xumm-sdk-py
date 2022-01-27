@@ -80,4 +80,4 @@ class TestCuratedAssetResponse(BaseTestConfig):
             CuratedAssetsResponse(**dict)
             cls.fail("CuratedAssetsResponse: raised Exception unexpectedly!")
         except Exception as e:
-            cls.assertEqual(str(e), "Invalid value for `name`, must be a `<class 'str'>`")
+            cls.assertEqual(str(e), "Invalid value: 1 for `name`, must be a `<class 'str'>` found: <class 'int'>")
