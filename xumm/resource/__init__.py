@@ -9,6 +9,9 @@ import six
 
 from xumm import client
 
+# import logging
+# logging.basicConfig(level=logging.ERROR)
+
 
 class BaseResource(object):
 
@@ -60,8 +63,13 @@ class BaseResource(object):
             # Error if value is not instance of attribute type
             if not isinstance(value, is_type):
                 raise ValueError(
-                    "Invalid value for `{}`, "
-                    "must be a `{}`".format(attr, is_type)
+                    "Invalid value: {} for `{}`, "
+                    "must be a `{}` found: {}".format(
+                        value,
+                        attr,
+                        is_type,
+                        type(value)
+                    )
                 )
 
             # Error if attribute is required and value is
@@ -85,7 +93,6 @@ class BaseResource(object):
     def to_dict(cls) -> Dict[str, object]:
         """Returns the model properties as a dict"""
         result = {}
-        print(cls.__class__)
 
         for attr, _ in six.iteritems(cls.attribute_map):
             value = getattr(cls, attr)
@@ -105,6 +112,7 @@ class BaseResource(object):
                 ))
             else:
                 result[attr] = value
+
         if issubclass(cls.__class__, dict):
             for key, value in cls.items():
                 result[key] = value
@@ -127,7 +135,7 @@ class BaseResource(object):
 
         :rtype: str
         """
-        return pprint.pformat(self.to_dict())
+        return pprint.pformat(self.__class__)
 
     def __repr__(self) -> str:
         """For `print` and `pprint`"""
@@ -135,6 +143,13 @@ class BaseResource(object):
 
     def __eq__(self, other) -> bool:
         """Returns true if both objects are equal"""
+
+        if type(other) != type(self):
+            return False
+
+        if isinstance(self, list):
+            return self == other
+
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other) -> bool:

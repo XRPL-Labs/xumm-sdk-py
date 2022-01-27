@@ -246,6 +246,10 @@ class Quota(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    nullable = {}
+
+    required = {}
+
     model_types = {
         'ratelimit': str
     }
@@ -285,8 +289,8 @@ class Quota(XummResource):
         :param ratelimit: The ratelimit of this Quota.
         :type ratelimit: str
         """
-        if ratelimit is None:
-            raise ValueError("Invalid value for `ratelimit`, must not be `None`")  # noqa: E501
+        # if ratelimit is None:
+        #     raise ValueError("Invalid value for `ratelimit`, must not be `None`")  # noqa: E501
 
         cls._ratelimit = ratelimit
 

@@ -36,4 +36,4 @@ class TestPongResponse(BaseTestConfig):
             PongResponse(**dict)
             cls.fail("PongResponse: raised Exception unexpectedly!")
         except Exception as e:
-            cls.assertEqual(str(e), "Invalid value for `pong`, must be a `<class 'bool'>`")
+            cls.assertEqual(str(e), "Invalid value: true for `pong`, must be a `<class 'bool'>` found: <class 'str'>")

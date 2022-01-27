@@ -72,7 +72,7 @@ class XummSdk(XummResource):
         """
 
         res = client.get(PingResource.get_url())
-        return PongResponse(**res)
+        return PongResponse(**res).auth
 
     def get_kyc_status(
         cls,

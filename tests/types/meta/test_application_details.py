@@ -33,4 +33,4 @@ class TestApplicationDetails(BaseTestConfig):
             ApplicationDetails(**dict)
             cls.fail("ApplicationDetails: raised Exception unexpectedly!")
         except Exception as e:
-            cls.assertEqual(str(e), "Invalid value for `uuidv4`, must be a `<class 'str'>`")
+            cls.assertEqual(str(e), "Invalid value: 1 for `uuidv4`, must be a `<class 'str'>` found: <class 'int'>")

@@ -52,7 +52,7 @@ class TestCommon(BaseTestConfig):
         mock_get.return_value = Mock(status_code=200)
         mock_get.return_value.json.return_value = cls.json_fixtures['ping']['pong']
 
-        cls.assertEqual(sdk.ping().to_dict(), cls.json_fixtures['ping']['pong'])
+        cls.assertEqual(sdk.ping().to_dict(), cls.json_fixtures['ping']['pong']['auth'])
 
     @patch('xumm.client.requests.get')
     def test_invalid_credentials(cls, mock_get):
