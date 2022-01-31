@@ -54,6 +54,4 @@ class TestPayloadCreate(BaseTestConfig):
             cls.sdk.payload.create(test_fixtures.invalid_payload(), True)
             cls.fail("payload_create() raised Exception unexpectedly!")
         except Exception as e:
-            cls.assertEqual(e.error['reference'], cls.json_fixtures['payload']['error']['error']['reference'])
-            cls.assertEqual(e.error['code'], cls.json_fixtures['payload']['error']['error']['code'])
-            # cls.assertEqual(e.error['message'], cls.json_fixtures['payload']['error']['error']['message'])
+            cls.assertEqual(str(e), 'Error code 602, see XUMM Dev Console, reference: a61ba59a-0304-44ae-a86e-efefegewgew4')

@@ -5,7 +5,7 @@ from setuptools import setup
 from codecs import open
 
 NAME = "xumm-sdk-py-dangell7"
-VERSION = "0.9.9-beta.5"
+VERSION = "1.0.0"
 # To install the library, run the following
 #
 # python setup.py install

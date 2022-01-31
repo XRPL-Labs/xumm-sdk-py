@@ -50,8 +50,7 @@ class TestPayloadCancel(BaseTestConfig):
             cls.sdk.payload.cancel(payloadId, True)
             cls.fail("payload_cancel() raised Exception unexpectedly!")
         except Exception as e:
-            cls.assertEqual(e.error['reference'], cls.json_fixtures['payload']['notfound']['error']['reference'])
-            cls.assertEqual(e.error['code'], cls.json_fixtures['payload']['notfound']['error']['code'])
+            cls.assertEqual(str(e), 'Error code 404, see XUMM Dev Console, reference: a61ba59a-0304-44ae-a86e-d74808bd5190')
 
     @patch('xumm.client.requests.delete')
     @patch('xumm.client.requests.post')

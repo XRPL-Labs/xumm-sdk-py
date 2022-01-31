@@ -61,6 +61,4 @@ class TestPayloadGet(BaseTestConfig):
             cls.sdk.payload.get('00000000-0000-4839-af2f-f794874a80b0', True)
             cls.fail("payload_get() raised Exception unexpectedly!")
         except Exception as e:
-            cls.assertEqual(e.error['reference'], cls.json_fixtures['payload']['notfound']['error']['reference'])
-            cls.assertEqual(e.error['code'], cls.json_fixtures['payload']['notfound']['error']['code'])
-            # cls.assertEqual(e.error['message'], cls.json_fixtures['payload']['error']['error']['message'])
+            cls.assertEqual(str(e), 'Error code 404, see XUMM Dev Console, reference: a61ba59a-0304-44ae-a86e-d74808bd5190')

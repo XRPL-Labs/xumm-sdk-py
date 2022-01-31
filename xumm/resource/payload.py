@@ -35,57 +35,36 @@ class CallbackPromise:
     data = None
 
     def in_res(cls, args):
+        # print('RES')
         cls.data = args
         return args
 
     def in_rej(cls, error):
+        # print('REJ')
         cls.error = error
         return error
 
     def __init__(cls):
         cls.resolve_fn = cls.in_res
-        cls.reject_fn = cls.in_res
+        cls.reject_fn = cls.in_rej
         cls.data = None
 
     def _resolve(cls, arg: Any):
-        cls.resolve_fn(arg)
+        if not cls.data and not cls.error:
+            cls.resolve_fn(arg)
 
     def _reject(cls, error):
-        cls.reject_fn(error)
+        if not cls.data and not cls.error:
+            cls.reject_fn(error)
 
     async def _resolved(cls):
         while not cls.data and not cls.error:
             continue
 
         if cls.error:
-            # return {'data': str(cls.error)}
             return None
 
         return cls.data
-
-# class CallbackPromise:
-
-#     resolved = None
-#     args = None
-#     kwargs = None
-
-#     def in_res(cls, *args, **kwargs):
-#         cls.args = args
-#         cls.kwargs = kwargs
-#         return cls
-
-#     def __init__(cls, *args, **kwargs):
-#         cls.resolve_fn = cls.in_res
-#         cls.data = None
-
-#     def _resolve(cls, *args, **kwargs):
-#         cls.resolve_fn(*args, **kwargs)
-
-#     async def _resolved(cls):
-#         while not cls.args or not cls.kwargs:
-#             continue
-
-#         return cls.args, cls.kwargs
 
 
 class PayloadResource(XummResource):
@@ -246,10 +225,6 @@ class PayloadResource(XummResource):
         callback_promise = CallbackPromise()
         payload_details = cls.resolve_payload(payload)
 
-        # callback_promise.promise.then(() => {
-        #     cls._conn.disconnect()
-        # })
-
         if payload_details:
 
             def on_open(connection):
@@ -290,17 +265,18 @@ class PayloadResource(XummResource):
                     'Payload {}: Subscription ended (WebSocket closed)'
                     .format(payload_details.meta.uuid)
                 )
+                callback_promise._reject('closed')
 
             cls._callback = callback
             cls._conn = WSClient(
                 log_level=logging.DEBUG if env == 'sandbox' else logging.ERROR,
-                server='ws://localhost:8765' if env == 'sandbox' else 'wss://xumm.app/sign/{}'.format(payload_details.meta.uuid),  # noqa: E501
+                server='ws://127.0.0.1:8765' if env == 'sandbox' else 'wss://xumm.app/sign/{}'.format(payload_details.meta.uuid),  # noqa: E501
                 on_response=on_message,
                 on_error=on_error,
                 on_close=on_close,
                 on_open=on_open
             )
-            cls._conn.connect()
+            cls._conn.connect(nowait=False)
 
             resp = {
                 'payload': payload_details.to_dict(),
