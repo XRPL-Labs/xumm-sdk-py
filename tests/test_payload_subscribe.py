@@ -283,3 +283,7 @@ class TestPayloadSubscribe(BaseTestConfig):
         asyncio.set_event_loop(loop)
         loop.run_until_complete(cls._test_payload_subscribe())
         loop.close()
+
+        cls._test_callback_promise_result()
+        cls._test_callback_promise_reject()
+        # cls._test_callback_promise_await()
