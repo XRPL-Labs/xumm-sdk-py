@@ -127,8 +127,9 @@ class WSClient(Thread):
         Get socket status.
         :return:
         """
-        if cls.socket.sock:
-            return cls.socket.sock.getstatus()
+        if cls.connected.is_set():
+            return 101
+        return 500
 
     def reconnect(cls) -> None:
         """

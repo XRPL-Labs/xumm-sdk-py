@@ -182,20 +182,27 @@ def handle_error_code(
     :type: Dict[str, object]
     :return: throws
     """
+
+    if 'error' not in json:
+        raise ValueError('Invalid XUMM API Error')
+
+    if 'code' not in json['error'] or 'reference' not in json['error']:
+        raise ValueError('Invalid XUMM API Error')
+    
+    err = 'Error code {}, see XUMM Dev Console, reference: {}'.format(
+        json['error']['code'],
+        json['error']['reference'],
+    )
+
     if status_code == 400:
-        err = json.get('error', 'Bad request')
         raise error.InvalidRequestError(err, status_code, headers)
     elif status_code == 401:
-        err = json.get('error', 'Not authorized')
         raise error.AuthenticationError(err, status_code, headers)
     elif status_code == 404:
-        err = json.get('error', 'Not found')
         raise error.InvalidRequestError(err, status_code, headers)
     elif status_code == 500:
-        err = json.get('error', 'Internal server error')
         raise error.APIError(err, status_code, headers)
     else:
-        err = json.get('error', 'Unknown status code ({})'.format(status_code))
         raise error.APIError(err, status_code, headers)
 
 

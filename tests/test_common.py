@@ -69,8 +69,7 @@ class TestCommon(BaseTestConfig):
            sdk.ping()
            cls.fail("ping() raised Exception unexpectedly!")
         except Exception as e:
-            cls.assertEqual(e.error['reference'], cls.json_fixtures['invalidCredentials']['error']['reference'])
-            cls.assertEqual(e.error['code'], cls.json_fixtures['invalidCredentials']['error']['code'])
+            cls.assertEqual(str(e), 'Error code 813, see XUMM Dev Console, reference: 26279bfe-c7e1-4b12-a680-26119d8f5062')
     
     @patch('xumm.client.requests.get')
     def test_fetch_curated_assets(cls, mock_get):

@@ -7,6 +7,7 @@ from tests.fixtures import xumm_api as test_fixtures
 from xumm.util import read_json
 
 import websockets
+import time
 
 json_fixtures = read_json('./tests/fixtures/xumm_api.json')
 
@@ -39,7 +40,7 @@ async def start_server(ws, path):
 
 async def main():
     print('STARTING SOCKET')
-    async with websockets.serve(start_server, "localhost", 8765):
+    async with websockets.serve(start_server, "127.0.0.1", 8765):
         print('SERVING SOCKET')
         await asyncio.Future()  # run forever
 
