@@ -184,11 +184,11 @@ def handle_error_code(
     """
 
     if 'error' not in json:
-        raise ValueError('Invalid XUMM API Error')
+        raise ValueError('Error parsing Xumm JSON response: error')
 
     if 'code' not in json['error'] or 'reference' not in json['error']:
-        raise ValueError('Invalid XUMM API Error')
-    
+        raise ValueError('Error parsing Xumm JSON response: code/reference')
+
     err = 'Error code {}, see XUMM Dev Console, reference: {}'.format(
         json['error']['code'],
         json['error']['reference'],
