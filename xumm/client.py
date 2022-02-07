@@ -5,9 +5,13 @@ from __future__ import unicode_literals
 
 import requests
 import textwrap
-from typing import List, Dict, Any  # noqa: F401
+
+from socket import gethostname
+
 from requests.exceptions import ConnectionError
 from requests import Response
+
+from typing import List, Dict, Any  # noqa: F401
 
 from xumm import (
     api_base,
@@ -64,7 +68,8 @@ def get_headers() -> Dict[str, object]:
         'X-API-Key': api_key,
         'X-API-Secret': api_secret,
         'content-type': 'application/json',
-        'accept': 'application/json'
+        'accept': 'application/json',
+        'user-agent': "xumm-sdk/python ({}) python-requests".format(gethostname(), )
     }
 
 
