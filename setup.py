@@ -24,11 +24,18 @@ setup(
     packages=['xumm'],
     include_package_data=True,
     install_requires=[
-        "requests == 2.27.1",
-        "websocket-client == 1.2.3",
-        "six == 1.16.0",
-        "python-dotenv == 0.19.2"
+        "requests==2.27.1",
+        "websocket-client==1.2.3",
+        "six==1.16.0",
+        "python-dotenv==0.19.2"
     ],
+    extras_require={
+        'develop': [
+            'pytest==6.2.5',
+            'websockets==9.1',
+            'flake==8-4.0.1'
+        ]
+    },
     test_suite='pytest',
     tests_require=['pytest'],
     classifiers=[
