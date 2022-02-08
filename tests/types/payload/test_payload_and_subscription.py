@@ -1,6 +1,6 @@
-import os
-import json
 import time
+import pytest
+
 from testing_config import BaseTestConfig
 
 from xumm.ws_client import WSClient
@@ -57,8 +57,7 @@ class TestPayloadAndSubscription(BaseTestConfig):
             'resolved': resolved_callback,
             'websocket': websocket_conn,
         }
-        try:
+        
+        with pytest.raises(TypeError, match=r'argument after \*\* must be a mapping, not NoneType'):
             PayloadAndSubscription(**dict)
             cls.fail("PayloadAndSubscription: raised Exception unexpectedly!")
-        except Exception as e:
-            cls.assertEqual(str(e), "xumm.resource.types.xumm_api.XummPostPayloadResponse() argument after ** must be a mapping, not NoneType")

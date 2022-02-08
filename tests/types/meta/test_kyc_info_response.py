@@ -1,5 +1,4 @@
-import os
-import json
+import pytest
 from testing_config import BaseTestConfig
 
 from xumm.resource.types import (
@@ -21,8 +20,7 @@ class TestKycInfoResponse(BaseTestConfig):
             "account": 1,  # FAILS
             "kycApproved": True
         }
-        try:
+
+        with pytest.raises(ValueError, match=r"Invalid value: 1 for `account`, must be a `<class 'str'>` found: <class 'int'>"):
             KycInfoResponse(**dict)
             cls.fail("KycInfoResponse: raised Exception unexpectedly!")
-        except Exception as e:
-            cls.assertEqual(str(e), "Invalid value: 1 for `account`, must be a `<class 'str'>` found: <class 'int'>")

@@ -69,7 +69,7 @@ def get_headers() -> Dict[str, object]:
         'X-API-Secret': api_secret,
         'content-type': 'application/json',
         'accept': 'application/json',
-        'user-agent': "xumm-sdk/python ({}) python-requests".format(gethostname(), )
+        'user-agent': "xumm-sdk/python ({}) requests".format(gethostname(),)
     }
 
 
@@ -204,7 +204,9 @@ def handle_error_code(
     # soft error
     elif isinstance(json['error'], dict):
         if 'code' not in json['error'] or 'reference' not in json['error']:
-            raise ValueError('Error parsing Xumm JSON response: code/reference')
+            raise ValueError(
+                    'Error parsing Xumm JSON response: code/reference'
+                )
 
         err = 'Error code {}, see XUMM Dev Console, reference: {}'.format(
             json['error']['code'],
@@ -213,7 +215,6 @@ def handle_error_code(
     # this should neven happen
     else:
         err = 'Unexpected error'
-    
 
     if status_code == 400:
         raise error.InvalidRequestError(err, status_code, headers)

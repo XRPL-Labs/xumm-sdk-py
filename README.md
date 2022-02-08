@@ -79,8 +79,7 @@ Instead of providing a `txjson` transaction, a transaction formatted as HEX blob
 
 ```python
 sdk.payload.get(
-  payload: Union[str, CreatedPayload],
-  return_errors: bool = False
+  payload: Union[str, CreatedPayload]
 ): -> XummPayload
 ```
 
@@ -103,8 +102,6 @@ You can `get()` a payload by:
   payload = sdk.payload.get(created)
   ```
 
-If a payload can't be fetched (eg. doesn't exist), `None` will be returned, unless a second param (boolean) is provided to get the SDK to throw an Error in case a payload can't be retrieved:
-
 ```python
 sdk.payload.get('aaaaaaaa-bbbb-cccc-dddd-1234567890ab', True)
 ```
@@ -113,8 +110,7 @@ sdk.payload.get('aaaaaaaa-bbbb-cccc-dddd-1234567890ab', True)
 
 ```python
 sdk.payload.create (
-payload: create_payload,
-return_errors: bool = False
+payload: create_payload
 ): -> Union[CreatedPayload, None]
 ```
 
@@ -147,8 +143,7 @@ Alternatively user routing / instruction flows can be custom built using the QR 
 
 ```python
 sdk.payload.cancel(
-  payload: Union[str, XummPayload, CreatedPayload],
-  return_errors: bool = False
+  payload: Union[str, XummPayload, CreatedPayload]
 ): -> Union[DeletedPayload, None]
 ```
 
@@ -240,14 +235,14 @@ Your XUMM APP storage is stored at the XUMM API backend, meaning it persists unt
 This data is private, and accessible only with your own API credentials. This private JSON data can be used to store credentials / config / bootstrap info / ... for your headless application (eg. POS device).
 
 ```python
-storage_set = await sdk.storage.set({name: 'Wietse', age: 32, male: True})
+storage_set = await sdk.storage.set({'name': 'Wietse', 'age': 32, 'male': True})
 print(storage_set)
 # True
 ```
 
 ```python
 storage_get = sdk.storage.get()
-print(storage_get)
+print(storage_get.data)
 # { 'name': 'Wietse', 'age': 32, 'male': True }
 ```
 
@@ -259,7 +254,7 @@ print(storage_delete)
 
 ```python
 storage_get_after_delete = sdk.storage.get()
-print(storage_get_after_delete)
+print(storage_get_after_delete.data)
 # None
 ```
 
@@ -346,11 +341,11 @@ Returns: [`<XrplTransaction>`](https://github.com/XRPL-Labs/xumm-sdk-py/blob/mai
 
 ## Development
 
-### Run
+### Install requirments
 
-Build, run, show debug output & watch `dist/samples/dev.py`, compiled from `samples/dev.py` using `python3`. The `samples/dev.py` file is **not included by default**.
-
-[Here's a sample `samples/dev.py` file](https://github.com/XRPL-Labs/xumm-sdk-py/blob/main/samples/dev.py).
+```bash
+pip install -e ".[develop]"
+```
 
 ### Build
 
@@ -376,4 +371,14 @@ DEBUG=xumm-sdk* python3 main.py
 
 ### Lint & test
 
-Lint the code using `python3 -m flake8 --output-file=./logs/linter.txt --exclude="./samples/, ./build/, ./dist/, ./tests/"`, run tests (pytest) using `python3 test.py tests/`
+Lint the code using:
+
+```bash
+python3 -m flake8
+```
+
+For running test:
+
+```bash
+python3 test.py tests/
+```

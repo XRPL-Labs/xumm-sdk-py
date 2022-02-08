@@ -17,13 +17,11 @@ def main():
 
     try:
         os.remove(os.path.join(basedir, '.coverage'))
-
     except OSError:
         pass
 
     try:
         shutil.rmtree(os.path.join(basedir, '.cache'))
-
     except OSError:
         pass
 

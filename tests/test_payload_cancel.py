@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
 
+import pytest
+
 from testing_config import BaseTestConfig
 from tests.fixtures import xumm_api as test_fixtures
 from unittest.mock import Mock, patch
@@ -28,17 +30,6 @@ class TestPayloadCancel(BaseTestConfig):
         cls.assertEqual(cls.sdk.payload.cancel(payloadId).to_dict(), cls.json_fixtures['payload']['cancelled'])
 
     @patch('xumm.client.requests.delete')
-    def test_payload_not_found_null(cls, mock_delete):
-        print('should return numm if payload not found')
-        payloadId = '00000000-0000-4839-af2f-f794874a80b0'
-
-        mock_delete.return_value = Mock(status_code=404)
-        mock_delete.return_value.json.return_value = cls.json_fixtures['payload']['notfound']
-
-        response = cls.sdk.payload.cancel(payloadId)
-        cls.assertEqual(response, None)
-
-    @patch('xumm.client.requests.delete')
     def test_payload_not_found_errors(cls, mock_delete):
         print('should throw if payload not found with `returnErrors`')
         payloadId = '00000000-0000-4839-af2f-f794874a80b0'
@@ -46,11 +37,9 @@ class TestPayloadCancel(BaseTestConfig):
         mock_delete.return_value = Mock(status_code=404)
         mock_delete.return_value.json.return_value = cls.json_fixtures['payload']['notfound']
 
-        try:
-            cls.sdk.payload.cancel(payloadId, True)
+        with pytest.raises(xumm.error.InvalidRequestError, match=r"Error code 404, see XUMM Dev Console, reference: a61ba59a-0304-44ae-a86e-d74808bd5190"):
+            cls.sdk.payload.cancel(payloadId)
             cls.fail("payload_cancel() raised Exception unexpectedly!")
-        except Exception as e:
-            cls.assertEqual(str(e), 'Error code 404, see XUMM Dev Console, reference: a61ba59a-0304-44ae-a86e-d74808bd5190')
 
     @patch('xumm.client.requests.delete')
     @patch('xumm.client.requests.post')

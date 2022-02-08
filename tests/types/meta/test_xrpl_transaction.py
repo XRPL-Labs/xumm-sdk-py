@@ -1,5 +1,4 @@
-import os
-import json
+import pytest
 from testing_config import BaseTestConfig
 
 from xumm.resource.types import (
@@ -53,8 +52,7 @@ class TestXrplTransactionResponse(BaseTestConfig):
                 "validated": True
             }
         }
-        try:
+
+        with pytest.raises(ValueError, match=r"Invalid value: 1 for `txid`, must be a `<class 'str'>` found: <class 'int'>"):
             XrplTransaction(**dict)
             cls.fail("XrplTransaction: raised Exception unexpectedly!")
-        except Exception as e:
-            cls.assertEqual(str(e), "Invalid value: 1 for `txid`, must be a `<class 'str'>` found: <class 'int'>")

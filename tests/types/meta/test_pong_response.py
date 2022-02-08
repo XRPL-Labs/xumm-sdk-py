@@ -1,5 +1,4 @@
-import os
-import json
+import pytest
 from testing_config import BaseTestConfig
 
 from xumm.resource.types import (
@@ -32,8 +31,7 @@ class TestPongResponse(BaseTestConfig):
                 }
             }
         }
-        try:
+
+        with pytest.raises(ValueError, match=r"Invalid value: true for `pong`, must be a `<class 'bool'>` found: <class 'str'>"):
             PongResponse(**dict)
             cls.fail("PongResponse: raised Exception unexpectedly!")
-        except Exception as e:
-            cls.assertEqual(str(e), "Invalid value: true for `pong`, must be a `<class 'bool'>` found: <class 'str'>")

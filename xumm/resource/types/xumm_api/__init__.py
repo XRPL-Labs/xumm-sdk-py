@@ -1,11 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# Type definitions for non-npm package xumm-sdk 0.1
-# Project: https://xumm.app
-# Definitions by: Wietse Wind <https://github.com/WietseWind>
-# Definitions: https://github.com/XRPL-Labs/XUMM-SDK
-
 from xumm.resource import XummResource
 from typing import Union, Dict
 
@@ -45,17 +40,11 @@ xrpl_tx_types = [
   'SetFee'
 ]
 
-# export type XummTransactionType = typeof XummTxTypes[number]
-# export type XrplTransactionType = typeof XrplTxTypes[number]
 
 # XummTransactionType: str = xumm_tx_types[int]
 # XrplTransactionType: str = xrpl_tx_types[int]
 XummTransactionType: str = None
 XrplTransactionType: str = None
-
-# export interface XummJsonTransaction extends Record<string, unknown> {
-#   TransactionType: XummTransactionType | XrplTransactionType
-# }
 
 
 class XummJsonTransaction(XummResource):
@@ -187,28 +176,6 @@ class XummCustomMeta(XummResource):
         """
 
         cls._instruction = instruction
-
-
-# export interface XummPayloadMeta {
-#   exists: boolean
-#   uuid: string
-#   multisign: boolean
-#   submit: boolean
-#   destination: string
-#   resolved_destination: string
-#   resolved: boolean
-#   signed: boolean
-#   cancelled: boolean
-#   expired: boolean
-#   pushed: boolean
-#   app_opened: boolean
-#   opened_by_deeplink: boolean | null
-#   immutable?: boolean
-#   forceAccount?: boolean
-#   return_url_app: string | null
-#   return_url_web: string | null
-#   is_xapp: boolean
-# }
 
 
 class XummPayloadMeta(XummResource):
@@ -993,10 +960,6 @@ class XummPayloadBodyBase(XummResource):
 
     #     self._txblob = txblob
 
-# export interface XummPostPayloadBodyJson extends XummPayloadBodyBase {
-#   txjson: XummJsonTransaction
-# }
-
 
 class XummPostPayloadBodyJson(XummPayloadBodyBase):
     def __init__(cls, txjson: XummJsonTransaction = None):
@@ -1197,42 +1160,6 @@ class XummPostPayloadResponse(XummResource):
             raise ValueError("Invalid value for `pushed`, must not be `None`")  # noqa: E501
 
         cls._pushed = pushed
-
-# export interface XummGetPayloadResponse {
-#   meta: XummPayloadMeta
-#   application: {
-#     name: string
-#     description: string
-#     disabled: 0 | 1
-#     uuidv4: string
-#     icon_url: string
-#     issued_user_token: string | null
-#   }
-#   payload: {
-#     tx_type: XummTransactionType | XrplTransactionType
-#     tx_destination: string
-#     tx_destination_tag: number | null
-#     request_json: XummJsonTransaction
-#     origintype: string | null
-#     signmethod: string | null
-#     created_at: string
-#     expires_at: string
-#     expires_in_seconds: number
-#     computed?: Record<string, unknown>
-#   }
-#   response: {
-#     hex: string | null
-#     txid: string | null
-#     resolved_at: string | null
-#     dispatched_nodetype: string | null
-#     dispatched_to: string | null
-#     dispatched_result: string | null
-#     multisign_account: string | null
-#     account: string | null
-#     approved_with?: XummTransactionApprovalType
-#   }
-#   custom_meta: XummCustomMeta
-# }
 
 
 class XummGetPayloadResponse(XummResource):
@@ -1513,46 +1440,3 @@ class XummDeletePayloadResponse(XummResource):
             raise ValueError("Invalid value for `custom_meta`, must not be `None`")  # noqa: E501
 
         cls._custom_meta = custom_meta
-
-# export interface XummWebhookBody {
-#   meta: {
-#     url: string
-#     application_uuidv4: string
-#     payload_uuidv4: string
-#   }
-#   custom_meta: XummCustomMeta
-#   payloadResponse: {
-#     payload_uuidv4: string
-#     reference_call_uuidv4: string
-#     signed: boolean
-#     user_token: boolean
-#     return_url: {
-#       app: string | null
-#       web: string | null
-#     }
-#   }
-#   userToken: {
-#     user_token: string
-#     token_issued: number
-#     token_expiration: number
-#   } | null
-# }
-
-# export interface XummWebsocketBody {
-#   payload_uuidv4: string
-#   reference_call_uuidv4: string
-#   signed: boolean
-#   user_token: boolean
-#   return_url: {
-#     app: string | null
-#     web: string | null
-#   }
-#   custom_meta: XummCustomMeta
-# }
-
-# export interface XummApiError {
-#   error: {
-#     reference: string
-#     code: number
-#   }
-# }

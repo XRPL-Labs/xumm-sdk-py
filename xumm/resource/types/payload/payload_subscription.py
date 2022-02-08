@@ -7,13 +7,6 @@ from typing import Callable, Any
 from xumm.ws_client import WSClient
 from ..xumm_api import XummGetPayloadResponse as XummPayload
 
-# export interface PayloadSubscription {
-#   payload: XummPayload,
-#   resolved: Promise<unknown> | undefined
-#   resolve: (resolveData?: unknown) => void
-#   websocket: WebSocket
-# }
-
 
 class PayloadSubscription(XummResource):
     """
