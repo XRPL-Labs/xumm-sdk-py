@@ -33,7 +33,7 @@ setup(
         'develop': [
             'pytest==6.2.5',
             'websockets==9.1',
-            'flake==8-4.0.1'
+            'flake8==4.0.1'
         ]
     },
     test_suite='pytest',
