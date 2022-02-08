@@ -85,7 +85,4 @@ class StorageGetResponse(XummResource):
         :param data: The data of this StorageGetResponse.
         :type data: Dict[str, object]
         """
-        if data is None:
-            raise ValueError("Invalid value for `data`, must not be `None`")  # noqa: E501
-
         self._data = data
