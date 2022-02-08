@@ -103,7 +103,7 @@ You can `get()` a payload by:
   ```
 
 ```python
-sdk.payload.get('aaaaaaaa-bbbb-cccc-dddd-1234567890ab', True)
+sdk.payload.get('aaaaaaaa-bbbb-cccc-dddd-1234567890ab')
 ```
 
 ##### sdk.payload.create
@@ -377,7 +377,7 @@ Lint the code using:
 python3 -m flake8
 ```
 
-For running test:
+For running tests:
 
 ```bash
 python3 test.py tests/
