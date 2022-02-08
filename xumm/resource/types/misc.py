@@ -613,7 +613,7 @@ class Payload(XummResource):
     model_types = {
         'tx_type': str,
         'tx_destination': str,
-        'tx_destination_tag': str,
+        'tx_destination_tag': int,
         'request_json': dict,
         'origintype': str,
         'signmethod': str,
