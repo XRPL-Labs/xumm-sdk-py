@@ -14,4 +14,4 @@ class CuratedAssetsResource(XummResource):
         :return: The GET url of this KycStatusResource.
         :rtype: str
         """
-        return super(CuratedAssetsResource, cls).platform_url() + 'curated_assets' + '/'  # noqa: E501
+        return super(CuratedAssetsResource, cls).platform_url() + 'curated-assets'  # noqa: E501

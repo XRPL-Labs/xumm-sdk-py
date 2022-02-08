@@ -26,4 +26,4 @@ class KycStatusResource(XummResource):
         :return: The POST url of this KycStatusResource.
         :rtype: str
         """
-        return super(KycStatusResource, cls).platform_url() + 'kyc-status/'
+        return super(KycStatusResource, cls).platform_url() + 'kyc-status'
