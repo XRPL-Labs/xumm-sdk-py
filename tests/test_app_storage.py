@@ -6,7 +6,6 @@ from unittest.mock import Mock, patch
 
 import xumm
 
-
 class TestAppStorage(BaseTestConfig):
 
     @classmethod

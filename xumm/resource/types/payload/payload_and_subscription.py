@@ -10,10 +10,6 @@ from ..xumm_api import (
     XummPostPayloadResponse as CreatedPayload,
 )
 
-# export interface PayloadAndSubscription extends PayloadSubscription {
-#   created: CreatedPayload
-# }
-
 
 class PayloadAndSubscription(XummResource):
     """

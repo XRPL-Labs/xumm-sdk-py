@@ -1,5 +1,4 @@
-import os
-import json
+import pytest
 from testing_config import BaseTestConfig
 
 from xumm.resource.types import (
@@ -26,8 +25,7 @@ class TestKycStatusResponse(BaseTestConfig):
                 "SUCCESSFUL": "KYC flow has been started and was SUCCESSFUL :)"
             }
         }
-        try:
+
+        with pytest.raises(ValueError, match=r"Invalid value for `kyc_status` \(TEMP\), must be one of \['NONE', 'IN_PROGRESS', 'REJECTED', 'SUCCESSFUL']"):
             KycStatusResponse(**dict)
             cls.fail("KycStatusResponse: raised Exception unexpectedly!")
-        except Exception as e:
-            cls.assertEqual(str(e), "Invalid value for `kyc_status` (TEMP), must be one of ['NONE', 'IN_PROGRESS', 'REJECTED', 'SUCCESSFUL']")

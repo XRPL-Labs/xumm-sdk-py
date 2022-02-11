@@ -1,5 +1,4 @@
-import os
-import json
+import pytest
 from testing_config import BaseTestConfig
 
 from xumm.resource.types import (
@@ -33,8 +32,7 @@ class TestSubscriptionCallbackParams(BaseTestConfig):
             'payload': cls.json_fixtures['payload']['get'],
             'resolve': resolve_callback,
         }
-        try:
+
+        with pytest.raises(ValueError, match=r'Invalid value for `data`, must not be `None`'):
             SubscriptionCallbackParams(**dict)
             cls.fail("SubscriptionCallbackParams: raised Exception unexpectedly!")
-        except Exception as e:
-            cls.assertEqual(str(e), "Invalid value for `data`, must not be `None`")

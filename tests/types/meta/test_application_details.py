@@ -1,5 +1,5 @@
-import os
-import json
+import pytest
+
 from testing_config import BaseTestConfig
 
 from xumm.resource.types import (
@@ -29,8 +29,7 @@ class TestApplicationDetails(BaseTestConfig):
                 "uuidv4": "2904b05f-5b37-4f3e-a624-940ad817943c"
             }
         }
-        try:
+
+        with pytest.raises(ValueError, match=r"Invalid value: 1 for `uuidv4`, must be a `<class 'str'>` found: <class 'int'>"):
             ApplicationDetails(**dict)
             cls.fail("ApplicationDetails: raised Exception unexpectedly!")
-        except Exception as e:
-            cls.assertEqual(str(e), "Invalid value: 1 for `uuidv4`, must be a `<class 'str'>` found: <class 'int'>")

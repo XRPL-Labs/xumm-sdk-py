@@ -14,7 +14,7 @@ The full process for cutting a release is as follows:
    `bumpversion --current-version 1.0.0 minor setup.py xumm/__init__.py`
 
 2. Change the version in the setup.py file:
-  `VERSION = "1.0.0"`
+   `VERSION = "1.0.0"`
 
 3. Add, and commit the changes, push up the branch, and open a PR:
    `git add .`
@@ -25,18 +25,17 @@ The full process for cutting a release is as follows:
 
    ``
 
-4. Once the PR is merged, checkout the `main` branch:
+5. Once the PR is merged, checkout the `main` branch:
    `git checkout main`
 
-5. Delete `main` branch (Optional):
+6. Delete `main` branch (Optional):
    `git branch -d 1.0.0`
 
-5. Make a new Git tag that matches the new version (make sure it is associated with the right commit SHA): FIXUP
+7. Make a new Git tag that matches the new version (make sure it is associated with the right commit SHA): FIXUP
    `git tag -a 1.0.0 -m "cut 1.0.0"`
 
-7. Push up the tag from `main`:
+8. Push up the tag from `main`:
    `git push origin 1.0.0`
-
 
 ## Packaging & Releasing
 
@@ -50,8 +49,8 @@ Build Repo
 
 ```
 dist/
-  xumm-sdk-py-dangell-1.0.0-py3-none-any.whl
-  xumm-sdk-py-dangell-1.0.0.tar.gz
+  xumm-sdk-py-1.0.0-py3-none-any.whl
+  xumm-sdk-py-1.0.0.tar.gz
 ```
 
 Install Twine
@@ -69,7 +68,6 @@ Config .pypirc
 Check Distribution
 
 `twine check dist/*`
-
 
 Push on Staging
 

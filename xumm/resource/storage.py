@@ -23,7 +23,7 @@ class StorageResource(XummResource):
         :return: The POST url of this StorageResource.
         :rtype: str
         """
-        return super(StorageResource, cls).platform_url() + 'storage' + '/'
+        return super(StorageResource, cls).platform_url() + 'app-storage'
 
     @classmethod
     def get_url(cls) -> str:
@@ -33,7 +33,7 @@ class StorageResource(XummResource):
         :return: The GET url of this StorageResource.
         :rtype: str
         """
-        return super(StorageResource, cls).platform_url() + 'storage' + '/'
+        return super(StorageResource, cls).platform_url() + 'app-storage'
 
     @classmethod
     def delete_url(cls) -> str:
@@ -43,7 +43,7 @@ class StorageResource(XummResource):
         :return: The DELETE url of this StorageResource.
         :rtype: str
         """
-        return super(StorageResource, cls).platform_url() + 'storage' + '/'
+        return super(StorageResource, cls).platform_url() + 'app-storage'
 
     def refresh_from(cls, **kwargs) -> 'StorageResource':
         return cls

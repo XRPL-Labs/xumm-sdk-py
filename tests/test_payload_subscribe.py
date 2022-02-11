@@ -1,24 +1,27 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-from multiprocessing.sharedctypes import Value
 import sys
 import time
 import json
+import asyncio
+import websockets
+
+from multiprocessing.sharedctypes import Value
+from threading import Thread, main_thread
+
 from testing_config import BaseTestConfig, AsyncioTestCase
 from tests.fixtures import (
     xumm_api as test_fixtures,
 )
 from unittest.mock import Mock, patch
-from xumm.ws_client import WSClient
+
 
 import xumm
-import asyncio
-import websockets
-
-from threading import Thread, main_thread
+from xumm.ws_client import WSClient
 from xumm.error import APIError
 from xumm.resource.payload import CallbackPromise
+
 
 COUNT = 0
 

@@ -1,44 +1,50 @@
 #!/usr/bin/env python
 # coding: utf-8
+import logging
+import asyncio
 
-import binascii
+import xumm
 
-payload = {
-  'custom_meta': {
-    'instruction': 'Hey! Please sign for:\n\nThis\nand\nthat 🍻',
-    'blob': {
-      'myOwnProp': 'Whereever',
-      'clientCountry': 'Estonia',
-      'clientAge': 34
-    },
-    'identifier': 'MY_OWN_UNIQUE_INTERNAL_ID_123'
-  },
-  'options': {
-    'submit': True,
-    'multisign': False,
-    'expire': 500,
-    'return_url': {
-      'app': 'https://dangell.com/xrpl?payload={}'.format(id),
-      'web': 'https://dangell.com/xrpl?payload={}'.format(id)
-    }
-  },
-  'user_token': '7ccc19cf-970a-4185-8bd3-49d507bf24ae',
-  # 'txblob': '1200002400000003614000000002FAF0806840000000000000C8732' +
-  #   '...' +
-  #   '5727D0B4057696574736557696E64E1F1',
-  'txjson': {
-    'TransactionType' : 'Payment',
-    'Destination' : 'rdAngelle2wMz3SBnAG8hkMsCgvGy9LWbZ1',
-    'Amount': '1000000',
-    'LastLedgerSequence': 20,
-    'Fee': '1337',
-    'Memos': [
-      {
-        'Memo': {
-          'MemoData': binascii.hexlify('Sample XUMM payload'.encode('utf8')).decode('utf-8').upper(),
-          'MemoFormat': binascii.hexlify('some/memo'.encode('utf8')).decode('utf-8').upper(),
-        }
-      }
-    ]
-  }
-})
+from fixtures import sample_payload
+
+class PayloadExample:
+    def __init__(self):
+        logging.debug('')
+        self.sdk = xumm.XummSdk('API_KEY', 'API_SECRET')
+        self.logger = logging.getLogger(self.__module__)
+        self.logger.setLevel(level=logging.DEBUG)
+
+    def subscription_callback(self, event):
+        self.logger.info('Subscription Event data: {}'.format(event['data']))
+        if 'expired' in event['data'] or 'signed' in event['data']:
+            # payload is reolved reuturn the data
+            return event['data']
+            
+
+    async def run(self):
+        # create the payload by passing the details and get payload UUID
+        try: 
+            create_payload_resp = self.sdk.payload.create(sample_payload)
+            self.logger.info("Payload created with id: %s" % create_payload_resp.uuid)            
+        except Exception as e:
+            self.logger.error("Unable to create the payload: %s" % e)
+            return
+
+        # start the websocket subscription on this payload and listen for changes
+        subscription = await self.sdk.payload.subscribe(create_payload_resp.uuid, self.subscription_callback)
+        # wait for the payload to resolve
+        resolve_data = await subscription.resolved()
+        # now we can cancel the subscription
+        self.sdk.payload.unsubscribe()
+
+        # fetch the payload from backend
+        get_payload_resp = self.sdk.payload.get(create_payload_resp.uuid)
+        self.logger.info("Payload resolved: %s" % get_payload_resp.meta.resolved)            
+
+
+if __name__ == "__main__":
+    example = PayloadExample()
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(example.run())
+

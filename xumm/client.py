@@ -5,9 +5,13 @@ from __future__ import unicode_literals
 
 import requests
 import textwrap
-from typing import List, Dict, Any  # noqa: F401
+
+from socket import gethostname
+
 from requests.exceptions import ConnectionError
 from requests import Response
+
+from typing import List, Dict, Any  # noqa: F401
 
 from xumm import (
     api_base,
@@ -64,7 +68,8 @@ def get_headers() -> Dict[str, object]:
         'X-API-Key': api_key,
         'X-API-Secret': api_secret,
         'content-type': 'application/json',
-        'accept': 'application/json'
+        'accept': 'application/json',
+        'user-agent': "xumm-sdk/python ({}) requests".format(gethostname(),)
     }
 
 
@@ -183,16 +188,33 @@ def handle_error_code(
     :return: throws
     """
 
+    # invalid response from api
     if 'error' not in json:
         raise ValueError('Error parsing Xumm JSON response: error')
 
-    if 'code' not in json['error'] or 'reference' not in json['error']:
-        raise ValueError('Error parsing Xumm JSON response: code/reference')
+    # hard error
+    if isinstance(json['error'], bool):
+        if 'code' not in json or 'message' not in json:
+            raise ValueError('Error parsing Xumm JSON response: code/message')
 
-    err = 'Error code {}, see XUMM Dev Console, reference: {}'.format(
-        json['error']['code'],
-        json['error']['reference'],
-    )
+        err = 'Error code {}, message: {}'.format(
+            json['code'],
+            json['message'],
+        )
+    # soft error
+    elif isinstance(json['error'], dict):
+        if 'code' not in json['error'] or 'reference' not in json['error']:
+            raise ValueError(
+                    'Error parsing Xumm JSON response: code/reference'
+                )
+
+        err = 'Error code {}, see XUMM Dev Console, reference: {}'.format(
+            json['error']['code'],
+            json['error']['reference'],
+        )
+    # this should neven happen
+    else:
+        err = 'Unexpected error'
 
     if status_code == 400:
         raise error.InvalidRequestError(err, status_code, headers)

@@ -1,17 +1,10 @@
 # coding: utf-8
-
 import os
 from setuptools import setup
 from codecs import open
 
-NAME = "xumm-sdk-py-dangell7"
+NAME = "xumm-sdk-py"
 VERSION = "1.0.0"
-# To install the library, run the following
-#
-# python setup.py install
-#
-# prerequisite: setuptools
-# http://pypi.python.org/pypi/setuptools
 
 # Get the long description from the README.md file
 base_dir = os.path.abspath(os.path.dirname(__file__))
@@ -31,11 +24,18 @@ setup(
     packages=['xumm'],
     include_package_data=True,
     install_requires=[
-        "requests >= 2.27.1",
-        "websocket-client >= 1.2.3",
-        "six >= 1.16.0",
-        "python-dotenv >= 0.19.2"
+        "requests==2.27.1",
+        "websocket-client==1.2.3",
+        "six==1.16.0",
+        "python-dotenv==0.19.2"
     ],
+    extras_require={
+        'develop': [
+            'pytest==6.2.5',
+            'websockets==9.1',
+            'flake8==4.0.1'
+        ]
+    },
     test_suite='pytest',
     tests_require=['pytest'],
     classifiers=[

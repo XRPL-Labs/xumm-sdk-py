@@ -6,13 +6,6 @@ from typing import Dict, Callable, Any
 
 from ..xumm_api import XummGetPayloadResponse as XummPayload
 
-# export interface SubscriptionCallbackParams {
-#   uuid: string
-#   data: AnyJson
-#   resolve: (resolveData?: unknown) => void,
-#   payload: XummPayload
-# }
-
 
 class SubscriptionCallbackParams(XummResource):
     """

@@ -7,13 +7,13 @@ from xumm.resource import XummResource
 class XrplTxResource(XummResource):
 
     @classmethod
-    def get_url(cls, id: str = None) -> str:
+    def get_url(cls, tx_hash: str) -> str:
         """
         Gets the GET url of this XrplTxResource
 
-        :param id: A string id.
+        :param tx_hash: A string contain transaction hash.
         :type: str
         :return: The GET url of this XrplTxResource.
         :rtype: str
         """
-        return super(XrplTxResource, cls).platform_url() + 'xrpl_tx' + '/' + id  # noqa: E501
+        return super(XrplTxResource, cls).platform_url() + 'xrpl-tx' + '/' + tx_hash  # noqa: E501

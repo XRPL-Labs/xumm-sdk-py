@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
-
+import pytest
 from testing_config import BaseTestConfig
 from unittest.mock import Mock, patch
 from dotenv import dotenv_values
@@ -65,11 +65,9 @@ class TestCommon(BaseTestConfig):
         mock_get.return_value = Mock(status_code=403)
         mock_get.return_value.json.return_value = cls.json_fixtures['invalidCredentials']
 
-        try:
-           sdk.ping()
-           cls.fail("ping() raised Exception unexpectedly!")
-        except Exception as e:
-            cls.assertEqual(str(e), 'Error code 813, see XUMM Dev Console, reference: 26279bfe-c7e1-4b12-a680-26119d8f5062')
+        with pytest.raises(xumm.error.APIError, match=r"Error code 813, see XUMM Dev Console, reference: 26279bfe-c7e1-4b12-a680-26119d8f5062"):
+            sdk.ping()
+            cls.fail("ping() raised Exception unexpectedly!")
     
     @patch('xumm.client.requests.get')
     def test_fetch_curated_assets(cls, mock_get):

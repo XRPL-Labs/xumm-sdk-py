@@ -141,7 +141,6 @@ class PayloadResource(XummResource):
             XummPostPayloadBodyBlob,
             XummJsonTransaction
         ],
-        return_errors: bool = False
     ) -> XummPostPayloadResponse:
         """Returns the dict as a model
 
@@ -150,21 +149,12 @@ class PayloadResource(XummResource):
             XummPostPayloadBodyJson |
             XummPostPayloadBodyBlob |
             XummJsonTransaction
-        :param return_errors: The return_errors of this payload_create.
-        :type return_errors: bool
 
         :return: The XummPostPayloadResponse of this XummPostPayloadResponse.  # noqa: E501
         :rtype: XummPostPayloadResponse
         """
         direct_tx = 'TransactionType' in payload and 'txjson' not in payload
         clone_payload = {'txjson': payload} if direct_tx else payload
-
-        if not return_errors:
-            try:
-                res = client.post(cls.post_url(), clone_payload)
-                return XummPostPayloadResponse(**res)
-            except:  # noqa: E722
-                return None
 
         res = client.post(cls.post_url(), clone_payload)
         return XummPostPayloadResponse(**res)
@@ -173,19 +163,12 @@ class PayloadResource(XummResource):
     def cancel(
         cls,
         id: str = None,
-        return_errors: bool = False
     ) -> XummDeletePayloadResponse:
         """Returns the dict as a model
 
         :return: The XummDeletePayloadResponse of this XummDeletePayloadResponse.  # noqa: E501
         :rtype: XummDeletePayloadResponse
         """
-        if not return_errors:
-            try:
-                res = client.delete(cls.delete_url(id))
-                return XummDeletePayloadResponse(**res)
-            except:  # noqa: E722
-                return None
 
         res = client.delete(cls.delete_url(id))
         return XummDeletePayloadResponse(**res)
@@ -194,20 +177,12 @@ class PayloadResource(XummResource):
     def get(
         cls,
         id: str = None,
-        return_errors: bool = False
     ) -> XummGetPayloadResponse:
         """Returns the dict as a model
 
         :return: The XummGetPayloadResponse of this XummGetPayloadResponse.  # noqa: E501
         :rtype: XummGetPayloadResponse
         """
-        if not return_errors:
-            try:
-                res = client.get(cls.get_url(id))
-                return XummGetPayloadResponse(**res)
-            except:  # noqa: E722
-                return None
-
         res = client.get(cls.get_url(id))
         return XummGetPayloadResponse(**res)
 

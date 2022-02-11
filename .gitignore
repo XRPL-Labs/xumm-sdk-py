@@ -16,8 +16,19 @@ venv
 # Production #
 /build
 /dist
-/xumm_sdk_py_dangell7.egg-info
 /xumm_sdk_py.egg-info
 .env
 .pypirc
 README.html
+
+# virtualenv
+.Python
+[Bb]in
+[Ii]nclude
+[Ll]ib
+[Ll]ib64
+[Ll]ocal
+[Ss]cripts
+pyvenv.cfg
+.venv
+pip-selfcheck.json
