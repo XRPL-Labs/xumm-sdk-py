@@ -1,6 +1,6 @@
 # coding: utf-8
 import os
-from setuptools import setup
+from setuptools import setup, find_packages
 from codecs import open
 
 NAME = "xumm-sdk-py"
@@ -21,7 +21,7 @@ setup(
     author='XRPL-Labs',
     author_email='support@xrpl-labs.com',
     url='https://github.com/XRPL-Labs/xumm-sdk-py',
-    packages=['xumm'],
+    packages=find_packages(include=('xumm*',)),
     include_package_data=True,
     install_requires=[
         "requests==2.27.1",
