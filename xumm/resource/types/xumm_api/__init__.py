@@ -1515,6 +1515,7 @@ class WebhookResponse(XummResource):
         'signed': True,
         'user_token': True,
         'return_url': True,
+        'txid': True,
     }
 
     model_types = {
@@ -1523,6 +1524,7 @@ class WebhookResponse(XummResource):
         'signed': bool,
         'user_token': str,
         'return_url': dict,
+        'txid': str,
     }
 
     attribute_map = {
@@ -1531,6 +1533,7 @@ class WebhookResponse(XummResource):
         'signed': 'signed',
         'user_token': 'user_token',
         'return_url': 'return_url',
+        'txid': 'txid',
     }
 
     def refresh_from(cls, **kwargs):
@@ -1552,6 +1555,7 @@ class WebhookResponse(XummResource):
         cls.signed = kwargs['signed']
         cls.user_token = kwargs['user_token']
         cls.return_url = ReturnUrl(**kwargs['return_url'])
+        cls.txid = kwargs['txid']
         return cls
 
     @property
@@ -1646,7 +1650,7 @@ class WebhookResponse(XummResource):
 
 
         :return: The return_url of this WebhookResponse.
-        :rtype: str
+        :rtype: ReturnUrl
         """
         return cls._return_url
 
@@ -1656,10 +1660,31 @@ class WebhookResponse(XummResource):
 
 
         :param return_url: The return_url of this WebhookResponse.
-        :type return_url: str
+        :type return_url: ReturnUrl
         """
 
         cls._return_url = return_url
+
+    @property
+    def txid(cls) -> str:
+        """Gets the txid of this WebhookResponse.
+
+
+        :return: The txid of this WebhookResponse.
+        :rtype: str
+        """
+        return cls._txid
+
+    @txid.setter
+    def txid(cls, txid: str):
+        """Sets the dispatched_to of this WebhookResponse.
+
+
+        :param txid: The txid of this WebhookResponse.
+        :type txid: str
+        """
+
+        cls._txid = txid
 
 
 class UserToken(XummResource):
