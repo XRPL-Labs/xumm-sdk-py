@@ -1522,7 +1522,7 @@ class WebhookResponse(XummResource):
         'payload_uuidv4': str,
         'reference_call_uuidv4': str,
         'signed': bool,
-        'user_token': str,
+        'user_token': bool,
         'return_url': dict,
         'txid': str,
     }
@@ -1600,7 +1600,7 @@ class WebhookResponse(XummResource):
         :type reference_call_uuidv4: str
         """
 
-        cls._txid = reference_call_uuidv4
+        cls._reference_call_uuidv4 = reference_call_uuidv4
 
     @property
     def signed(cls) -> bool:
@@ -1624,22 +1624,22 @@ class WebhookResponse(XummResource):
         cls._signed = signed
 
     @property
-    def user_token(cls) -> str:
+    def user_token(cls) -> bool:
         """Gets the user_token of this WebhookResponse.
 
 
         :return: The user_token of this WebhookResponse.
-        :rtype: str
+        :rtype: bool
         """
         return cls._user_token
 
     @user_token.setter
-    def user_token(cls, user_token: str):
+    def user_token(cls, user_token: bool):
         """Sets the dispatched_to of this WebhookResponse.
 
 
         :param user_token: The user_token of this WebhookResponse.
-        :type user_token: str
+        :type user_token: bool
         """
 
         cls._user_token = user_token
@@ -1683,6 +1683,9 @@ class WebhookResponse(XummResource):
         :param txid: The txid of this WebhookResponse.
         :type txid: str
         """
+
+        if txid is None:
+            raise ValueError("Invalid value for `txid`, must not be `None`")  # noqa: E501
 
         cls._txid = txid
 
@@ -1728,6 +1731,7 @@ class UserToken(XummResource):
         cls.user_token = kwargs['user_token']
         cls.token_issued = kwargs['token_issued']
         cls.token_expiration = kwargs['token_expiration']
+        return cls
 
     @property
     def user_token(cls) -> str:
@@ -1760,7 +1764,7 @@ class UserToken(XummResource):
         :return: The token_issued of this UserToken.
         :rtype: int
         """
-        return cls._user_token
+        return cls._token_issued
 
     @token_issued.setter
     def token_issued(cls, token_issued: int):
@@ -1807,6 +1811,10 @@ class XummWebhookBody(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    nullable = {
+        'user_token': True
+    }
+
     required = {
         'meta': True,
         'custom_meta': True,
@@ -1825,7 +1833,7 @@ class XummWebhookBody(XummResource):
         'meta': 'meta',
         'custom_meta': 'custom_meta',
         'payload_response': 'payloadResponse',
-        'user_token': 'user_token'
+        'user_token': 'userToken'
     }
 
     def refresh_from(cls, **kwargs):
@@ -1844,7 +1852,10 @@ class XummWebhookBody(XummResource):
         cls.meta = WebhookMeta(**kwargs['meta'])
         cls.custom_meta = XummCustomMeta(**kwargs['custom_meta'])
         cls.payload_response = WebhookResponse(**kwargs['payloadResponse'])
-        cls.user_token = UserToken(**kwargs['user_token'])
+        if 'userToken' in kwargs:
+            cls.user_token = UserToken(**kwargs['userToken'])
+
+        return cls
 
     @property
     def meta(cls) -> WebhookMeta:
@@ -1931,7 +1942,7 @@ class XummWebhookBody(XummResource):
         :param user_token: The user_token of this XummWebhookBody.
         :type user_token: UserToken
         """
-        if user_token is None:
-            raise ValueError("Invalid value for `user_token`, must not be `None`")  # noqa: E501
+        # if user_token is None:
+        #     raise ValueError("Invalid value for `user_token`, must not be `None`")  # noqa: E501
 
         cls._user_token = user_token
