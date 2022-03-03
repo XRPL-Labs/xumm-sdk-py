@@ -310,5 +310,35 @@
         "isoDecimals": 2
       }
     }
+  },
+  "webhook": {
+    "meta": {
+      "url": "https://webhook.site/00000000-0000-4e34-8112-c4391247a8ee",
+      "application_uuidv4": "00000000-1111-2222-af2f-f794874a80b0",
+      "payload_uuidv4": "00000000-0000-4839-af2f-f794874a80b0"
+    },
+    "custom_meta": {
+      "identifier": null,
+      "blob": {
+        "location": "Amersfoort"
+      },
+      "instruction": null
+    },
+    "payloadResponse": {
+      "payload_uuidv4": "00000000-0000-4839-af2f-f794874a80b0",
+      "reference_call_uuidv4": "19dd8a5b-e167-49a1-8f21-50f0254c55ef",
+      "signed": true,
+      "user_token": true,
+      "return_url": {
+        "app": "https://xumm.dev/beta/test?payloadId=00000000-0000-4839-af2f-f794874a80b0&customIdent=&txid=&hex=",
+        "web": "https://xumm.dev/beta/test?payloadId=00000000-0000-4839-af2f-f794874a80b0&customIdent=&txid=&hex="
+      },
+      "txid": "A17E4DEAD62BF705D9B73B4EAD2832F1C55C6C5A0067327A45E497FD8D31C0E3"
+    },
+    "userToken": {
+      "user_token": "00000001-1111-2222-af2f-f794874a80b0",
+      "token_issued": 0,
+      "token_expiration": 3600
+    }
   }
 }

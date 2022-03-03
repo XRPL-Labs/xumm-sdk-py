@@ -5,6 +5,7 @@ from xumm.resource import XummResource
 from typing import Union, Dict
 
 from ..misc import (
+    ReturnUrl,
     Options,
     Application,
     Payload,
@@ -808,28 +809,18 @@ class XummPayloadBodyBase(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    required = {
-        # 'user_token': True,
-        # 'options': True,
-        # 'txjson': True,
-        # 'custom_meta': True,
-        # 'txblob': True
-    }
+    required = {}
 
     model_types = {
         'user_token': str,
         'options': dict,
-        # 'txjson': 'TxJson',
         'custom_meta': dict,
-        # 'txblob': 'str'
     }
 
     attribute_map = {
         'user_token': 'user_token',
         'options': 'options',
-        # 'txjson': 'txjson',
         'custom_meta': 'custom_meta',
-        # 'txblob': 'txblob'
     }
 
     def refresh_from(cls, **kwargs):
@@ -843,19 +834,13 @@ class XummPayloadBodyBase(XummResource):
         cls.sanity_check(kwargs)
         cls._user_token = None
         cls._options = None
-        # cls._txjson = None
         cls._custom_meta = None
-        # cls._txblob = None
         if 'user_token' in kwargs:
             cls.user_token = kwargs['_user_token']
         if 'options' in kwargs:
             cls.options = kwargs['options']
-        # if 'txjson' in kwargs:
-        #     cls._txjson = kwargs['txjson']
         if 'custom_meta' in kwargs:
             cls.custom_meta = kwargs['custom_meta']
-        # if 'txblob' in kwargs:
-        #     cls._txblob = kwargs['txblob']
 
     @property
     def user_token(self) -> str:
@@ -899,27 +884,6 @@ class XummPayloadBodyBase(XummResource):
 
         self._options = options
 
-    # @property
-    # def txjson(self) -> TxJson:
-    #     """Gets the txjson of this XummPayloadBodyBase.
-
-    #     :return: The txjson of this XummPayloadBodyBase.
-    #     :rtype: TxJson
-    #     """
-    #     return self._txjson
-
-    # @txjson.setter
-    # def txjson(self, txjson: TxJson):
-    #     """Sets the txjson of this XummPayloadBodyBase.
-
-    #     :param txjson: The txjson of this XummPayloadBodyBase.
-    #     :type txjson: TxJson
-    #     """
-    #     if txjson is None:
-    #         raise ValueError("Invalid value for `txjson`, must not be `None`")  # noqa: E501
-
-    #     self._txjson = txjson
-
     @property
     def custom_meta(self) -> XummCustomMeta:
         """Gets the custom_meta of this XummPayloadBodyBase.
@@ -940,25 +904,6 @@ class XummPayloadBodyBase(XummResource):
         """
 
         self._custom_meta = custom_meta
-
-    # @property
-    # def txblob(self) -> str:
-    #     """Gets the txblob of this XummPayloadBodyBase.
-
-    #     :return: The txblob of this XummPayloadBodyBase.
-    #     :rtype: str
-    #     """
-    #     return self._txblob
-
-    # @txblob.setter
-    # def txblob(self, txblob: str):
-    #     """Sets the txblob of this XummPayloadBodyBase.
-
-    #     :param txblob: The txblob of this XummPayloadBodyBase.
-    #     :type txblob: str
-    #     """
-
-    #     self._txblob = txblob
 
 
 class XummPostPayloadBodyJson(XummPayloadBodyBase):
@@ -1440,3 +1385,564 @@ class XummDeletePayloadResponse(XummResource):
             raise ValueError("Invalid value for `custom_meta`, must not be `None`")  # noqa: E501
 
         cls._custom_meta = custom_meta
+
+
+class WebhookMeta(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
+    required = {
+        'url': True,
+        'application_uuidv4': True,
+        'payload_uuidv4': True
+    }
+
+    model_types = {
+        'url': str,
+        'application_uuidv4': str,
+        'payload_uuidv4': str
+    }
+
+    attribute_map = {
+        'url': 'url',
+        'application_uuidv4': 'application_uuidv4',
+        'payload_uuidv4': 'payload_uuidv4'
+    }
+
+    def refresh_from(cls, **kwargs):
+        """Returns the dict as a model
+
+        :param kwargs: A dict.
+        :type: dict
+        :return: The WebhookMeta of this WebhookMeta.  # noqa: E501
+        :rtype: WebhookMeta
+        """
+        cls.sanity_check(kwargs)
+        cls._url = None
+        cls._application_uuidv4 = None
+        cls._payload_uuidv4 = None
+        cls.url = kwargs['url']
+        cls.application_uuidv4 = kwargs['application_uuidv4']
+        cls.payload_uuidv4 = kwargs['payload_uuidv4']
+
+    @property
+    def url(cls) -> str:
+        """Gets the url of this WebhookMeta.
+
+
+        :return: The url of this WebhookMeta.
+        :rtype: str
+        """
+        return cls._url
+
+    @url.setter
+    def url(cls, url: str):
+        """Sets the url of this WebhookMeta.
+
+
+        :param url: The url of this WebhookMeta.
+        :type url: str
+        """
+        if url is None:
+            raise ValueError("Invalid value for `url`, must not be `None`")  # noqa: E501
+
+        cls._url = url
+
+    @property
+    def application_uuidv4(cls) -> str:
+        """Gets the application_uuidv4 of this WebhookMeta.
+
+
+        :return: The application_uuidv4 of this WebhookMeta.
+        :rtype: str
+        """
+        return cls._application_uuidv4
+
+    @application_uuidv4.setter
+    def application_uuidv4(cls, application_uuidv4: str):
+        """Sets the application_uuidv4 of this WebhookMeta.
+
+
+        :param application_uuidv4: The application_uuidv4 of this WebhookMeta.
+        :type application_uuidv4: str
+        """
+        if application_uuidv4 is None:
+            raise ValueError("Invalid value for `application_uuidv4`, must not be `None`")  # noqa: E501
+
+        cls._application_uuidv4 = application_uuidv4
+
+    @property
+    def payload_uuidv4(cls) -> str:
+        """Gets the payload_uuidv4 of this WebhookMeta.
+
+
+        :return: The payload_uuidv4 of this WebhookMeta.
+        :rtype: str
+        """
+        return cls._payload_uuidv4
+
+    @payload_uuidv4.setter
+    def payload_uuidv4(cls, payload_uuidv4: str):
+        """Sets the payload_uuidv4 of this WebhookMeta.
+
+
+        :param payload_uuidv4: The payload_uuidv4 of this WebhookMeta.
+        :type payload_uuidv4: str
+        """
+        if payload_uuidv4 is None:
+            raise ValueError("Invalid value for `payload_uuidv4`, must not be `None`")  # noqa: E501
+
+        cls._payload_uuidv4 = payload_uuidv4
+
+
+class WebhookResponse(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
+    nullable = {}
+
+    required = {
+        'payload_uuidv4': True,
+        'reference_call_uuidv4': True,
+        'signed': True,
+        'user_token': True,
+        'return_url': True,
+        'txid': True,
+    }
+
+    model_types = {
+        'payload_uuidv4': str,
+        'reference_call_uuidv4': str,
+        'signed': bool,
+        'user_token': bool,
+        'return_url': dict,
+        'txid': str,
+    }
+
+    attribute_map = {
+        'payload_uuidv4': 'payload_uuidv4',
+        'reference_call_uuidv4': 'reference_call_uuidv4',
+        'signed': 'signed',
+        'user_token': 'user_token',
+        'return_url': 'return_url',
+        'txid': 'txid',
+    }
+
+    def refresh_from(cls, **kwargs):
+        """Returns the dict as a model
+
+        :param kwargs: A dict.
+        :type: dict
+        :return: The WebhookResponse of this WebhookResponse.  # noqa: E501
+        :rtype: WebhookResponse
+        """
+        cls.sanity_check(kwargs)
+        cls._payload_uuidv4 = None
+        cls._reference_call_uuidv4 = None
+        cls._signed = None
+        cls._user_token = None
+        cls._return_url = None
+        cls.payload_uuidv4 = kwargs['payload_uuidv4']
+        cls.reference_call_uuidv4 = kwargs['reference_call_uuidv4']
+        cls.signed = kwargs['signed']
+        cls.user_token = kwargs['user_token']
+        cls.return_url = ReturnUrl(**kwargs['return_url'])
+        cls.txid = kwargs['txid']
+        return cls
+
+    @property
+    def payload_uuidv4(cls) -> str:
+        """Gets the payload_uuidv4 of this WebhookResponse.
+
+
+        :return: The payload_uuidv4 of this WebhookResponse.
+        :rtype: str
+        """
+        return cls._payload_uuidv4
+
+    @payload_uuidv4.setter
+    def payload_uuidv4(cls, payload_uuidv4: str):
+        """Sets the payload_uuidv4 of this WebhookResponse.
+
+
+        :param payload_uuidv4: The payload_uuidv4 of this WebhookResponse.
+        :type payload_uuidv4: str
+        """
+        # if payload_uuidv4 is None:
+        #     raise ValueError("Invalid value for `payload_uuidv4`, must not be `None`")  # noqa: E501
+
+        cls._payload_uuidv4 = payload_uuidv4
+
+    @property
+    def reference_call_uuidv4(cls) -> str:
+        """Gets the reference_call_uuidv4 of this WebhookResponse.
+
+
+        :return: The reference_call_uuidv4 of this WebhookResponse.
+        :rtype: str
+        """
+        return cls._reference_call_uuidv4
+
+    @reference_call_uuidv4.setter
+    def reference_call_uuidv4(cls, reference_call_uuidv4: str):
+        """Sets the reference_call_uuidv4 of this WebhookResponse.
+
+
+        :param reference_call_uuidv4: The reference_call_uuidv4 of this WebhookResponse.  # noqa: E501
+        :type reference_call_uuidv4: str
+        """
+
+        cls._reference_call_uuidv4 = reference_call_uuidv4
+
+    @property
+    def signed(cls) -> bool:
+        """Gets the signed of this WebhookResponse.
+
+
+        :return: The signed of this WebhookResponse.
+        :rtype: bool
+        """
+        return cls._signed
+
+    @signed.setter
+    def signed(cls, signed: bool):
+        """Sets the signed of this WebhookResponse.
+
+
+        :param signed: The signed of this WebhookResponse.
+        :type signed: bool
+        """
+
+        cls._signed = signed
+
+    @property
+    def user_token(cls) -> bool:
+        """Gets the user_token of this WebhookResponse.
+
+
+        :return: The user_token of this WebhookResponse.
+        :rtype: bool
+        """
+        return cls._user_token
+
+    @user_token.setter
+    def user_token(cls, user_token: bool):
+        """Sets the dispatched_to of this WebhookResponse.
+
+
+        :param user_token: The user_token of this WebhookResponse.
+        :type user_token: bool
+        """
+
+        cls._user_token = user_token
+
+    @property
+    def return_url(cls) -> ReturnUrl:
+        """Gets the return_url of this WebhookResponse.
+
+
+        :return: The return_url of this WebhookResponse.
+        :rtype: ReturnUrl
+        """
+        return cls._return_url
+
+    @return_url.setter
+    def return_url(cls, return_url: ReturnUrl):
+        """Sets the dispatched_to of this WebhookResponse.
+
+
+        :param return_url: The return_url of this WebhookResponse.
+        :type return_url: ReturnUrl
+        """
+
+        cls._return_url = return_url
+
+    @property
+    def txid(cls) -> str:
+        """Gets the txid of this WebhookResponse.
+
+
+        :return: The txid of this WebhookResponse.
+        :rtype: str
+        """
+        return cls._txid
+
+    @txid.setter
+    def txid(cls, txid: str):
+        """Sets the dispatched_to of this WebhookResponse.
+
+
+        :param txid: The txid of this WebhookResponse.
+        :type txid: str
+        """
+
+        if txid is None:
+            raise ValueError("Invalid value for `txid`, must not be `None`")  # noqa: E501
+
+        cls._txid = txid
+
+
+class UserToken(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
+    required = {
+        'user_token': True,
+        'token_issued': True,
+        'token_expiration': True
+    }
+
+    model_types = {
+        'user_token': str,
+        'token_issued': int,
+        'token_expiration': int
+    }
+
+    attribute_map = {
+        'user_token': 'user_token',
+        'token_issued': 'token_issued',
+        'token_expiration': 'token_expiration'
+    }
+
+    def refresh_from(cls, **kwargs):
+        """Returns the dict as a model
+
+        :param kwargs: A dict.
+        :type: dict
+        :return: The UserToken of this UserToken.  # noqa: E501
+        :rtype: UserToken
+        """
+        cls.sanity_check(kwargs)
+        cls._user_token = None
+        cls._token_issued = None
+        cls._token_expiration = None
+        cls.user_token = kwargs['user_token']
+        cls.token_issued = kwargs['token_issued']
+        cls.token_expiration = kwargs['token_expiration']
+        return cls
+
+    @property
+    def user_token(cls) -> str:
+        """Gets the user_token of this UserToken.
+
+
+        :return: The user_token of this UserToken.
+        :rtype: str
+        """
+        return cls._user_token
+
+    @user_token.setter
+    def user_token(cls, user_token: str):
+        """Sets the user_token of this UserToken.
+
+
+        :param user_token: The user_token of this UserToken.
+        :type user_token: str
+        """
+        if user_token is None:
+            raise ValueError("Invalid value for `user_token`, must not be `None`")  # noqa: E501
+
+        cls._user_token = user_token
+
+    @property
+    def token_issued(cls) -> int:
+        """Gets the token_issued of this UserToken.
+
+
+        :return: The token_issued of this UserToken.
+        :rtype: int
+        """
+        return cls._token_issued
+
+    @token_issued.setter
+    def token_issued(cls, token_issued: int):
+        """Sets the token_issued of this UserToken.
+
+
+        :param token_issued: The token_issued of this UserToken.
+        :type token_issued: int
+        """
+        if token_issued is None:
+            raise ValueError("Invalid value for `token_issued`, must not be `None`")  # noqa: E501
+
+        cls._token_issued = token_issued
+
+    @property
+    def token_expiration(cls) -> int:
+        """Gets the token_expiration of this UserToken.
+
+
+        :return: The token_expiration of this UserToken.
+        :rtype: int
+        """
+        return cls._token_expiration
+
+    @token_expiration.setter
+    def token_expiration(cls, token_expiration: int):
+        """Sets the token_expiration of this UserToken.
+
+
+        :param token_expiration: The token_expiration of this UserToken.
+        :type token_expiration: int
+        """
+        if token_expiration is None:
+            raise ValueError("Invalid value for `token_expiration`, must not be `None`")  # noqa: E501
+
+        cls._token_expiration = token_expiration
+
+
+class XummWebhookBody(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
+    nullable = {
+        'user_token': True
+    }
+
+    required = {
+        'meta': True,
+        'custom_meta': True,
+        'payload_response': True,
+        'user_token': True
+    }
+
+    model_types = {
+        'meta': dict,
+        'custom_meta': dict,
+        'payload_response': dict,
+        'user_token': dict
+    }
+
+    attribute_map = {
+        'meta': 'meta',
+        'custom_meta': 'custom_meta',
+        'payload_response': 'payloadResponse',
+        'user_token': 'userToken'
+    }
+
+    def refresh_from(cls, **kwargs):
+        """Returns the dict as a model
+
+        :param kwargs: A dict.
+        :type: dict
+        :return: The XummWebhookBody of this XummWebhookBody.  # noqa: E501
+        :rtype: XummWebhookBody
+        """
+        cls.sanity_check(kwargs)
+        cls._meta = None
+        cls._custom_meta = None
+        cls._payload_response = None
+        cls._user_token = None
+        cls.meta = WebhookMeta(**kwargs['meta'])
+        cls.custom_meta = XummCustomMeta(**kwargs['custom_meta'])
+        cls.payload_response = WebhookResponse(**kwargs['payloadResponse'])
+        if 'userToken' in kwargs:
+            cls.user_token = UserToken(**kwargs['userToken'])
+
+        return cls
+
+    @property
+    def meta(cls) -> WebhookMeta:
+        """Gets the meta of this XummWebhookBody.
+
+
+        :return: The meta of this XummWebhookBody.
+        :rtype: WebhookMeta
+        """
+        return cls._meta
+
+    @meta.setter
+    def meta(cls, meta: WebhookMeta):
+        """Sets the meta of this XummWebhookBody.
+
+
+        :param meta: The meta of this XummWebhookBody.
+        :type meta: WebhookMeta
+        """
+        if meta is None:
+            raise ValueError("Invalid value for `meta`, must not be `None`")  # noqa: E501
+
+        cls._meta = meta
+
+    @property
+    def custom_meta(cls) -> XummCustomMeta:
+        """Gets the custom_meta of this XummWebhookBody.
+
+
+        :return: The custom_meta of this XummWebhookBody.
+        :rtype: XummCustomMeta
+        """
+        return cls._custom_meta
+
+    @custom_meta.setter
+    def custom_meta(cls, custom_meta: XummCustomMeta):
+        """Sets the custom_meta of this XummWebhookBody.
+
+
+        :param custom_meta: The custom_meta of this XummWebhookBody.
+        :type custom_meta: XummCustomMeta
+        """
+        if custom_meta is None:
+            raise ValueError("Invalid value for `custom_meta`, must not be `None`")  # noqa: E501
+
+        cls._custom_meta = custom_meta
+
+    @property
+    def payload_response(cls) -> WebhookResponse:
+        """Gets the payload_response of this XummWebhookBody.
+
+
+        :return: The payload_response of this XummWebhookBody.
+        :rtype: WebhookResponse
+        """
+        return cls._payload_response
+
+    @payload_response.setter
+    def payload_response(cls, payload_response: WebhookResponse):
+        """Sets the payload_response of this XummWebhookBody.
+
+
+        :param payload_response: The payload_response of this XummWebhookBody.
+        :type payload_response: WebhookResponse
+        """
+
+        cls._payload_response = payload_response
+
+    @property
+    def user_token(cls) -> UserToken:
+        """Gets the user_token of this XummWebhookBody.
+
+
+        :return: The user_token of this XummWebhookBody.
+        :rtype: UserToken
+        """
+        return cls._user_token
+
+    @user_token.setter
+    def user_token(cls, user_token: UserToken):
+        """Sets the user_token of this XummWebhookBody.
+
+
+        :param user_token: The user_token of this XummWebhookBody.
+        :type user_token: UserToken
+        """
+        # if user_token is None:
+        #     raise ValueError("Invalid value for `user_token`, must not be `None`")  # noqa: E501
+
+        cls._user_token = user_token
