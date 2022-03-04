@@ -32,5 +32,6 @@ from .storage.storage_set_response import StorageSetResponse  # noqa: F401
 from .xumm_api import (  # noqa: F401
     XummPostPayloadResponse as CreatedPayload,
     XummDeletePayloadResponse as DeletedPayload,
-    XummGetPayloadResponse as XummPayload
+    XummGetPayloadResponse as XummPayload,
+    XummWebhookBody
 )
