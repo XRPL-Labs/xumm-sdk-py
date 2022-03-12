@@ -20,25 +20,30 @@ xumm_tx_types = [
 ]
 
 xrpl_tx_types = [
-  'Payment',
-  'OfferCreate',
-  'OfferCancel',
-  'EscrowFinish',
-  'EscrowCreate',
-  'EscrowCancel',
-  'DepositPreauth',
-  'CheckCreate',
-  'CheckCash',
-  'CheckCancel',
+  'AccountDelete',
   'AccountSet',
+  'CheckCancel',
+  'CheckCash',
+  'CheckCreate',
+  'DepositPreauth',
+  'EscrowCancel',
+  'EscrowCreate',
+  'EscrowFinish',
+  'NFTokenAcceptOffer',
+  'NFTokenBurn',
+  'NFTokenCancelOffer',
+  'NFTokenCreateOffer',
+  'NFTokenMint',
+  'OfferCancel',
+  'OfferCreate',
+  'Payment',
+  'PaymentChannelClaim',
   'PaymentChannelCreate',
   'PaymentChannelFund',
   'SetRegularKey',
   'SignerListSet',
-  'TrustSet',
-  'EnableAmendment',
-  'AccountDelete',
-  'SetFee'
+  'TicketCreate',
+  'TrustSet'
 ]
 
 
