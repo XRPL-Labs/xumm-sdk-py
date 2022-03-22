@@ -141,8 +141,6 @@ class TestCommon(BaseTestConfig):
             cls.json_fixtures['api']['key'],
             cls.json_fixtures['api']['secret']
         )
-        # configs = { **dotenv_values(".env") }
-        # sdk = xumm.XummSdk(configs['XUMM_APIKEY'], configs['XUMM_APISECRET'])
 
         mock_post.return_value = Mock(status_code=200)
         mock_post.return_value.json.return_value = cls.json_fixtures['userTokens']
@@ -150,7 +148,6 @@ class TestCommon(BaseTestConfig):
         user_token = cls.json_fixtures['userTokens']['tokens'][0]['user_token']
 
         cls.assertEqual([token.to_dict() for token in sdk.verify_user_tokens([user_token])], cls.json_fixtures['userTokens']['tokens'])
-        # cls.assertEqual(sdk.verify_user_tokens([user_token]), cls.json_fixtures['userTokens']['tokens'])
 
     @patch('xumm.client.requests.post')
     def test_validate_user_token(cls, mock_post):
@@ -159,8 +156,6 @@ class TestCommon(BaseTestConfig):
             cls.json_fixtures['api']['key'],
             cls.json_fixtures['api']['secret']
         )
-        # configs = { **dotenv_values(".env") }
-        # sdk = xumm.XummSdk(configs['XUMM_APIKEY'], configs['XUMM_APISECRET'])
 
         mock_post.return_value = Mock(status_code=200)
         mock_post.return_value.json.return_value = cls.json_fixtures['userTokens']
@@ -168,4 +163,3 @@ class TestCommon(BaseTestConfig):
         user_token = cls.json_fixtures['userTokens']['tokens'][0]['user_token']
 
         cls.assertEqual(sdk.verify_user_token(user_token).to_dict(), cls.json_fixtures['userTokens']['tokens'][0])
-        # cls.assertEqual(sdk.verify_user_token(user_token), cls.json_fixtures['userTokens']['tokens'][0])

@@ -134,7 +134,6 @@ class XummSdk(XummResource):
 
         res = client.post(UserTokensResource.post_url(), tokens)
         return UserTokenResponse(**res).tokens
-        # return [token.to_dict() for token in UserTokenResponse(**res).tokens] or []  # noqa: E501
 
     def verify_user_token(cls, token: str = None) -> UserTokenResponse:
         """Returns the dict as a model
