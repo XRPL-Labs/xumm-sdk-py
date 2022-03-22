@@ -133,3 +133,33 @@ class TestCommon(BaseTestConfig):
         mock_get.return_value.json.return_value = cls.json_fixtures['xrplTx']
 
         cls.assertEqual(sdk.get_transaction(cls.json_fixtures['xrplTx']['txid']).to_dict(), cls.json_fixtures['xrplTx'])
+
+    @patch('xumm.client.requests.post')
+    def test_validate_user_tokens(cls, mock_post):
+        print('should fetch user tokens')
+        sdk = xumm.XummSdk(
+            cls.json_fixtures['api']['key'],
+            cls.json_fixtures['api']['secret']
+        )
+
+        mock_post.return_value = Mock(status_code=200)
+        mock_post.return_value.json.return_value = cls.json_fixtures['userTokens']
+
+        user_token = cls.json_fixtures['userTokens']['tokens'][0]['user_token']
+
+        cls.assertEqual([token.to_dict() for token in sdk.verify_user_tokens([user_token])], cls.json_fixtures['userTokens']['tokens'])
+
+    @patch('xumm.client.requests.post')
+    def test_validate_user_token(cls, mock_post):
+        print('should fetch user token')
+        sdk = xumm.XummSdk(
+            cls.json_fixtures['api']['key'],
+            cls.json_fixtures['api']['secret']
+        )
+
+        mock_post.return_value = Mock(status_code=200)
+        mock_post.return_value.json.return_value = cls.json_fixtures['userTokens']
+
+        user_token = cls.json_fixtures['userTokens']['tokens'][0]['user_token']
+
+        cls.assertEqual(sdk.verify_user_token(user_token).to_dict(), cls.json_fixtures['userTokens']['tokens'][0])
