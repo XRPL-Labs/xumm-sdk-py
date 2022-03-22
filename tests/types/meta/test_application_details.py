@@ -6,7 +6,7 @@ from xumm.resource.types import (
     ApplicationDetails
 )
 
-class TestApplicationDetails(BaseTestConfig):
+class TestUserToken(BaseTestConfig):
 
     def test_application_details(cls):
         print('should set application details')

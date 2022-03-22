@@ -133,3 +133,16 @@ class TestCommon(BaseTestConfig):
         mock_get.return_value.json.return_value = cls.json_fixtures['xrplTx']
 
         cls.assertEqual(sdk.get_transaction(cls.json_fixtures['xrplTx']['txid']).to_dict(), cls.json_fixtures['xrplTx'])
+
+    # @patch('xumm.client.requests.post')
+    def test_create_kyc_status(cls):
+        print('should get user tokens')
+        sdk = xumm.XummSdk(
+            cls.json_fixtures['api']['key'],
+            cls.json_fixtures['api']['secret']
+        )
+
+        # mock_post.return_value = Mock(status_code=200)
+        # mock_post.return_value.json.return_value = cls.json_fixtures['userTokens']
+
+        cls.assertEqual(sdk.verify_user_tokens().to_dict(), cls.json_fixtures['userTokens'])

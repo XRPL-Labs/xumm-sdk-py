@@ -2,7 +2,7 @@
 # coding: utf-8
 
 import re
-from typing import Union
+from typing import List, Union
 import xumm
 from xumm import (
     client,
@@ -17,6 +17,7 @@ from .types import (
     CuratedAssetsResponse,
     XrplTransaction,
     RatesResponse,
+    UserTokenResponse
 )
 
 from xumm.resource.ping import PingResource
@@ -26,6 +27,7 @@ from xumm.resource.xrpl_tx import XrplTxResource
 from xumm.resource.rates import RatesResource
 from xumm.resource.payload import PayloadResource
 from xumm.resource.storage import StorageResource
+from xumm.resource.user_tokens import UserTokensResource
 
 
 class XummSdk(XummResource):
@@ -122,3 +124,23 @@ class XummSdk(XummResource):
 
         res = client.get(RatesResource.get_url(id))
         return RatesResponse(**res)
+
+    def verify_user_tokens(cls, tokens: List[str] = None) -> UserTokenResponse:
+        """Returns the dict as a model
+
+        :return: The UserTokenResponse of this UserTokenResponse.  # noqa: E501
+        :rtype: UserTokenResponse
+        """
+
+        res = client.post(UserTokensResource.post_url(), tokens)
+        return UserTokenResponse(**res)
+
+    def verify_user_token(cls, token: str = None) -> UserTokenResponse:
+        """Returns the dict as a model
+
+        :return: The UserTokenResponse of this UserTokenResponse.  # noqa: E501
+        :rtype: UserTokenResponse
+        """
+
+        token_results = cls.verify_user_tokens([token])
+        return token_results[0] if isinstance(token_results, list) and len(token_results) == 1 else None  # noqa: E501

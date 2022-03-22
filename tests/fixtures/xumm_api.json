@@ -311,6 +311,14 @@
       }
     }
   },
+  "userTokens": {
+    "tokens": [{
+      "user_token": "00000001-1111-2222-af2f-f794874a80b0",
+      "active": true,
+      "token_issued": 0,
+      "token_expiration": 3600
+    }]
+  },
   "webhook": {
     "meta": {
       "url": "https://webhook.site/00000000-0000-4e34-8112-c4391247a8ee",
