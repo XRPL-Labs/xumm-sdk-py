@@ -339,6 +339,25 @@ tx_info = sdk.get_transaction(tx_hash)
 
 Returns: [`<XrplTransaction>`](https://github.com/XRPL-Labs/xumm-sdk-py/blob/main/xumm/resource/types/meta/xrpl_transaction.py#L114).
 
+##### sdk.verify_user_tokens() / sdk.verify_user_tokens()
+
+The `verify_user_tokens` (or single token: `verify_user_token`) method allows you to verify one or more User Tokens obtained from previous sign requests. This allows you to detect if you will be able to push your next Sign Request to specific users.
+
+```python
+some_token = '691d5ae8-968b-44c8-8835-f25da1214f35'
+token_validity = sdk.verify_user_tokens([
+  some_token,
+  'b12b59a8-83c8-4bc0-8acb-1d1d743871f1',
+  '51313be2-5887-4ae8-9fda-765775a59e51'
+])
+if sdk.verify_user_token(some_token).active:
+  # Push, use `user_token` in payload
+else:
+  # QR or Redirect (deeplink) flow
+```
+
+Returns: [`<UserTokenValidity or [UserTokenValidity]>`](https://github.com/XRPL-Labs/xumm-sdk-py/blob/main/xumm/resource/types/meta/user_tokens.py#L8).
+
 ## Development
 
 ### Install requirments
