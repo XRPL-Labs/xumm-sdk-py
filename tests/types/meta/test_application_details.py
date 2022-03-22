@@ -1,4 +1,5 @@
-import pytest
+#!/usr/bin/env python
+# coding: utf-8
 
 from testing_config import BaseTestConfig
 
@@ -6,7 +7,7 @@ from xumm.resource.types import (
     ApplicationDetails
 )
 
-class TestUserToken(BaseTestConfig):
+class TestApplicationDetails(BaseTestConfig):
 
     def test_application_details(cls):
         print('should set application details')
