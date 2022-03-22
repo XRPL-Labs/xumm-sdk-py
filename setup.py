@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 from codecs import open
 
 NAME = "xumm-sdk-py"
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 
 # Get the long description from the README.md file
 base_dir = os.path.abspath(os.path.dirname(__file__))
