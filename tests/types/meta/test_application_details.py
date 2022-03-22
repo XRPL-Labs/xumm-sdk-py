@@ -1,5 +1,7 @@
-import pytest
+#!/usr/bin/env python
+# coding: utf-8
 
+import pytest
 from testing_config import BaseTestConfig
 
 from xumm.resource.types import (
