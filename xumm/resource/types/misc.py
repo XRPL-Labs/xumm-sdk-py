@@ -2,6 +2,7 @@
 # coding: utf-8
 
 from xumm.resource import XummResource
+from typing import List
 
 
 class ReturnUrl(XummResource):
@@ -94,21 +95,30 @@ class Options(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
+    nullable = {
+        'signers': True
+    }
     required = {
         'submit': True,
+        'multisign': True,
         'expire': True,
+        'signers': True,
         'return_url': True
     }
 
     model_types = {
         'submit': bool,
+        'multisign': bool,
         'expire': int,
+        'signers': list,
         'return_url': dict
     }
 
     attribute_map = {
         'submit': 'submit',
+        'multisign': 'multisign',
         'expire': 'expire',
+        'signers': 'signers',
         'return_url': 'return_url'
     }
 
@@ -121,11 +131,15 @@ class Options(XummResource):
         :rtype: Options
         """
         cls._submit = None
+        cls._multisign = None
         cls._expire = None
         cls._return_url = None
+        cls._signers = None
         cls.submit = kwargs['submit']
+        cls.multisign = kwargs['multisign']
         cls.expire = kwargs['expire']
-        cls.return_url = kwargs['return_url']
+        cls.return_url = ReturnUrl(**kwargs['return_url'])
+        cls.signers = kwargs['signers']
 
     @property
     def submit(self) -> bool:
@@ -151,6 +165,29 @@ class Options(XummResource):
         self._submit = submit
 
     @property
+    def multisign(self) -> bool:
+        """Gets the multisign of this Options.
+
+
+        :return: The multisign of this Options.
+        :rtype: bool
+        """
+        return self._multisign
+
+    @multisign.setter
+    def multisign(self, multisign: bool):
+        """Sets the multisign of this Options.
+
+
+        :param multisign: The multisign of this Options.
+        :type multisign: bool
+        """
+        if multisign is None:
+            raise ValueError("Invalid value for `multisign`, must not be `None`")  # noqa: E501
+
+        self._multisign = multisign
+
+    @property
     def expire(self) -> int:
         """Gets the expire of this Options.
 
@@ -172,6 +209,27 @@ class Options(XummResource):
             raise ValueError("Invalid value for `expire`, must not be `None`")  # noqa: E501
 
         self._expire = expire
+
+    @property
+    def signers(cls) -> List[str]:
+        """Gets the signers of this Options.
+
+
+        :return: The signers of this Options.
+        :rtype: List[str]
+        """
+        return cls._signers
+
+    @signers.setter
+    def signers(cls, signers: List[str]):
+        """Sets the signers of this Options.
+
+
+        :param signers: The signers of this Options.  # noqa: E501
+        :type signers: List[str]
+        """
+
+        cls._signers = signers
 
     @property
     def return_url(self) -> ReturnUrl:
