@@ -2,7 +2,7 @@
 # coding: utf-8
 
 from xumm.resource import XummResource
-from typing import Union, Dict
+from typing import Union, Dict, List
 
 from ..misc import (
     ReturnUrl,
@@ -194,6 +194,7 @@ class XummPayloadMeta(XummResource):
     """
     nullable = {
         'opened_by_deeplink': True,
+        'signers': True,
         'return_url_app': True,
         'return_url_web': True,
     }
@@ -211,8 +212,7 @@ class XummPayloadMeta(XummResource):
         'pushed': True,
         'app_opened': True,
         'opened_by_deeplink': True,
-        # 'immutable': True,
-        # 'force_account': True,
+        'signers': True,
         'return_url_app': True,
         'return_url_web': True,
         'is_xapp': True
@@ -232,8 +232,7 @@ class XummPayloadMeta(XummResource):
         'pushed': bool,
         'app_opened': bool,
         'opened_by_deeplink': bool,
-        'immutable': bool,
-        'force_account': bool,
+        'signers': list,
         'return_url_app': str,
         'return_url_web': str,
         'is_xapp': bool
@@ -253,8 +252,7 @@ class XummPayloadMeta(XummResource):
         'pushed': 'pushed',
         'app_opened': 'app_opened',
         'opened_by_deeplink': 'opened_by_deeplink',
-        'immutable': 'immutable',
-        'force_account': 'forceAccount',
+        'signers': 'signers',
         'return_url_app': 'return_url_app',
         'return_url_web': 'return_url_web',
         'is_xapp': 'is_xapp'
@@ -282,8 +280,7 @@ class XummPayloadMeta(XummResource):
         cls._pushed = None
         cls._app_opened = None
         cls._opened_by_deeplink = None
-        cls._immutable = None
-        cls._force_account = None
+        cls._signers = None
         cls._return_url_app = None
         cls._return_url_web = None
         cls._is_xapp = None
@@ -301,10 +298,8 @@ class XummPayloadMeta(XummResource):
         cls.app_opened = kwargs['app_opened']
         if 'opened_by_deeplink' in kwargs:
             cls.opened_by_deeplink = kwargs['opened_by_deeplink']
-        if 'immutable' in kwargs:
-            cls.immutable = kwargs['immutable']
-        if 'forceAccount' in kwargs:
-            cls.force_account = kwargs['forceAccount']
+        if 'signers' in kwargs:
+            cls.signers = kwargs['signers']
         if 'return_url_app' in kwargs:
             cls.return_url_app = kwargs['return_url_app']
         if 'return_url_web' in kwargs:
@@ -611,46 +606,25 @@ class XummPayloadMeta(XummResource):
         cls._opened_by_deeplink = opened_by_deeplink
 
     @property
-    def immutable(cls) -> bool:
-        """Gets the immutable of this XummPayloadMeta.
+    def signers(cls) -> List[str]:
+        """Gets the signers of this XummPayloadMeta.
 
 
-        :return: The immutable of this XummPayloadMeta.
-        :rtype: bool
+        :return: The signers of this XummPayloadMeta.
+        :rtype: List[str]
         """
-        return cls._immutable
+        return cls._signers
 
-    @immutable.setter
-    def immutable(cls, immutable: bool):
-        """Sets the immutable of this XummPayloadMeta.
-
-
-        :param immutable: The immutable of this XummPayloadMeta.  # noqa: E501
-        :type immutable: bool
-        """
-
-        cls._immutable = immutable
-
-    @property
-    def force_account(cls) -> bool:
-        """Gets the force_account of this XummPayloadMeta.
+    @signers.setter
+    def signers(cls, signers: List[str]):
+        """Sets the signers of this XummPayloadMeta.
 
 
-        :return: The force_account of this XummPayloadMeta.
-        :rtype: bool
-        """
-        return cls._force_account
-
-    @force_account.setter
-    def force_account(cls, force_account: bool):
-        """Sets the force_account of this XummPayloadMeta.
-
-
-        :param force_account: The force_account of this XummPayloadMeta.  # noqa: E501
-        :type force_account: bool
+        :param signers: The signers of this XummPayloadMeta.  # noqa: E501
+        :type signers: List[str]
         """
 
-        cls._force_account = force_account
+        cls._signers = signers
 
     @property
     def return_url_app(cls) -> str:
