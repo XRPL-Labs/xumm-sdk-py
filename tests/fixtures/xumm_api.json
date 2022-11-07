@@ -154,7 +154,9 @@
         "environment_nodetype": "MAINNET",
         "dispatched_nodetype": "MAINNET",
         "multisign_account": "rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY",
-        "account": "rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY"
+        "signer": "rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY",
+        "account": "rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY",
+        "user": "rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY"
       },
       "custom_meta": {
         "identifier": null,

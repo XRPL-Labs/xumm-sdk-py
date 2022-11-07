@@ -275,6 +275,8 @@ class Response(XummResource):
         'dispatched_nodetype': True,
         'multisign_account': True,
         'account': True,
+        'signer': True,
+        'user': True,
     }
 
     required = {
@@ -289,7 +291,9 @@ class Response(XummResource):
         'dispatched_nodetype': True,
         'multisign_account': True,
         'account': True,
+        'signer': True,
         # 'approved_with': True,
+        'user': True,
     }
 
     model_types = {
@@ -304,7 +308,9 @@ class Response(XummResource):
         'dispatched_nodetype': str,
         'multisign_account': str,
         'account': str,
+        'signer': str,
         'approved_with': str,
+        'user': str,
     }
 
     attribute_map = {
@@ -319,7 +325,9 @@ class Response(XummResource):
         'dispatched_nodetype': 'dispatched_nodetype',
         'multisign_account': 'multisign_account',
         'account': 'account',
+        'signer': 'signer',
         'approved_with': 'approved_with',
+        'user': 'user',
     }
 
     def refresh_from(cls, **kwargs):
@@ -342,7 +350,9 @@ class Response(XummResource):
         cls._dispatched_nodetype = None
         cls._multisign_account = None
         cls._account = None
+        cls._signer = None
         cls._approved_with = None
+        cls._user = None
         if 'hex' in kwargs:
             cls.hex = kwargs['hex']
         if 'txid' in kwargs:
@@ -365,8 +375,12 @@ class Response(XummResource):
             cls.multisign_account = kwargs['multisign_account']
         if 'account' in kwargs:
             cls.account = kwargs['account']
+        if 'signer' in kwargs:
+            cls.signer = kwargs['signer']
         if 'approved_with' in kwargs:
             cls.approved_with = kwargs['approved_with']
+        if 'user' in kwargs:
+            cls.user = kwargs['user']
         return cls
 
     @property
@@ -623,6 +637,29 @@ class Response(XummResource):
         cls._account = account
 
     @property
+    def signer(cls) -> str:
+        """Gets the signer of this Response.
+
+
+        :return: The signer of this Response.
+        :rtype: str
+        """
+        return cls._signer
+
+    @signer.setter
+    def signer(cls, signer: str):
+        """Sets the signer of this Response.
+
+
+        :param signer: The signer of this Response.
+        :type signer: str
+        """
+        # if signer is None:
+        #     raise ValueError("Invalid value for `signer`, must not be `None`")  # noqa: E501
+
+        cls._signer = signer
+
+    @property
     def approved_with(self) -> str:
         """Gets the approved_with of this Response.
 
@@ -648,6 +685,29 @@ class Response(XummResource):
             )
 
         self._approved_with = approved_with
+
+    @property
+    def user(cls) -> str:
+        """Gets the user of this Response.
+
+
+        :return: The user of this Response.
+        :rtype: str
+        """
+        return cls._user
+
+    @user.setter
+    def user(cls, user: str):
+        """Sets the user of this Response.
+
+
+        :param user: The user of this Response.
+        :type user: str
+        """
+        # if user is None:
+        #     raise ValueError("Invalid value for `user`, must not be `None`")  # noqa: E501
+
+        cls._user = user
 
 
 class RequestJson(XummResource):
