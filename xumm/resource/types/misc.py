@@ -95,19 +95,13 @@ class Options(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    nullable = {
-        'signers': True
-    }
-    required = {
-        'submit': True,
-        'multisign': True,
-        'expire': True,
-        'signers': True,
-        'return_url': True
-    }
+    nullable = {}
+
+    required = {}
 
     model_types = {
         'submit': bool,
+        'pathfinding': bool,
         'multisign': bool,
         'expire': int,
         'signers': list,
@@ -116,6 +110,7 @@ class Options(XummResource):
 
     attribute_map = {
         'submit': 'submit',
+        'pathfinding': 'pathfinding',
         'multisign': 'multisign',
         'expire': 'expire',
         'signers': 'signers',
@@ -131,15 +126,23 @@ class Options(XummResource):
         :rtype: Options
         """
         cls._submit = None
+        cls._pathfinding = None
         cls._multisign = None
         cls._expire = None
         cls._return_url = None
         cls._signers = None
-        cls.submit = kwargs['submit']
-        cls.multisign = kwargs['multisign']
-        cls.expire = kwargs['expire']
-        cls.return_url = ReturnUrl(**kwargs['return_url'])
-        cls.signers = kwargs['signers']
+        if 'submit' in kwargs:
+            cls.submit = kwargs['submit']
+        if 'pathfinding' in kwargs:
+            cls.pathfinding = kwargs['pathfinding']
+        if 'multisign' in kwargs:
+            cls.multisign = kwargs['multisign']
+        if 'expire' in kwargs:
+            cls.expire = kwargs['expire']
+        if 'return_url' in kwargs:
+            cls.return_url = ReturnUrl(**kwargs['return_url'])
+        if 'signers' in kwargs:
+            cls.signers = kwargs['signers']
 
     @property
     def submit(self) -> bool:
@@ -159,10 +162,29 @@ class Options(XummResource):
         :param submit: The submit of this Options.
         :type submit: bool
         """
-        if submit is None:
-            raise ValueError("Invalid value for `submit`, must not be `None`")  # noqa: E501
 
         self._submit = submit
+
+    @property
+    def pathfinding(self) -> bool:
+        """Gets the pathfinding of this Options.
+
+
+        :return: The pathfinding of this Options.
+        :rtype: bool
+        """
+        return self._pathfinding
+
+    @pathfinding.setter
+    def pathfinding(self, pathfinding: bool):
+        """Sets the pathfinding of this Options.
+
+
+        :param pathfinding: The pathfinding of this Options.
+        :type pathfinding: bool
+        """
+
+        self._pathfinding = pathfinding
 
     @property
     def multisign(self) -> bool:
@@ -182,8 +204,6 @@ class Options(XummResource):
         :param multisign: The multisign of this Options.
         :type multisign: bool
         """
-        if multisign is None:
-            raise ValueError("Invalid value for `multisign`, must not be `None`")  # noqa: E501
 
         self._multisign = multisign
 
@@ -205,8 +225,6 @@ class Options(XummResource):
         :param expire: The expire of this Options.
         :type expire: int
         """
-        if expire is None:
-            raise ValueError("Invalid value for `expire`, must not be `None`")  # noqa: E501
 
         self._expire = expire
 
@@ -249,8 +267,6 @@ class Options(XummResource):
         :param return_url: The return_url of this Options.
         :type return_url: ReturnUrl
         """
-        if return_url is None:
-            raise ValueError("Invalid value for `return_url`, must not be `None`")  # noqa: E501
 
         self._return_url = return_url
 
