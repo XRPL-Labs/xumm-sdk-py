@@ -269,6 +269,9 @@ class Response(XummResource):
         'resolved_at': True,
         'dispatched_to': True,
         'dispatched_result': True,
+        'dispatched_to_node': True,
+        'environment_nodeuri': True,
+        'environment_nodetype': True,
         'dispatched_nodetype': True,
         'multisign_account': True,
         'account': True,
@@ -280,6 +283,9 @@ class Response(XummResource):
         'resolved_at': True,
         'dispatched_to': True,
         'dispatched_result': True,
+        'dispatched_to_node': True,
+        'environment_nodeuri': True,
+        'environment_nodetype': True,
         'dispatched_nodetype': True,
         'multisign_account': True,
         'account': True,
@@ -292,6 +298,9 @@ class Response(XummResource):
         'resolved_at': str,
         'dispatched_to': str,
         'dispatched_result': str,
+        'dispatched_to_node': bool,
+        'environment_nodeuri': str,
+        'environment_nodetype': str,
         'dispatched_nodetype': str,
         'multisign_account': str,
         'account': str,
@@ -304,6 +313,9 @@ class Response(XummResource):
         'resolved_at': 'resolved_at',
         'dispatched_to': 'dispatched_to',
         'dispatched_result': 'dispatched_result',
+        'dispatched_to_node': 'dispatched_to_node',
+        'environment_nodeuri': 'environment_nodeuri',
+        'environment_nodetype': 'environment_nodetype',
         'dispatched_nodetype': 'dispatched_nodetype',
         'multisign_account': 'multisign_account',
         'account': 'account',
@@ -324,6 +336,9 @@ class Response(XummResource):
         cls._resolved_at = None
         cls._dispatched_to = None
         cls._dispatched_result = None
+        cls._dispatched_to_node = None
+        cls._environment_nodeuri = None
+        cls._environment_nodetype = None
         cls._dispatched_nodetype = None
         cls._multisign_account = None
         cls._account = None
@@ -338,6 +353,12 @@ class Response(XummResource):
             cls.dispatched_to = kwargs['dispatched_to']
         if 'dispatched_result' in kwargs:
             cls.dispatched_result = kwargs['dispatched_result']
+        if 'dispatched_to_node' in kwargs:
+            cls.dispatched_to_node = kwargs['dispatched_to_node']
+        if 'environment_nodeuri' in kwargs:
+            cls.environment_nodeuri = kwargs['environment_nodeuri']
+        if 'environment_nodetype' in kwargs:
+            cls.environment_nodetype = kwargs['environment_nodetype']
         if 'dispatched_nodetype' in kwargs:
             cls.dispatched_nodetype = kwargs['dispatched_nodetype']
         if 'multisign_account' in kwargs:
@@ -462,6 +483,75 @@ class Response(XummResource):
         #     raise ValueError("Invalid value for `dispatched_result`, must not be `None`")  # noqa: E501
 
         cls._dispatched_result = dispatched_result
+
+    @property
+    def dispatched_to_node(cls) -> bool:
+        """Gets the dispatched_to_node of this Response.
+
+
+        :return: The dispatched_to_node of this Response.
+        :rtype: bool
+        """
+        return cls._dispatched_to_node
+
+    @dispatched_to_node.setter
+    def dispatched_to_node(cls, dispatched_to_node: bool):
+        """Sets the dispatched_to_node of this Response.
+
+
+        :param dispatched_to_node: The dispatched_to_node of this Response.
+        :type dispatched_to_node: bool
+        """
+        # if dispatched_to_node is None:
+        #     raise ValueError("Invalid value for `dispatched_to_node`, must not be `None`")  # noqa: E501
+
+        cls._dispatched_to_node = dispatched_to_node
+
+    @property
+    def environment_nodeuri(cls) -> str:
+        """Gets the environment_nodeuri of this Response.
+
+
+        :return: The environment_nodeuri of this Response.
+        :rtype: str
+        """
+        return cls._environment_nodeuri
+
+    @environment_nodeuri.setter
+    def environment_nodeuri(cls, environment_nodeuri: str):
+        """Sets the environment_nodeuri of this Response.
+
+
+        :param environment_nodeuri: The environment_nodeuri of this Response.
+        :type environment_nodeuri: str
+        """
+        # if environment_nodeuri is None:
+        #     raise ValueError("Invalid value for `environment_nodeuri`, must not be `None`")  # noqa: E501
+
+        cls._environment_nodeuri = environment_nodeuri
+
+    @property
+    def environment_nodetype(cls) -> str:
+        """Gets the environment_nodetype of this Response.
+
+
+        :return: The environment_nodetype of this Response.
+        :rtype: str
+        """
+        return cls._environment_nodetype
+
+    @environment_nodetype.setter
+    def environment_nodetype(cls, environment_nodetype: str):
+        """Sets the environment_nodetype of this Response.
+
+
+        :param environment_nodetype: The environment_nodetype of this Response.
+        :type environment_nodetype: str
+        """
+        # if environment_nodetype is None:
+        #     raise ValueError("Invalid value for `environment_nodetype`, must not be `None`")  # noqa: E501
+
+        cls._environment_nodetype = environment_nodetype
 
     @property
     def dispatched_nodetype(cls) -> str:

@@ -149,6 +149,9 @@
         "resolved_at": "2020-05-03T17:28:40.000Z",
         "dispatched_to": "wss://xrplcluster.com",
         "dispatched_result": "tes_SUCCESS",
+        "dispatched_to_node": false,
+        "environment_nodeuri": "wss://xrplcluster.com",
+        "environment_nodetype": "MAINNET",
         "dispatched_nodetype": "MAINNET",
         "multisign_account": "rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY",
         "account": "rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY"
