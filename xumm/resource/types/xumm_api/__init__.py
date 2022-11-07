@@ -193,6 +193,7 @@ class XummPayloadMeta(XummResource):
                             and the value is json key in definition.
     """
     nullable = {
+        'pathfinding': True,
         'opened_by_deeplink': True,
         'signers': True,
         'return_url_app': True,
@@ -203,6 +204,7 @@ class XummPayloadMeta(XummResource):
         'uuid': True,
         'multisign': True,
         'submit': True,
+        'pathfinding': True,
         'destination': True,
         'resolved_destination': True,
         'resolved': True,
@@ -212,6 +214,8 @@ class XummPayloadMeta(XummResource):
         'pushed': True,
         'app_opened': True,
         'opened_by_deeplink': True,
+        # 'immutable': True,
+        # 'force_account': True,
         'signers': True,
         'return_url_app': True,
         'return_url_web': True,
@@ -223,6 +227,7 @@ class XummPayloadMeta(XummResource):
         'uuid': str,
         'multisign': bool,
         'submit': bool,
+        'pathfinding': bool,
         'destination': str,
         'resolved_destination': str,
         'resolved': bool,
@@ -232,6 +237,8 @@ class XummPayloadMeta(XummResource):
         'pushed': bool,
         'app_opened': bool,
         'opened_by_deeplink': bool,
+        'immutable': bool,
+        'force_account': bool,
         'signers': list,
         'return_url_app': str,
         'return_url_web': str,
@@ -243,6 +250,7 @@ class XummPayloadMeta(XummResource):
         'uuid': 'uuid',
         'multisign': 'multisign',
         'submit': 'submit',
+        'pathfinding': 'pathfinding',
         'destination': 'destination',
         'resolved_destination': 'resolved_destination',
         'resolved': 'resolved',
@@ -252,6 +260,8 @@ class XummPayloadMeta(XummResource):
         'pushed': 'pushed',
         'app_opened': 'app_opened',
         'opened_by_deeplink': 'opened_by_deeplink',
+        'immutable': 'immutable',
+        'force_account': 'forceAccount',
         'signers': 'signers',
         'return_url_app': 'return_url_app',
         'return_url_web': 'return_url_web',
@@ -271,6 +281,7 @@ class XummPayloadMeta(XummResource):
         cls._uuid = None
         cls._multisign = None
         cls._submit = None
+        cls._pathfinding = None
         cls._destination = None
         cls._resolved_destination = None
         cls._resolved = None
@@ -280,6 +291,8 @@ class XummPayloadMeta(XummResource):
         cls._pushed = None
         cls._app_opened = None
         cls._opened_by_deeplink = None
+        cls._immutable = None
+        cls._force_account = None
         cls._signers = None
         cls._return_url_app = None
         cls._return_url_web = None
@@ -296,8 +309,14 @@ class XummPayloadMeta(XummResource):
         cls.expired = kwargs['expired']
         cls.pushed = kwargs['pushed']
         cls.app_opened = kwargs['app_opened']
+        if 'pathfinding' in kwargs:
+            cls.pathfinding = kwargs['pathfinding']
         if 'opened_by_deeplink' in kwargs:
             cls.opened_by_deeplink = kwargs['opened_by_deeplink']
+        if 'immutable' in kwargs:
+            cls.immutable = kwargs['immutable']
+        if 'forceAccount' in kwargs:
+            cls.force_account = kwargs['forceAccount']
         if 'signers' in kwargs:
             cls.signers = kwargs['signers']
         if 'return_url_app' in kwargs:
@@ -397,6 +416,29 @@ class XummPayloadMeta(XummResource):
             raise ValueError("Invalid value for `submit`, must not be `None`")  # noqa: E501
 
         cls._submit = submit
+
+    @property
+    def pathfinding(cls) -> bool:
+        """Gets the pathfinding of this XummPayloadMeta.
+
+
+        :return: The pathfinding of this XummPayloadMeta.
+        :rtype: bool
+        """
+        return cls._pathfinding
+
+    @pathfinding.setter
+    def pathfinding(cls, pathfinding: bool):
+        """Sets the pathfinding of this XummPayloadMeta.
+
+
+        :param pathfinding: The pathfinding of this XummPayloadMeta.
+        :type pathfinding: bool
+        """
+        # if pathfinding is None:
+        #     raise ValueError("Invalid value for `pathfinding`, must not be `None`")  # noqa: E501
+
+        cls._pathfinding = pathfinding
 
     @property
     def destination(cls) -> str:
@@ -604,6 +646,48 @@ class XummPayloadMeta(XummResource):
         #     raise ValueError("Invalid value for `opened_by_deeplink`, must not be `None`")  # noqa: E501
 
         cls._opened_by_deeplink = opened_by_deeplink
+
+    @property
+    def immutable(cls) -> bool:
+        """Gets the immutable of this XummPayloadMeta.
+
+
+        :return: The immutable of this XummPayloadMeta.
+        :rtype: bool
+        """
+        return cls._immutable
+
+    @immutable.setter
+    def immutable(cls, immutable: bool):
+        """Sets the immutable of this XummPayloadMeta.
+
+
+        :param immutable: The immutable of this XummPayloadMeta.  # noqa: E501
+        :type immutable: bool
+        """
+
+        cls._immutable = immutable
+
+    @property
+    def force_account(cls) -> bool:
+        """Gets the force_account of this XummPayloadMeta.
+
+
+        :return: The force_account of this XummPayloadMeta.
+        :rtype: bool
+        """
+        return cls._force_account
+
+    @force_account.setter
+    def force_account(cls, force_account: bool):
+        """Sets the force_account of this XummPayloadMeta.
+
+
+        :param force_account: The force_account of this XummPayloadMeta.  # noqa: E501
+        :type force_account: bool
+        """
+
+        cls._force_account = force_account
 
     @property
     def signers(cls) -> List[str]:
@@ -815,7 +899,7 @@ class XummPayloadBodyBase(XummResource):
         cls._options = None
         cls._custom_meta = None
         if 'user_token' in kwargs:
-            cls.user_token = kwargs['_user_token']
+            cls.user_token = kwargs['user_token']
         if 'options' in kwargs:
             cls.options = kwargs['options']
         if 'custom_meta' in kwargs:

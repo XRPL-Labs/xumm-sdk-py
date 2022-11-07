@@ -36,20 +36,3 @@ class TestMiscTypes(BaseTestConfig):
           }
         }
         cls.assertEqual(Options(**dict).to_dict(), dict)
-    
-    def test_options_fail(cls):
-        print('should fail to set options')
-
-        dict = {
-          'submit': None,  # FAILS
-          'multisign': True,
-          'expire': 0,
-          'signers': None,
-          'return_url': {
-            'app': 'string',
-            'web': 'string'
-          }
-        }
-        with pytest.raises(ValueError, match=r'Invalid value for `submit`, must not be `None`'):
-            Options(**dict)
-            cls.fail("Options: raised Exception unexpectedly!")

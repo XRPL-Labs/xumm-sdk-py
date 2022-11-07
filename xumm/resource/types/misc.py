@@ -95,19 +95,13 @@ class Options(XummResource):
       attribute_map (dict): The key is attribute name
                             and the value is json key in definition.
     """
-    nullable = {
-        'signers': True
-    }
-    required = {
-        'submit': True,
-        'multisign': True,
-        'expire': True,
-        'signers': True,
-        'return_url': True
-    }
+    nullable = {}
+
+    required = {}
 
     model_types = {
         'submit': bool,
+        'pathfinding': bool,
         'multisign': bool,
         'expire': int,
         'signers': list,
@@ -116,6 +110,7 @@ class Options(XummResource):
 
     attribute_map = {
         'submit': 'submit',
+        'pathfinding': 'pathfinding',
         'multisign': 'multisign',
         'expire': 'expire',
         'signers': 'signers',
@@ -131,15 +126,23 @@ class Options(XummResource):
         :rtype: Options
         """
         cls._submit = None
+        cls._pathfinding = None
         cls._multisign = None
         cls._expire = None
         cls._return_url = None
         cls._signers = None
-        cls.submit = kwargs['submit']
-        cls.multisign = kwargs['multisign']
-        cls.expire = kwargs['expire']
-        cls.return_url = ReturnUrl(**kwargs['return_url'])
-        cls.signers = kwargs['signers']
+        if 'submit' in kwargs:
+            cls.submit = kwargs['submit']
+        if 'pathfinding' in kwargs:
+            cls.pathfinding = kwargs['pathfinding']
+        if 'multisign' in kwargs:
+            cls.multisign = kwargs['multisign']
+        if 'expire' in kwargs:
+            cls.expire = kwargs['expire']
+        if 'return_url' in kwargs:
+            cls.return_url = ReturnUrl(**kwargs['return_url'])
+        if 'signers' in kwargs:
+            cls.signers = kwargs['signers']
 
     @property
     def submit(self) -> bool:
@@ -159,10 +162,29 @@ class Options(XummResource):
         :param submit: The submit of this Options.
         :type submit: bool
         """
-        if submit is None:
-            raise ValueError("Invalid value for `submit`, must not be `None`")  # noqa: E501
 
         self._submit = submit
+
+    @property
+    def pathfinding(self) -> bool:
+        """Gets the pathfinding of this Options.
+
+
+        :return: The pathfinding of this Options.
+        :rtype: bool
+        """
+        return self._pathfinding
+
+    @pathfinding.setter
+    def pathfinding(self, pathfinding: bool):
+        """Sets the pathfinding of this Options.
+
+
+        :param pathfinding: The pathfinding of this Options.
+        :type pathfinding: bool
+        """
+
+        self._pathfinding = pathfinding
 
     @property
     def multisign(self) -> bool:
@@ -182,8 +204,6 @@ class Options(XummResource):
         :param multisign: The multisign of this Options.
         :type multisign: bool
         """
-        if multisign is None:
-            raise ValueError("Invalid value for `multisign`, must not be `None`")  # noqa: E501
 
         self._multisign = multisign
 
@@ -205,8 +225,6 @@ class Options(XummResource):
         :param expire: The expire of this Options.
         :type expire: int
         """
-        if expire is None:
-            raise ValueError("Invalid value for `expire`, must not be `None`")  # noqa: E501
 
         self._expire = expire
 
@@ -249,8 +267,6 @@ class Options(XummResource):
         :param return_url: The return_url of this Options.
         :type return_url: ReturnUrl
         """
-        if return_url is None:
-            raise ValueError("Invalid value for `return_url`, must not be `None`")  # noqa: E501
 
         self._return_url = return_url
 
@@ -269,9 +285,14 @@ class Response(XummResource):
         'resolved_at': True,
         'dispatched_to': True,
         'dispatched_result': True,
+        'dispatched_to_node': True,
+        'environment_nodeuri': True,
+        'environment_nodetype': True,
         'dispatched_nodetype': True,
         'multisign_account': True,
         'account': True,
+        'signer': True,
+        'user': True,
     }
 
     required = {
@@ -280,10 +301,15 @@ class Response(XummResource):
         'resolved_at': True,
         'dispatched_to': True,
         'dispatched_result': True,
+        'dispatched_to_node': True,
+        'environment_nodeuri': True,
+        'environment_nodetype': True,
         'dispatched_nodetype': True,
         'multisign_account': True,
         'account': True,
+        'signer': True,
         # 'approved_with': True,
+        'user': True,
     }
 
     model_types = {
@@ -292,10 +318,15 @@ class Response(XummResource):
         'resolved_at': str,
         'dispatched_to': str,
         'dispatched_result': str,
+        'dispatched_to_node': bool,
+        'environment_nodeuri': str,
+        'environment_nodetype': str,
         'dispatched_nodetype': str,
         'multisign_account': str,
         'account': str,
+        'signer': str,
         'approved_with': str,
+        'user': str,
     }
 
     attribute_map = {
@@ -304,10 +335,15 @@ class Response(XummResource):
         'resolved_at': 'resolved_at',
         'dispatched_to': 'dispatched_to',
         'dispatched_result': 'dispatched_result',
+        'dispatched_to_node': 'dispatched_to_node',
+        'environment_nodeuri': 'environment_nodeuri',
+        'environment_nodetype': 'environment_nodetype',
         'dispatched_nodetype': 'dispatched_nodetype',
         'multisign_account': 'multisign_account',
         'account': 'account',
+        'signer': 'signer',
         'approved_with': 'approved_with',
+        'user': 'user',
     }
 
     def refresh_from(cls, **kwargs):
@@ -324,10 +360,15 @@ class Response(XummResource):
         cls._resolved_at = None
         cls._dispatched_to = None
         cls._dispatched_result = None
+        cls._dispatched_to_node = None
+        cls._environment_nodeuri = None
+        cls._environment_nodetype = None
         cls._dispatched_nodetype = None
         cls._multisign_account = None
         cls._account = None
+        cls._signer = None
         cls._approved_with = None
+        cls._user = None
         if 'hex' in kwargs:
             cls.hex = kwargs['hex']
         if 'txid' in kwargs:
@@ -338,14 +379,24 @@ class Response(XummResource):
             cls.dispatched_to = kwargs['dispatched_to']
         if 'dispatched_result' in kwargs:
             cls.dispatched_result = kwargs['dispatched_result']
+        if 'dispatched_to_node' in kwargs:
+            cls.dispatched_to_node = kwargs['dispatched_to_node']
+        if 'environment_nodeuri' in kwargs:
+            cls.environment_nodeuri = kwargs['environment_nodeuri']
+        if 'environment_nodetype' in kwargs:
+            cls.environment_nodetype = kwargs['environment_nodetype']
         if 'dispatched_nodetype' in kwargs:
             cls.dispatched_nodetype = kwargs['dispatched_nodetype']
         if 'multisign_account' in kwargs:
             cls.multisign_account = kwargs['multisign_account']
         if 'account' in kwargs:
             cls.account = kwargs['account']
+        if 'signer' in kwargs:
+            cls.signer = kwargs['signer']
         if 'approved_with' in kwargs:
             cls.approved_with = kwargs['approved_with']
+        if 'user' in kwargs:
+            cls.user = kwargs['user']
         return cls
 
     @property
@@ -464,6 +515,75 @@ class Response(XummResource):
         cls._dispatched_result = dispatched_result
 
     @property
+    def dispatched_to_node(cls) -> bool:
+        """Gets the dispatched_to_node of this Response.
+
+
+        :return: The dispatched_to_node of this Response.
+        :rtype: bool
+        """
+        return cls._dispatched_to_node
+
+    @dispatched_to_node.setter
+    def dispatched_to_node(cls, dispatched_to_node: bool):
+        """Sets the dispatched_to_node of this Response.
+
+
+        :param dispatched_to_node: The dispatched_to_node of this Response.
+        :type dispatched_to_node: bool
+        """
+        # if dispatched_to_node is None:
+        #     raise ValueError("Invalid value for `dispatched_to_node`, must not be `None`")  # noqa: E501
+
+        cls._dispatched_to_node = dispatched_to_node
+
+    @property
+    def environment_nodeuri(cls) -> str:
+        """Gets the environment_nodeuri of this Response.
+
+
+        :return: The environment_nodeuri of this Response.
+        :rtype: str
+        """
+        return cls._environment_nodeuri
+
+    @environment_nodeuri.setter
+    def environment_nodeuri(cls, environment_nodeuri: str):
+        """Sets the environment_nodeuri of this Response.
+
+
+        :param environment_nodeuri: The environment_nodeuri of this Response.
+        :type environment_nodeuri: str
+        """
+        # if environment_nodeuri is None:
+        #     raise ValueError("Invalid value for `environment_nodeuri`, must not be `None`")  # noqa: E501
+
+        cls._environment_nodeuri = environment_nodeuri
+
+    @property
+    def environment_nodetype(cls) -> str:
+        """Gets the environment_nodetype of this Response.
+
+
+        :return: The environment_nodetype of this Response.
+        :rtype: str
+        """
+        return cls._environment_nodetype
+
+    @environment_nodetype.setter
+    def environment_nodetype(cls, environment_nodetype: str):
+        """Sets the environment_nodetype of this Response.
+
+
+        :param environment_nodetype: The environment_nodetype of this Response.
+        :type environment_nodetype: str
+        """
+        # if environment_nodetype is None:
+        #     raise ValueError("Invalid value for `environment_nodetype`, must not be `None`")  # noqa: E501
+
+        cls._environment_nodetype = environment_nodetype
+
+    @property
     def dispatched_nodetype(cls) -> str:
         """Gets the dispatched_nodetype of this Response.
 
@@ -533,6 +653,29 @@ class Response(XummResource):
         cls._account = account
 
     @property
+    def signer(cls) -> str:
+        """Gets the signer of this Response.
+
+
+        :return: The signer of this Response.
+        :rtype: str
+        """
+        return cls._signer
+
+    @signer.setter
+    def signer(cls, signer: str):
+        """Sets the signer of this Response.
+
+
+        :param signer: The signer of this Response.
+        :type signer: str
+        """
+        # if signer is None:
+        #     raise ValueError("Invalid value for `signer`, must not be `None`")  # noqa: E501
+
+        cls._signer = signer
+
+    @property
     def approved_with(self) -> str:
         """Gets the approved_with of this Response.
 
@@ -558,6 +701,29 @@ class Response(XummResource):
             )
 
         self._approved_with = approved_with
+
+    @property
+    def user(cls) -> str:
+        """Gets the user of this Response.
+
+
+        :return: The user of this Response.
+        :rtype: str
+        """
+        return cls._user
+
+    @user.setter
+    def user(cls, user: str):
+        """Sets the user of this Response.
+
+
+        :param user: The user of this Response.
+        :type user: str
+        """
+        # if user is None:
+        #     raise ValueError("Invalid value for `user`, must not be `None`")  # noqa: E501
+
+        cls._user = user
 
 
 class RequestJson(XummResource):

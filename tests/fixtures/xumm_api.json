@@ -79,6 +79,7 @@
         "uuid": "00000000-0000-4839-af2f-f794874a80b0",
         "multisign": false,
         "submit": false,
+        "pathfinding": false,
         "destination": "",
         "resolved_destination": "",
         "resolved": false,
@@ -107,6 +108,7 @@
         "uuid": "00000000-0000-4839-af2f-f794874a80b0",
         "multisign": false,
         "submit": false,
+        "pathfinding": false,
         "destination": "",
         "resolved_destination": "",
         "resolved": true,
@@ -149,9 +151,14 @@
         "resolved_at": "2020-05-03T17:28:40.000Z",
         "dispatched_to": "wss://xrplcluster.com",
         "dispatched_result": "tes_SUCCESS",
+        "dispatched_to_node": false,
+        "environment_nodeuri": "wss://xrplcluster.com",
+        "environment_nodetype": "MAINNET",
         "dispatched_nodetype": "MAINNET",
         "multisign_account": "rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY",
-        "account": "rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY"
+        "signer": "rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY",
+        "account": "rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY",
+        "user": "rPEPPER7kfTD9w2To4CQk6UCfuHM9c6GDY"
       },
       "custom_meta": {
         "identifier": null,
