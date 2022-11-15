@@ -2009,3 +2009,293 @@ class XummWebhookBody(XummResource):
         #     raise ValueError("Invalid value for `user_token`, must not be `None`")  # noqa: E501
 
         cls._user_token = user_token
+
+
+class XummXappEventRequest(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
+    required = {
+        'user_token': True,
+        'body': True,
+    }
+
+    model_types = {
+        'user_token': str,
+        'subtitle': str,
+        'body': str,
+        'data': dict,
+        'silent': bool,
+    }
+
+    attribute_map = {
+        'user_token': 'user_token',
+        'subtitle': 'subtitle',
+        'body': 'body',
+        'data': 'data',
+        'silent': 'silent',
+    }
+
+    def refresh_from(cls, **kwargs):
+        """Returns the dict as a model
+
+        :param kwargs: A dict.
+        :type: dict
+        :return: The XummXappEventRequest of this XummXappEventRequest.  # noqa: E501
+        :rtype: XummXappEventRequest
+        """
+        cls.sanity_check(kwargs)
+        cls._user_token = None
+        cls._subtitle = None
+        cls._body = None
+        cls._data = None
+        cls._silent = None
+        cls.user_token = kwargs['user_token']
+        if 'subtitle' in kwargs:
+            cls.subtitle = kwargs['subtitle']
+        cls.body = kwargs['body']
+        if 'data' in kwargs:
+            cls.data = kwargs['data']
+        if 'silent' in kwargs:
+            cls.silent = kwargs['silent']
+
+    @property
+    def user_token(self) -> str:
+        """Gets the user_token of this XummXappEventRequest.
+
+
+        :return: The user_token of this XummXappEventRequest.
+        :rtype: str
+        """
+        return self._user_token
+
+    @user_token.setter
+    def user_token(self, user_token: str):
+        """Sets the user_token of this XummXappEventRequest.
+
+
+        :param user_token: The user_token of this XummXappEventRequest.
+        :type user_token: str
+        """
+
+        self._user_token = user_token
+
+    @property
+    def subtitle(self) -> str:
+        """Gets the subtitle of this XummXappEventRequest.
+
+
+        :return: The subtitle of this XummXappEventRequest.
+        :rtype: subtitle
+        """
+        return self._subtitle
+
+    @subtitle.setter
+    def subtitle(self, subtitle: str):
+        """Sets the subtitle of this XummXappEventRequest.
+
+
+        :param subtitle: The subtitle of this XummXappEventRequest.
+        :type subtitle: subtitle
+        """
+
+        self._subtitle = subtitle
+
+    @property
+    def body(self) -> str:
+        """Gets the body of this XummXappEventRequest.
+
+
+        :return: The body of this XummXappEventRequest.
+        :rtype: body
+        """
+        return self._body
+
+    @body.setter
+    def body(self, body: str):
+        """Sets the body of this XummXappEventRequest.
+
+
+        :param body: The body of this XummXappEventRequest.
+        :type body: body
+        """
+
+        self._body = body
+
+    @property
+    def data(self) -> dict:
+        """Gets the data of this XummXappEventRequest.
+
+
+        :return: The data of this XummXappEventRequest.
+        :rtype: data
+        """
+        return self._data
+
+    @data.setter
+    def data(self, data: dict):
+        """Sets the data of this XummXappEventRequest.
+
+
+        :param data: The data of this XummXappEventRequest.
+        :type data: data
+        """
+
+        self._data = data
+
+    @property
+    def silent(self) -> bool:
+        """Gets the silent of this XummXappEventRequest.
+
+
+        :return: The silent of this XummXappEventRequest.
+        :rtype: silent
+        """
+        return self._silent
+
+    @silent.setter
+    def silent(self, silent: bool):
+        """Sets the silent of this XummXappEventRequest.
+
+
+        :param silent: The silent of this XummXappEventRequest.
+        :type silent: silent
+        """
+
+        self._silent = silent
+
+
+class XummXappPushRequest(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
+    required = {
+        'user_token': True,
+        'body': True,
+    }
+
+    model_types = {
+        'user_token': str,
+        'subtitle': str,
+        'body': str,
+        'data': dict,
+    }
+
+    attribute_map = {
+        'user_token': 'user_token',
+        'subtitle': 'subtitle',
+        'body': 'body',
+        'data': 'data',
+    }
+
+    def refresh_from(cls, **kwargs):
+        """Returns the dict as a model
+
+        :param kwargs: A dict.
+        :type: dict
+        :return: The XummXappPushRequest of this XummXappPushRequest.  # noqa: E501
+        :rtype: XummXappPushRequest
+        """
+        cls.sanity_check(kwargs)
+        cls._user_token = None
+        cls._subtitle = None
+        cls._body = None
+        cls._data = None
+        cls.user_token = kwargs['user_token']
+        if 'subtitle' in kwargs:
+            cls.subtitle = kwargs['subtitle']
+        cls.body = kwargs['body']
+        if 'data' in kwargs:
+            cls.data = kwargs['data']
+
+    @property
+    def user_token(self) -> str:
+        """Gets the user_token of this XummXappPushRequest.
+
+
+        :return: The user_token of this XummXappPushRequest.
+        :rtype: str
+        """
+        return self._user_token
+
+    @user_token.setter
+    def user_token(self, user_token: str):
+        """Sets the user_token of this XummXappPushRequest.
+
+
+        :param user_token: The user_token of this XummXappPushRequest.
+        :type user_token: str
+        """
+
+        self._user_token = user_token
+
+    @property
+    def subtitle(self) -> str:
+        """Gets the subtitle of this XummXappPushRequest.
+
+
+        :return: The subtitle of this XummXappPushRequest.
+        :rtype: subtitle
+        """
+        return self._subtitle
+
+    @subtitle.setter
+    def subtitle(self, subtitle: str):
+        """Sets the subtitle of this XummXappPushRequest.
+
+
+        :param subtitle: The subtitle of this XummXappPushRequest.
+        :type subtitle: subtitle
+        """
+
+        self._subtitle = subtitle
+
+    @property
+    def body(self) -> str:
+        """Gets the body of this XummXappPushRequest.
+
+
+        :return: The body of this XummXappPushRequest.
+        :rtype: body
+        """
+        return self._body
+
+    @body.setter
+    def body(self, body: str):
+        """Sets the body of this XummXappPushRequest.
+
+
+        :param body: The body of this XummXappPushRequest.
+        :type body: body
+        """
+
+        self._body = body
+
+    @property
+    def data(self) -> dict:
+        """Gets the data of this XummXappPushRequest.
+
+
+        :return: The data of this XummXappPushRequest.
+        :rtype: data
+        """
+        return self._data
+
+    @data.setter
+    def data(self, data: dict):
+        """Sets the data of this XummXappPushRequest.
+
+
+        :param data: The data of this XummXappPushRequest.
+        :type data: data
+        """
+
+        self._data = data

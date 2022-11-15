@@ -28,6 +28,7 @@ from xumm.resource.rates import RatesResource
 from xumm.resource.payload import PayloadResource
 from xumm.resource.storage import StorageResource
 from xumm.resource.user_tokens import UserTokensResource
+from xumm.resource.xapp import XappResource
 
 
 class XummSdk(XummResource):
@@ -62,6 +63,7 @@ class XummSdk(XummResource):
 
         cls.payload = PayloadResource()
         cls.storage = StorageResource()
+        cls.xapp = XappResource()
 
     def refresh_from(cls, **kwargs):
         return super().refresh_from(**kwargs)

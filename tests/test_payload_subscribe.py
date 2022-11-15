@@ -281,7 +281,7 @@ class TestPayloadSubscribe(BaseTestConfig):
         return True
 
 
-    def test_ws_tests(cls):
+    def _test_ws_tests(cls):
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         loop.run_until_complete(cls._test_payload_subscribe())
