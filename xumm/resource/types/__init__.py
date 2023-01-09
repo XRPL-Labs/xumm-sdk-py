@@ -26,6 +26,10 @@ from .storage.storage_get_response import StorageGetResponse  # noqa: F401
 from .storage.storage_response import StorageResponse  # noqa: F401
 from .storage.storage_set_response import StorageSetResponse  # noqa: F401
 
+from .xapp.xapp_ott_response import XappOttResponse  # noqa: F401
+from .xapp.xapp_event_response import XappEventResponse  # noqa: F401
+from .xapp.xapp_push_response import XappPushResponse  # noqa: F401
+
 from .meta.user_tokens import (  # noqa: F401
     UserTokenValidity,
     UserTokenResponse,
@@ -38,5 +42,7 @@ from .xumm_api import (  # noqa: F401
     XummPostPayloadResponse as CreatedPayload,
     XummDeletePayloadResponse as DeletedPayload,
     XummGetPayloadResponse as XummPayload,
-    XummWebhookBody
+    XummWebhookBody,
+    XummXappEventRequest,
+    XummXappPushRequest,
 )
