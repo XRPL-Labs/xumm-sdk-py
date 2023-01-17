@@ -4,7 +4,7 @@
 from xumm.resource import XummResource
 
 
-class XappPushResponse(XummResource):
+class PushPushResponse(XummResource):
     """
     Attributes:
       model_types (dict): The key is attribute name
@@ -29,8 +29,8 @@ class XappPushResponse(XummResource):
 
         :param kwargs: A dict.
         :type: dict
-        :return: The XappPushResponse of this XappPushResponse.  # noqa: E501
-        :rtype: XappPushResponse
+        :return: The PushPushResponse of this PushPushResponse.  # noqa: E501
+        :rtype: PushPushResponse
         """
         cls.sanity_check(kwargs)
         cls._pushed = None
@@ -38,20 +38,20 @@ class XappPushResponse(XummResource):
 
     @property
     def pushed(self) -> bool:
-        """Gets the pushed of this XappPushResponse.
+        """Gets the pushed of this PushPushResponse.
 
 
-        :return: The pushed of this XappPushResponse.
+        :return: The pushed of this PushPushResponse.
         :rtype: bool
         """
         return self._pushed
 
     @pushed.setter
     def pushed(self, pushed: bool):
-        """Sets the pushed of this XappPushResponse.
+        """Sets the pushed of this PushPushResponse.
 
 
-        :param pushed: The pushed of this XappPushResponse.
+        :param pushed: The pushed of this PushPushResponse.
         :type pushed: bool
         """
         self._pushed = pushed
