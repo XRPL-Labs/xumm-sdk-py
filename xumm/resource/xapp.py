@@ -35,4 +35,3 @@ class XappResource(XummResource):
 
         res = client.get(cls.ott_url(token))
         return XappOttResponse(**res)
-
