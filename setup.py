@@ -24,7 +24,7 @@ setup(
     packages=find_packages(include=('xumm*',)),
     include_package_data=True,
     install_requires=[
-        "requests==2.27.1",
+        "requests>=2.26.0",
         "websocket-client==1.2.3",
         "six==1.16.0",
         "python-dotenv==0.19.2"
