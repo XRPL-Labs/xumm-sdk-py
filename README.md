@@ -4,7 +4,7 @@ Interact with the XUMM SDK from Python environments.
 
 #### **⚠️ Please note: The XUMM SDK (XUMM API in general) is for BACKEND USE only. Please DO NOT use your API credentials in a FRONTEND environment.**
 
-> To implement the XUMM SKD (or XUMM API directly) in your own web project, make sure your frontend calls your own backend, where the follow up communication with the XUMM SDK (or XUMM API) will take place. Your XUMM credentials should never be publicly available.
+> To implement the XUMM SDK (or XUMM API directly) in your own web project, make sure your frontend calls your own backend, where the follow up communication with the XUMM SDK (or XUMM API) will take place. Your XUMM credentials should never be publicly available.
 
 - [Getting Started](#getting-started)
 - [Usage](#usage)
