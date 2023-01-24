@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 from codecs import open
 
 NAME = "xumm-sdk-py"
-VERSION = "1.0.2"
+VERSION = "1.0.3"
 
 # Get the long description from the README.md file
 base_dir = os.path.abspath(os.path.dirname(__file__))
@@ -24,10 +24,10 @@ setup(
     packages=find_packages(include=('xumm*',)),
     include_package_data=True,
     install_requires=[
-        "requests==2.27.1",
-        "websocket-client==1.2.3",
+        "requests>=2.26.0,<=2.28.2",
+        "websocket-client>=1.2.3,<=1.4.2",
         "six==1.16.0",
-        "python-dotenv==0.19.2"
+        "python-dotenv>=0.19.2,<=0.21.1"
     ],
     extras_require={
         'develop': [
