@@ -7,6 +7,7 @@ import xumm
 
 from fixtures import sample_payload
 
+
 class PayloadExample:
     def __init__(self):
         logging.debug('')
