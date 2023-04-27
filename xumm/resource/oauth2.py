@@ -55,7 +55,7 @@ class OAuth2Resource(XummResource):
         oauth = OAuth2Session(api_key, redirect_uri=redirect_uri)
         return oauth.authorization_url(cls.auth_url())
 
-    def token(cls, authorization_response: str) -> OAuth2TokenResponse:
+    def token(cls, redirect_uri: str, authorization_response: str) -> OAuth2TokenResponse:  # noqa: E501
         """Returns the dict as a model
 
         :return: The OAuth2TokenResponse of this OAuth2TokenResponse.  # noqa: E501
@@ -63,7 +63,7 @@ class OAuth2Resource(XummResource):
         """
 
         from xumm import api_key, api_secret
-        oauth = OAuth2Session(api_key)
+        oauth = OAuth2Session(api_key, redirect_uri=redirect_uri)
         token = oauth.fetch_token(
             cls.token_url(),
             client_secret=api_secret,
