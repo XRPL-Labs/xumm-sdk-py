@@ -5,20 +5,14 @@
 The full process for cutting a release is as follows:
 
 0. Checkout a new branch:
-   `git checkout -b 1.0.0` # 1.0.0-release
-
-1. Python / Pip Bumpversion
-
-   `pip3 install bumpversion`
-
-   `bumpversion --current-version 1.0.0 minor setup.py xumm/__init__.py`
+   `git checkout -b v1.0.2` # 1.0.2-release
 
 2. Change the version in the setup.py file:
-   `VERSION = "1.0.0"`
+   `VERSION = "1.0.2"`
 
 3. Add, and commit the changes, push up the branch, and open a PR:
    `git add .`
-   `git commit -m 'RELEASE 1.0.0'`
+   `git commit -m 'RELEASE v1.0.2'`
    `git push --set-upstream origin HEAD`
 
 4. Open PR request
@@ -29,13 +23,13 @@ The full process for cutting a release is as follows:
    `git checkout main`
 
 6. Delete `main` branch (Optional):
-   `git branch -d 1.0.0`
+   `git branch -d v1.0.2`
 
 7. Make a new Git tag that matches the new version (make sure it is associated with the right commit SHA): FIXUP
-   `git tag -a 1.0.0 -m "cut 1.0.0"`
+   `git tag -a v1.0.2 -m "cut v1.0.2"`
 
 8. Push up the tag from `main`:
-   `git push origin 1.0.0`
+   `git push origin v1.0.2`
 
 ## Packaging & Releasing
 
@@ -49,8 +43,8 @@ Build Repo
 
 ```
 dist/
-  xumm-sdk-py-1.0.0-py3-none-any.whl
-  xumm-sdk-py-1.0.0.tar.gz
+  xumm-sdk-py-1.0.2-py3-none-any.whl
+  xumm-sdk-py-1.0.2.tar.gz
 ```
 
 Install Twine

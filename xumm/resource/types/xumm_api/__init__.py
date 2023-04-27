@@ -2,7 +2,7 @@
 # coding: utf-8
 
 from xumm.resource import XummResource
-from typing import Union, Dict
+from typing import Union, Dict, List
 
 from ..misc import (
     ReturnUrl,
@@ -193,7 +193,9 @@ class XummPayloadMeta(XummResource):
                             and the value is json key in definition.
     """
     nullable = {
+        'pathfinding': True,
         'opened_by_deeplink': True,
+        'signers': True,
         'return_url_app': True,
         'return_url_web': True,
     }
@@ -202,6 +204,7 @@ class XummPayloadMeta(XummResource):
         'uuid': True,
         'multisign': True,
         'submit': True,
+        'pathfinding': True,
         'destination': True,
         'resolved_destination': True,
         'resolved': True,
@@ -213,6 +216,7 @@ class XummPayloadMeta(XummResource):
         'opened_by_deeplink': True,
         # 'immutable': True,
         # 'force_account': True,
+        'signers': True,
         'return_url_app': True,
         'return_url_web': True,
         'is_xapp': True
@@ -223,6 +227,7 @@ class XummPayloadMeta(XummResource):
         'uuid': str,
         'multisign': bool,
         'submit': bool,
+        'pathfinding': bool,
         'destination': str,
         'resolved_destination': str,
         'resolved': bool,
@@ -234,6 +239,7 @@ class XummPayloadMeta(XummResource):
         'opened_by_deeplink': bool,
         'immutable': bool,
         'force_account': bool,
+        'signers': list,
         'return_url_app': str,
         'return_url_web': str,
         'is_xapp': bool
@@ -244,6 +250,7 @@ class XummPayloadMeta(XummResource):
         'uuid': 'uuid',
         'multisign': 'multisign',
         'submit': 'submit',
+        'pathfinding': 'pathfinding',
         'destination': 'destination',
         'resolved_destination': 'resolved_destination',
         'resolved': 'resolved',
@@ -255,6 +262,7 @@ class XummPayloadMeta(XummResource):
         'opened_by_deeplink': 'opened_by_deeplink',
         'immutable': 'immutable',
         'force_account': 'forceAccount',
+        'signers': 'signers',
         'return_url_app': 'return_url_app',
         'return_url_web': 'return_url_web',
         'is_xapp': 'is_xapp'
@@ -273,6 +281,7 @@ class XummPayloadMeta(XummResource):
         cls._uuid = None
         cls._multisign = None
         cls._submit = None
+        cls._pathfinding = None
         cls._destination = None
         cls._resolved_destination = None
         cls._resolved = None
@@ -284,6 +293,7 @@ class XummPayloadMeta(XummResource):
         cls._opened_by_deeplink = None
         cls._immutable = None
         cls._force_account = None
+        cls._signers = None
         cls._return_url_app = None
         cls._return_url_web = None
         cls._is_xapp = None
@@ -299,12 +309,16 @@ class XummPayloadMeta(XummResource):
         cls.expired = kwargs['expired']
         cls.pushed = kwargs['pushed']
         cls.app_opened = kwargs['app_opened']
+        if 'pathfinding' in kwargs:
+            cls.pathfinding = kwargs['pathfinding']
         if 'opened_by_deeplink' in kwargs:
             cls.opened_by_deeplink = kwargs['opened_by_deeplink']
         if 'immutable' in kwargs:
             cls.immutable = kwargs['immutable']
         if 'forceAccount' in kwargs:
             cls.force_account = kwargs['forceAccount']
+        if 'signers' in kwargs:
+            cls.signers = kwargs['signers']
         if 'return_url_app' in kwargs:
             cls.return_url_app = kwargs['return_url_app']
         if 'return_url_web' in kwargs:
@@ -402,6 +416,29 @@ class XummPayloadMeta(XummResource):
             raise ValueError("Invalid value for `submit`, must not be `None`")  # noqa: E501
 
         cls._submit = submit
+
+    @property
+    def pathfinding(cls) -> bool:
+        """Gets the pathfinding of this XummPayloadMeta.
+
+
+        :return: The pathfinding of this XummPayloadMeta.
+        :rtype: bool
+        """
+        return cls._pathfinding
+
+    @pathfinding.setter
+    def pathfinding(cls, pathfinding: bool):
+        """Sets the pathfinding of this XummPayloadMeta.
+
+
+        :param pathfinding: The pathfinding of this XummPayloadMeta.
+        :type pathfinding: bool
+        """
+        # if pathfinding is None:
+        #     raise ValueError("Invalid value for `pathfinding`, must not be `None`")  # noqa: E501
+
+        cls._pathfinding = pathfinding
 
     @property
     def destination(cls) -> str:
@@ -653,6 +690,27 @@ class XummPayloadMeta(XummResource):
         cls._force_account = force_account
 
     @property
+    def signers(cls) -> List[str]:
+        """Gets the signers of this XummPayloadMeta.
+
+
+        :return: The signers of this XummPayloadMeta.
+        :rtype: List[str]
+        """
+        return cls._signers
+
+    @signers.setter
+    def signers(cls, signers: List[str]):
+        """Sets the signers of this XummPayloadMeta.
+
+
+        :param signers: The signers of this XummPayloadMeta.  # noqa: E501
+        :type signers: List[str]
+        """
+
+        cls._signers = signers
+
+    @property
     def return_url_app(cls) -> str:
         """Gets the return_url_app of this XummPayloadMeta.
 
@@ -841,7 +899,7 @@ class XummPayloadBodyBase(XummResource):
         cls._options = None
         cls._custom_meta = None
         if 'user_token' in kwargs:
-            cls.user_token = kwargs['_user_token']
+            cls.user_token = kwargs['user_token']
         if 'options' in kwargs:
             cls.options = kwargs['options']
         if 'custom_meta' in kwargs:
@@ -1951,3 +2009,205 @@ class XummWebhookBody(XummResource):
         #     raise ValueError("Invalid value for `user_token`, must not be `None`")  # noqa: E501
 
         cls._user_token = user_token
+
+
+class XummPushEventRequest(XummResource):
+    """
+    Attributes:
+      model_types (dict): The key is attribute name
+                            and the value is attribute type.
+      attribute_map (dict): The key is attribute name
+                            and the value is json key in definition.
+    """
+    required = {}
+
+    model_types = {
+        'user_token': str,
+        'user_uuid': str,
+        'user_account': str,
+        'subtitle': str,
+        'body': str,
+        'data': object,
+        'silent': bool,
+    }
+
+    attribute_map = {
+        'user_token': 'user_token',
+        'user_uuid': 'user_uuid',
+        'user_account': 'user_account',
+        'subtitle': 'subtitle',
+        'body': 'body',
+        'data': 'data',
+        'silent': 'silent',
+    }
+
+    def refresh_from(cls, **kwargs):
+        """Returns the dict as a model
+
+        :param kwargs: A dict.
+        :type: dict
+        :return: The XummPushEventRequest of this XummPushEventRequest.  # noqa: E501
+        :rtype: XummPushEventRequest
+        """
+        cls.sanity_check(kwargs)
+        cls._user_token = None
+        cls._user_uuid = None
+        cls._user_account = None
+        cls._subtitle = None
+        cls._body = None
+        cls._data = None
+        cls._silent = None
+        if 'user_token' in kwargs:
+            cls.user_token = kwargs['user_token']
+        if 'user_uuid' in kwargs:
+            cls.user_uuid = kwargs['user_uuid']
+        if 'user_account' in kwargs:
+            cls.user_account = kwargs['user_account']
+        if 'subtitle' in kwargs:
+            cls.subtitle = kwargs['subtitle']
+        if 'body' in kwargs:
+            cls.body = kwargs['body']
+        if 'data' in kwargs:
+            cls.data = kwargs['data']
+        if 'silent' in kwargs:
+            cls.silent = kwargs['silent']
+
+    @property
+    def user_token(self) -> bool:
+        """Gets the user_token of this XummPushEventRequest.
+
+
+        :return: The user_token of this XummPushEventRequest.
+        :rtype: bool
+        """
+        return self._user_token
+
+    @user_token.setter
+    def user_token(self, user_token: bool):
+        """Sets the user_token of this XummPushEventRequest.
+
+
+        :param user_token: The user_token of this XummPushEventRequest.
+        :type user_token: bool
+        """
+        self._user_token = user_token
+
+    @property
+    def user_uuid(self) -> str:
+        """Gets the user_uuid of this XummPushEventRequest.
+
+
+        :return: The user_uuid of this XummPushEventRequest.
+        :rtype: str
+        """
+        return self._user_uuid
+
+    @user_uuid.setter
+    def user_uuid(self, user_uuid: str):
+        """Sets the user_uuid of this XummPushEventRequest.
+
+
+        :param user_uuid: The user_uuid of this XummPushEventRequest.
+        :type user_uuid: str
+        """
+        self._user_uuid = user_uuid
+
+    @property
+    def user_account(self) -> str:
+        """Gets the user_account of this XummPushEventRequest.
+
+
+        :return: The user_account of this XummPushEventRequest.
+        :rtype: str
+        """
+        return self._user_account
+
+    @user_account.setter
+    def user_account(self, user_account: str):
+        """Sets the user_account of this XummPushEventRequest.
+
+
+        :param user_account: The user_account of this XummPushEventRequest.
+        :type user_account: str
+        """
+        self._user_account = user_account
+
+    @property
+    def subtitle(self) -> str:
+        """Gets the subtitle of this XummPushEventRequest.
+
+
+        :return: The subtitle of this XummPushEventRequest.
+        :rtype: str
+        """
+        return self._subtitle
+
+    @subtitle.setter
+    def subtitle(self, subtitle: str):
+        """Sets the subtitle of this XummPushEventRequest.
+
+
+        :param subtitle: The subtitle of this XummPushEventRequest.
+        :type subtitle: str
+        """
+        self._subtitle = subtitle
+
+    @property
+    def body(self) -> str:
+        """Gets the body of this XummPushEventRequest.
+
+
+        :return: The body of this XummPushEventRequest.
+        :rtype: str
+        """
+        return self._body
+
+    @body.setter
+    def body(self, body: str):
+        """Sets the body of this XummPushEventRequest.
+
+
+        :param body: The body of this XummPushEventRequest.
+        :type body: str
+        """
+        self._body = body
+
+    @property
+    def data(self) -> object:
+        """Gets the data of this XummPushEventRequest.
+
+
+        :return: The data of this XummPushEventRequest.
+        :rtype: object
+        """
+        return self._data
+
+    @data.setter
+    def data(self, data: object):
+        """Sets the data of this XummPushEventRequest.
+
+
+        :param data: The data of this XummPushEventRequest.
+        :type data: object
+        """
+        self._data = data
+
+    @property
+    def silent(self) -> bool:
+        """Gets the silent of this XummPushEventRequest.
+
+
+        :return: The silent of this XummPushEventRequest.
+        :rtype: bool
+        """
+        return self._silent
+
+    @silent.setter
+    def silent(self, silent: bool):
+        """Sets the silent of this XummPushEventRequest.
+
+
+        :param silent: The silent of this XummPushEventRequest.
+        :type silent: bool
+        """
+        self._silent = silent
