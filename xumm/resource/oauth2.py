@@ -1,16 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-from typing import List, Dict, Any  # noqa: F401
+from typing import List, Dict, Any, Tuple  # noqa: F401
 
-from xumm import client
 from xumm.resource import XummResource
 
-from .types import (
-    OAuth2AuthResponse,
-    # OAuth2TokenResponse,
-    # OAuth2UserInfoResponse,
-)
+from requests_oauthlib import OAuth2Session
+
+from .types import OAuth2TokenResponse
 
 
 class OAuth2Resource(XummResource):
@@ -35,38 +32,44 @@ class OAuth2Resource(XummResource):
         """
         return super(OAuth2Resource, cls).oauth2_url() + 'token'
 
-    @classmethod
-    def userinfo_url(cls) -> str:
-        """
-        Gets the USERINFO url of this OAuth2Resource
+    # @classmethod
+    # def userinfo_url(cls) -> str:
+    #     """
+    #     Gets the USERINFO url of this OAuth2Resource
 
-        :return: The USERINFO url of this OAuth2Resource.
-        :rtype: str
-        """
-        return super(OAuth2Resource, cls).oauth2_url() + 'userinfo'
+    #     :return: The USERINFO url of this OAuth2Resource.
+    #     :rtype: str
+    #     """
+    #     return super(OAuth2Resource, cls).oauth2_url() + 'userinfo'
 
     def refresh_from(cls, **kwargs) -> 'OAuth2Resource':
         return cls
 
-    def auth(cls, data: Dict[str, object]) -> OAuth2AuthResponse:
+    def auth(cls, redirect_uri: str) -> Tuple[str, str]:
         """Returns the dict as a model
 
-        :return: The OAuth2AuthResponse of this OAuth2AuthResponse.  # noqa: E501
-        :rtype: OAuth2AuthResponse
+        :return: The authorization url and the state.  # noqa: E501
+        :rtype: Tuple[str, str]
+        """
+        from xumm import api_key
+        oauth = OAuth2Session(api_key, redirect_uri=redirect_uri)
+        return oauth.authorization_url(cls.auth_url())
+
+    def token(cls, authorization_response: str) -> OAuth2TokenResponse:
+        """Returns the dict as a model
+
+        :return: The OAuth2TokenResponse of this OAuth2TokenResponse.  # noqa: E501
+        :rtype: OAuth2TokenResponse
         """
 
-        res = client.auth(cls.auth_url(), data)
-        return OAuth2AuthResponse(**res)
-
-    # def token(cls) -> OAuth2TokenResponse:
-    #     """Returns the dict as a model
-
-    #     :return: The OAuth2TokenResponse of this OAuth2TokenResponse.  # noqa: E501
-    #     :rtype: OAuth2TokenResponse
-    #     """
-
-    #     res = client.get(cls.get_url())
-    #     return OAuth2TokenResponse(**res)
+        from xumm import api_key, api_secret
+        oauth = OAuth2Session(api_key)
+        token = oauth.fetch_token(
+            cls.token_url(),
+            client_secret=api_secret,
+            authorization_response=authorization_response
+        )
+        return OAuth2TokenResponse(**token)
 
     # def userinfo(cls) -> OAuth2UserInfoResponse:
     #     """Returns the dict as a model

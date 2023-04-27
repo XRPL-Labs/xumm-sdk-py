@@ -40,3 +40,5 @@ from .xumm_api import (  # noqa: F401
     XummGetPayloadResponse as XummPayload,
     XummWebhookBody
 )
+
+from .oauth2.oauth2_token_response import OAuth2TokenResponse  # noqa: F401
