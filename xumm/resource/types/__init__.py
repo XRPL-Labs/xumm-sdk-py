@@ -46,4 +46,4 @@ from .xumm_api import (  # noqa: F401
 )
 
 from .oauth2.oauth2_token_response import OAuth2TokenResponse  # noqa: F401
-from .oauth2.oauth2_user_info_response import OAuth2UserInfoResponse  # noqa: F401
+from .oauth2.oauth2_user_info_response import OAuth2UserInfoResponse  # noqa: F401 E501
