@@ -74,7 +74,8 @@ def get_headers() -> Dict[str, object]:
 
 
 def get(
-    url: str
+    url: str,
+    access_token: str
 ) -> Dict[str, object]:
     """
     Returns the sdk GET response
@@ -84,7 +85,10 @@ def get(
     :return: Dict[str, object]
     """
     try:
-        res = requests.get(url, headers=get_headers())
+        headers = get_headers()
+        if isinstance(access_token, str):
+            headers['Authorization'] = f'Bearer {access_token}'
+        res = requests.get(url, headers=headers)
     except Exception as e:
         handle_request_error(e)
     return handle_response(res)

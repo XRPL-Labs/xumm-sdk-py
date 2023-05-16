@@ -26,8 +26,6 @@ from .storage.storage_get_response import StorageGetResponse  # noqa: F401
 from .storage.storage_response import StorageResponse  # noqa: F401
 from .storage.storage_set_response import StorageSetResponse  # noqa: F401
 
-from .xapp.xapp_ott_response import XappOttResponse  # noqa: F401
-
 from .push.push_event_response import PushEventResponse  # noqa: F401
 from .push.push_push_response import PushPushResponse  # noqa: F401
 
@@ -48,3 +46,4 @@ from .xumm_api import (  # noqa: F401
 )
 
 from .oauth2.oauth2_token_response import OAuth2TokenResponse  # noqa: F401
+from .oauth2.oauth2_user_info_response import OAuth2UserInfoResponse  # noqa: F401
