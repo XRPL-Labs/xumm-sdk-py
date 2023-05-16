@@ -28,7 +28,6 @@ from xumm.resource.rates import RatesResource
 from xumm.resource.payload import PayloadResource
 from xumm.resource.storage import StorageResource
 from xumm.resource.user_tokens import UserTokensResource
-from xumm.resource.xapp import XappResource
 from xumm.resource.push import PushResource
 from xumm.resource.oauth2 import OAuth2Resource
 
@@ -65,7 +64,6 @@ class XummSdk(XummResource):
 
         cls.payload = PayloadResource()
         cls.storage = StorageResource()
-        cls.xapp = XappResource()
         cls.push = PushResource()
         cls.oauth2 = OAuth2Resource()
 
