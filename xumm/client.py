@@ -75,7 +75,7 @@ def get_headers() -> Dict[str, object]:
 
 def get(
     url: str,
-    access_token: str
+    access_token: str = None
 ) -> Dict[str, object]:
     """
     Returns the sdk GET response
