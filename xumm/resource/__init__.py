@@ -8,6 +8,7 @@ import pprint
 import six
 
 from xumm import client
+from xumm import oauth2_base
 
 # import logging
 # logging.basicConfig(level=logging.ERROR)
@@ -162,6 +163,10 @@ class XummResource(BaseResource):
     @classmethod
     def platform_url(cls) -> str:
         return client.build_url() + 'platform' + '/'
+
+    @classmethod
+    def oauth2_url(cls) -> str:
+        return oauth2_base + '/'
 
     def __init__(cls, *args, **kwargs) -> 'XummResource':
         cls.refresh_from(**kwargs)
