@@ -205,10 +205,7 @@ response.websocket  # WSClient
 
 Examples:
 
-- [Async process after returning data in the callback function](https://github.com/XRPL-Labs/xumm-sdk-py/blob/main/samples/ws/async_callback.py)
-- [Await based on returning data in the callback function](https://github.com/XRPL-Labs/xumm-sdk-py/blob/main/samples/ws/await_callback.py)
-- [Await based on resolving a callback event](https://github.com/XRPL-Labs/xumm-sdk-py/blob/main/samples/ws/await_event.py)
-- [Await based on resolving without using a callback function](https://github.com/XRPL-Labs/xumm-sdk-py/blob/main/samples/ws/await_no_callback.py)
+- [Async process after returning data in the callback function](https://github.com/XRPL-Labs/xumm-sdk-py/blob/main/samples/payload.py)
 
 ##### sdk.payload.create_subscribe
 
