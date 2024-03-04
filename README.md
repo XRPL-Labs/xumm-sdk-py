@@ -172,7 +172,7 @@ To subscribe to live payload status updates, the XUMM SDK can setup a WebSocket 
 
 More information about the status update events & sample event data [can be found in the Developer Docs](https://xumm.readme.io/docs/payload-status).
 
-Status updates can be processed by providing a _callback function_ to the `sdk.payload.subscribe()` method. Alternatively, the (by the `sdk.payload_subscribe()` method) returned raw websocket can be used to listen for WebSocket `onmessage` events.
+Status updates can be processed by providing a _callback function_ to the `sdk.payload.subscribe()` method. Alternatively, the (by the `sdk.payload.subscribe()` method) returned raw websocket can be used to listen for WebSocket `onmessage` events.
 
 The subscription will be closed by either:
 
